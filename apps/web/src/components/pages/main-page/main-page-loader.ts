@@ -3,10 +3,12 @@ import {
   GetMainPageDataQueryResponse,
   getMainPageDataQuery,
 } from './main-page-query';
+import { handleErrors } from '~/lib/helper';
 
 export const getMainPageData = async () => {
-  const mainPage = await sanityFetch<GetMainPageDataQueryResponse>({
-    query: getMainPageDataQuery,
-  });
-  return mainPage;
+  return await handleErrors(
+    sanityFetch<GetMainPageDataQueryResponse>({
+      query: getMainPageDataQuery,
+    }),
+  );
 };

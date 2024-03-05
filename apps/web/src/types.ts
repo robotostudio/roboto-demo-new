@@ -5,7 +5,9 @@ export type PreviewProps<T> = {
   queryParams: Record<string, any>;
 };
 
-export type DynamicPage<T = { slug: string }> = {
+
+
+export type PageParams<T = Record<string, string>> = {
   params: T;
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -21,3 +23,4 @@ export type PageComponentProps<T> = {
   data: PartialResponse<T>;
   preview?: boolean;
 };
+

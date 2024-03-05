@@ -7,5 +7,5 @@ export type MainPageComponentProps =
 
 export const MainPageComponent: FC<MainPageComponentProps> = ({ data }) => {
   const { description, title } = data ?? {};
-  return <div>main page </div>;
+  return <div>main page {JSON.stringify(data)}</div>;
 };
