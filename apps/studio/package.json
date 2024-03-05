@@ -9,6 +9,7 @@
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "deploy-graphql": "sanity graphql deploy"
   },
   "keywords": [
@@ -26,13 +27,7 @@
     "@sanity/eslint-config-studio": "^3.0.1",
     "@types/react": "^18.0.25",
     "eslint": "^8.6.0",
-    "prettier": "^3.0.2",
+    "prettier": "2.8.8",
     "typescript": "^5.1.6"
-  },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100,
-    "bracketSpacing": false,
-    "singleQuote": true
   }
 }
