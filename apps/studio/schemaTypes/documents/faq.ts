@@ -14,11 +14,11 @@ export const faq = defineType({
       validation: (rule) => rule.required(),
     }),
     // languageField,
-    defineField({
-      name: 'answer',
-      type: 'richText',
-      validation: (rule) => rule.required(),
-    }),
+    // defineField({
+    //   name: 'answer',
+    //   type: 'richText',
+    //   validation: (rule) => rule.required(),
+    // }),
   ],
   //   preview: {
   //     select: { title: 'question', answer: 'answer', lang: 'language' },

@@ -10,10 +10,13 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "dependencies": {
+    "@sanity/asset-utils": "^1.3.0",
+    "@sanity/image-url": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.344.0",
     "next": "14.1.0",
+    "next-sanity": "^8.1.3",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.2.1",
