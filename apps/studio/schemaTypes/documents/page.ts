@@ -26,7 +26,7 @@ export const page = defineType({
       description:
         "Page descriptions shouldn't be too long or too short. Long page descriptions will only be partially shown in search results and short descriptions are unlikely to to be helpful to users. We recommend page descriptions are between 100 and 320 characters.",
       type: 'text',
-      rows: 3,
+      rows: 2,
       group: CONST.MAIN_CONTENT,
 
       validation: (rule) => [
