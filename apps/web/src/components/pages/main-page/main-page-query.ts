@@ -1,7 +1,8 @@
 import { groq } from 'next-sanity';
+import { localeMatch } from '~/lib/sanity/fragment';
 
 export const getMainPageDataQuery = groq`
-*[_type == "mainPage"][0]{
+*[_type == "mainPage" && ${localeMatch}][0]{
   title,
   description,
 }

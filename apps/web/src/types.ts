@@ -1,3 +1,5 @@
+import { Locale } from './config';
+
 export type PreviewProps<T> = {
   initialData: T;
   query: string;
@@ -5,10 +7,8 @@ export type PreviewProps<T> = {
   queryParams: Record<string, any>;
 };
 
-
-
 export type PageParams<T = Record<string, string>> = {
-  params: T;
+  params: T & { locale: Locale };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
@@ -23,5 +23,3 @@ export type PageComponentProps<T> = {
   data: PartialResponse<T>;
   preview?: boolean;
 };
-
-

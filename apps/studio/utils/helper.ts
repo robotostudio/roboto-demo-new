@@ -26,7 +26,7 @@ export const isUniqueAcrossAllDocuments: SlugIsUniqueValidator = async (
     slug,
   };
   const query = `!defined(*[!(_id in [$draft, $published]) && slug.current == $slug][0]._id)`;
-  const result = await client.fetch(query, params);
+  const result = await client.fetch<boolean>(query, params);
   return result;
 };
 
@@ -90,7 +90,6 @@ export const validateSlugIndexPages: CustomValidator<Slug | undefined> = (
   context: ValidationContext,
 ): string | true => {
   let language: string = '';
-
   if (context.document != null && context.document.language != null) {
     language = context.document?.language as string;
   }
