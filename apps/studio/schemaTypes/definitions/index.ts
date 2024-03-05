@@ -1,1 +1,3 @@
-export const definitions = [];
+import { pageBuilder } from './pageBuilder';
+
+export const definitions = [pageBuilder];

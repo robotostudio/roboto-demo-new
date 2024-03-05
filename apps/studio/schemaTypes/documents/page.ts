@@ -5,7 +5,7 @@ import {
   getFlag,
   isUniqueAcrossAllDocuments,
 } from '../../utils/helper';
-import { languageField } from '../../utils/common';
+import { languageField, pageBuilderField } from '../../utils/common';
 import { cardFields } from '../../utils/cardFields';
 import { ogFields } from '../../utils/ogFields';
 import { seoFields } from '../../utils/seoFields';
@@ -49,7 +49,7 @@ export const page = defineType({
         isUnique: isUniqueAcrossAllDocuments,
       },
     }),
-    // pageBuilderField,
+    pageBuilderField,
     languageField,
     ...seoFields,
     ...ogFields,

@@ -1,5 +1,7 @@
 import {
   CustomValidator,
+  PreviewConfig,
+  PreviewValue,
   Slug,
   SlugIsUniqueValidator,
   SlugifierFn,
@@ -107,3 +109,23 @@ export const validateSlugIndexPages: CustomValidator<Slug | undefined> = (
   }
   return true;
 };
+
+export const blockPreview = (
+  type: string,
+  select: Record<string, string> = { title: 'title', image: 'image' },
+  options?: Omit<PreviewValue, 'subtitle'>,
+): PreviewConfig => {
+  return {
+    select,
+    prepare: (props) => {
+      return {
+        ...props,
+        ...options,
+        subtitle: `${getTitleCase(type)} Block`,
+      };
+    },
+  };
+};
+    
+
+

@@ -7,7 +7,7 @@ import {
   validateSlugIndexPages,
 } from '../../utils/helper';
 import { cardFields } from '../../utils/cardFields';
-import { languageField } from '../../utils/common';
+import { languageField, pageBuilderField } from '../../utils/common';
 import { ogFields } from '../../utils/ogFields';
 import { seoFields } from '../../utils/seoFields';
 import { Home } from 'lucide-react';
@@ -53,7 +53,7 @@ export const mainPage = defineType({
         isUnique: isUniqueAcrossAllDocuments,
       },
     }),
-    // pageBuilderField,
+    pageBuilderField,
     languageField,
     ...seoFields,
     ...ogFields,

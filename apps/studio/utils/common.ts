@@ -1,4 +1,5 @@
 import { defineField } from 'sanity';
+import { CONST } from './constant';
 
 export const languageField = defineField({
   initialValue: () => 'en-GB',
@@ -15,4 +16,10 @@ export const iconField = defineField({
     storeSvg: true,
   },
   type: 'iconPicker',
+});
+
+export const pageBuilderField = defineField({
+  name: 'pageBuilder',
+  group: CONST.MAIN_CONTENT,
+  type: 'pageBuilder',
 });

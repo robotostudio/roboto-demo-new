@@ -1,18 +1,20 @@
 import { groq } from 'next-sanity';
 import { Locale } from '~/config';
+import { PageBuilder } from '~/schema';
 
 export const getSlugPageDataQuery = groq`
 *[_type == "page" && slug.current == $slug ][0]{
     title,
     content,
-    "slug":slug.current
+    "slug":slug.current,
+    pageBuilder
 }
 `;
 
 export type GetSlugPageDataQueryResponse = {
   title: string;
-  content: string;
   slug: string;
+  pageBuilder: PageBuilder;
 };
 
 export const getAllSlugPagePathsQuery = groq`
