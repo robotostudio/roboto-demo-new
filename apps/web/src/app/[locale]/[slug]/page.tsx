@@ -6,10 +6,8 @@ import { PageParams } from '~/types';
 export default async function Page({ params }: PageParams<{ slug: string }>) {
   const { locale, slug } = params ?? {};
   const [data, err] = await getSlugPageData(slug);
-  console.log('🚀 ~ Page ~ data, err:', data, err);
 
   if (err || !data) {
-    console.log('not found');
     return notFound();
   }
   return <SlugPage data={data} />;

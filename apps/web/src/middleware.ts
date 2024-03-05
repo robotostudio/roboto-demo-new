@@ -18,7 +18,6 @@ export default function middleware(request: NextRequest) {
       request.nextUrl.pathname,
     );
   if (!shouldHandle) return;
-  console.log('🚀 ~ middleware ~ pathname:', pathname, shouldHandle);
 
   return intlMiddleware(request);
 }

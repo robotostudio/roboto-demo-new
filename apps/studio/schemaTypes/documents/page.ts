@@ -63,7 +63,6 @@ export const page = defineType({
       isPrivate: 'seoNoIndex',
     },
     prepare: ({ title, lang, slug, isPrivate }) => {
-      console.log('🚀 ~ isPrivate:', isPrivate);
       return {
         title: [getFlag(lang), title].join(' '),
         subtitle: [isPrivate ? 'Private' : 'Public', ':', slug].join(' '),
