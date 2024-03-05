@@ -12,3 +12,10 @@ export type GetMainPageDataQueryResponse = {
   title: string;
   description: string;
 };
+
+
+export const getAllMainPageTranslationsQuery = groq`
+*[_type == "mainPage"].language
+`;
+
+export type GetAllMainPageTranslationsQueryResponse = string[];

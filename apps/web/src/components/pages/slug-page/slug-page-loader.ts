@@ -1,7 +1,9 @@
 import { handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
 import {
+  GetAllSlugPagePathsQueryResponse,
   GetSlugPageDataQueryResponse,
+  getAllSlugPagePathsQuery,
   getSlugPageDataQuery,
 } from './slug-page-query';
 
@@ -13,3 +15,12 @@ export const getSlugPageData = async (slug: string) => {
     }),
   );
 };
+
+export const getAllSlugPagePaths = async () => {
+  return await handleErrors(
+    sanityFetch<GetAllSlugPagePathsQueryResponse>({
+      query: getAllSlugPagePathsQuery,
+    }),
+  );
+};
+

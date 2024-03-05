@@ -1,15 +1,22 @@
 import { NextIntlClientProvider } from 'next-intl';
+import { unstable_setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { PropsWithChildren } from 'react';
 import { locales } from '~/config';
-import { PageParams } from '~/types';
+
+type Props = {
+  children: React.ReactNode;
+  params: { locale: string };
+};
 
 export default async function LocaleLayout({
   children,
   params: { locale },
-}: PageParams & PropsWithChildren) {
+}: Props) {
+  console.log('🚀 ~ locale:', locale);
   const isValidLocale = locales.some((cur) => cur === locale);
   if (!isValidLocale) return notFound();
+  unstable_setRequestLocale(locale);
+
   return (
     <html lang={locale}>
       <body>
