@@ -14,7 +14,8 @@ export const getNavbarDataQuery = groq`
 *[_type == "navbar"][0]{
     _id,
     title,
-    ${[buttons, links].join(',')}
+    ${[buttons, links].join(',')},
+    "logo":*[_type == "logo"][0].image.asset->url
 }
 `;
 
@@ -23,4 +24,5 @@ export type NavbarData = {
   title: string;
   buttons: SanityButtons;
   links: NavbarLinks;
+  logo: any;
 };

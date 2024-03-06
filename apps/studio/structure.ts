@@ -1,4 +1,5 @@
 import {
+  Building2,
   File,
   HomeIcon,
   LucideIcon,
@@ -110,7 +111,10 @@ const createList = ({ S, type, icon, title }: CreateList) => {
     .icon(icon ?? File);
 };
 
-export const structure = (S: StructureBuilder, context: StructureResolverContext) =>
+export const structure = (
+  S: StructureBuilder,
+  context: StructureResolverContext,
+) =>
   S.list()
     .title('Content')
     .items([
@@ -128,7 +132,10 @@ export const structure = (S: StructureBuilder, context: StructureResolverContext
         S,
         title: 'Settings',
         icon: Settings,
-        items: [createSingleTon({ S, type: 'navbar', icon: Menu })],
+        items: [
+          createSingleTon({ S, type: 'navbar', icon: Menu }),
+          createSingleTon({ S, type: 'logo', icon: Building2 }),
+        ],
       }),
     ]);
 

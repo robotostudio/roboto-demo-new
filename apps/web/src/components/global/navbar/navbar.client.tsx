@@ -15,6 +15,8 @@ import {
 import Link from 'next/link';
 import { cn } from '~/lib/utils';
 import { SanityIcon } from '../sanity-icon';
+import { Buttons } from '../buttons';
+import Image from 'next/image';
 
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
@@ -26,16 +28,16 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors',
+            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
             className,
           )}
           {...props}
         >
-          <div className="hover:bg-accent flex items-center gap-2">
+          <div className="flex items-center gap-2 hover:bg-accent">
             <span>{icon && <SanityIcon icon={icon} />}</span>
             <div className="">
               <div className="text-sm font-medium leading-none">{title}</div>
-              <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                 {children}
               </p>
             </div>
@@ -90,10 +92,12 @@ export const NavItem: FC<{ data: NavbarLink }> = ({ data }) => {
 };
 
 export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
-  const { buttons, links } = data ?? {};
+  const { buttons, links, logo } = data ?? {};
   return (
     <nav className="flex items-center justify-between bg-purple-300 p-4">
-      <div></div>
+      <div className="flex items-center">
+        <Image src={logo} alt="logo" width={70} height={40} />
+      </div>
       <div>
         <NavigationMenu>
           <NavigationMenuList>
@@ -102,7 +106,9 @@ export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      <div></div>
+      <div>
+        <Buttons buttons={buttons} />
+      </div>
     </nav>
   );
 };
