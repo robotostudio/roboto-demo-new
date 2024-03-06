@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { Navbar } from '~/components/global/navbar';
 import { locales } from '~/config';
 
 type Props = {
@@ -21,6 +22,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale}>
+          <Navbar />
           {children}
         </NextIntlClientProvider>
       </body>

@@ -346,6 +346,13 @@ export interface MainPage extends SanityDocument {
   slug?: { _type: 'slug'; current: string };
 
   /**
+   * pageBuilder — `pageBuilder`
+   *
+   *
+   */
+  pageBuilder?: PageBuilder;
+
+  /**
    * language — `string`
    *
    *
@@ -433,7 +440,171 @@ export interface MainPage extends SanityDocument {
   };
 }
 
+/**
+ * Navbar
+ *
+ *
+ */
+export interface Navbar extends SanityDocument {
+  _type: 'navbar';
+
+  /**
+   * Title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * links — `array`
+   *
+   *
+   */
+  links?: Array<SanityKeyed<NavLink> | SanityKeyed<NavDropdownColumn>>;
+
+  /**
+   * Call to Action — `array`
+   *
+   *
+   */
+  buttons?: Array<SanityKeyed<Button>>;
+}
+
 export type PageBuilder = Array<SanityKeyed<Hero> | SanityKeyed<Cta>>;
+
+export type NavLink = {
+  _type: 'navLink';
+  /**
+   * title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * url — `customUrl`
+   *
+   *
+   */
+  url?: CustomUrl;
+};
+
+export type CustomUrl = {
+  _type: 'customUrl';
+  /**
+   * type — `string`
+   *
+   *
+   */
+  type?: 'internal' | 'external';
+
+  /**
+   * Open in new tab — `boolean`
+   *
+   * If checked, the link will open in a new tab.
+   */
+  openInNewTab?: boolean;
+
+  /**
+   * URL — `url`
+   *
+   *
+   */
+  external?: string;
+
+  /**
+   * href — `string`
+   *
+   *
+   */
+  href?: string;
+
+  /**
+   * internal — `reference`
+   *
+   *
+   */
+  internal?: SanityReference<Page | BlogIndex | Blog | MainPage>;
+};
+
+export type Button = {
+  _type: 'button';
+  /**
+   * variant — `string`
+   *
+   *
+   */
+  variant?: 'default' | 'outline' | 'link';
+
+  /**
+   * Icon — `iconPicker`
+   *
+   *
+   */
+  icon?: IconPicker;
+
+  /**
+   * Button Text — `string`
+   *
+   *
+   */
+  buttonText?: string;
+
+  /**
+   * Url — `customUrl`
+   *
+   *
+   */
+  url?: CustomUrl;
+};
+
+export type NavLinkColumn = {
+  _type: 'navLinkColumn';
+  /**
+   * Title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * Icon — `iconPicker`
+   *
+   *
+   */
+  icon?: IconPicker;
+
+  /**
+   * Descriptions — `string`
+   *
+   *
+   */
+  description?: string;
+
+  /**
+   * url — `customUrl`
+   *
+   *
+   */
+  url?: CustomUrl;
+};
+
+export type NavDropdownColumn = {
+  _type: 'navDropdownColumn';
+  /**
+   * title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * columns — `array`
+   *
+   *
+   */
+  columns?: Array<SanityKeyed<NavLinkColumn>>;
+};
 
 export type Hero = {
   _type: 'hero';
@@ -469,4 +640,11 @@ export type Cta = {
   subtitle?: string;
 };
 
-export type Documents = Page | Blog | Faq | BlogIndex | MainPage;
+export type Documents = Page | Blog | Faq | BlogIndex | MainPage | Navbar;
+
+/**
+ * This interface is a stub. It was referenced in your sanity schema but
+ * the definition was not actually found. Future versions of
+ * sanity-codegen will let you type this explicity.
+ */
+type IconPicker = any;

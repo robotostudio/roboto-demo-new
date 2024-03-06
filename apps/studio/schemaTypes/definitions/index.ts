@@ -1,6 +1,6 @@
 import { button } from './button';
 import { customUrl } from './customUrl';
-import { navLink, navLinkColumn } from './navLink';
+import { navDropdownColumn, navLink, navLinkColumn } from './navLink';
 import { pageBuilder } from './pageBuilder';
 
 export const definitions = [
@@ -9,5 +9,5 @@ export const definitions = [
   customUrl,
   button,
   navLinkColumn,
-  navLink,
+  navDropdownColumn,
 ];

@@ -19,7 +19,7 @@ export const customUrl = defineType({
       initialValue: () => false,
     }),
     defineField({
-      name: 'url',
+      name: 'external',
       type: 'url',
       title: 'URL',
       hidden: ({ parent }) => parent?.type !== 'external',
@@ -43,7 +43,7 @@ export const customUrl = defineType({
       readOnly: true,
     }),
     defineField({
-      name: 'internalLink',
+      name: 'internal',
       type: 'reference',
       hidden: ({ parent }) => parent?.type !== 'internal',
       to: allLinkableTypes,

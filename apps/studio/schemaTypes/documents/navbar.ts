@@ -14,7 +14,10 @@ export const navbar = defineType({
     defineField({
       name: 'links',
       type: 'array',
-      of: [defineArrayMember({ type: 'navLink' })],
+      of: [
+        defineArrayMember({ type: 'navLink' }),
+        defineArrayMember({ type: 'navDropdownColumn' }),
+      ],
     }),
     defineField({
       name: 'buttons',
