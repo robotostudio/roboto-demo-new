@@ -1,6 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
-import { blockPreview, createRadioListLayout } from '../../utils/helper';
 import { iconField } from '../../utils/common';
+import { blockPreview } from '../../utils/helper';
 
 export const navLinkColumn = defineType({
   name: 'navLinkColumn',

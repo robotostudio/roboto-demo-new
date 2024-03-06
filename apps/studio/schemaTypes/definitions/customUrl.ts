@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity';
-import { createRadioListLayout } from '../../utils/helper';
+import { allLinkableTypes, createRadioListLayout } from '../../utils/helper';
 
 export const customUrl = defineType({
   name: 'customUrl',
@@ -46,7 +46,7 @@ export const customUrl = defineType({
       name: 'internalLink',
       type: 'reference',
       hidden: ({ parent }) => parent?.type !== 'internal',
-      to: [{ type: 'page' }],
+      to: allLinkableTypes,
       validation: (rule) => [
         rule.custom((value, { parent }) => {
           const type = (parent as { type?: string })?.type;

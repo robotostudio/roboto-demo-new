@@ -151,3 +151,9 @@ export const createRadioListLayout = (
 
 export const capitalize = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
+
+
+export const allLinkableTypes = ['page', 'blogIndex', 'blog', 'mainPage'].map(
+  (type) => ({ type }),
+);
+

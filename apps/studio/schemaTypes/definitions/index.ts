@@ -9,4 +9,5 @@ export const definitions = [
   customUrl,
   button,
   navLinkColumn,
+  navLink,
 ];
