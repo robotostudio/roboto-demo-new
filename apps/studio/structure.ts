@@ -1,11 +1,21 @@
-import { File, HomeIcon, LucideIcon } from 'lucide-react';
+import {
+  File,
+  HomeIcon,
+  LucideIcon,
+  Menu,
+  Settings,
+  Split,
+} from 'lucide-react';
 import {
   DefaultDocumentNodeResolver,
+  Divider,
+  ListItem,
+  ListItemBuilder,
   StructureBuilder,
   StructureResolverContext,
 } from 'sanity/structure';
-import { getTitleCase } from './utils/helper';
 import { SchemaType, SingletonType } from './schemaTypes';
+import { getTitleCase } from './utils/helper';
 
 type Base<T = SchemaType> = {
   type: T;
@@ -31,6 +41,20 @@ const createSingleTon = ({ S, type, title, icon }: CreateSingleTon) => {
     .child(
       S.document().views([S.view.form()]).schemaType(type).documentId(type),
     );
+};
+
+type CreateNestedList = {
+  S: StructureBuilder;
+  items: (ListItemBuilder | ListItem | Divider)[];
+  title: NonNullable<Base['title']>;
+  icon?: Base['icon'];
+};
+
+const createNestedList = ({ S, title, icon, items }: CreateNestedList) => {
+  return S.listItem()
+    .title(title)
+    .icon(icon ?? Split)
+    .child(S.list().title(title).items(items));
 };
 
 type CreateIndexList = {
@@ -86,10 +110,7 @@ const createList = ({ S, type, icon, title }: CreateList) => {
     .icon(icon ?? File);
 };
 
-export const structure = (
-  S: StructureBuilder,
-  context: StructureResolverContext,
-) =>
+export const structure = (S: StructureBuilder, context: StructureResolverContext) =>
   S.list()
     .title('Content')
     .items([
@@ -101,6 +122,13 @@ export const structure = (
         S,
         index: { type: 'blogIndex' },
         list: { type: 'blog' },
+      }),
+      S.divider(),
+      createNestedList({
+        S,
+        title: 'Settings',
+        icon: Settings,
+        items: [createSingleTon({ S, type: 'navbar', icon: Menu })],
       }),
     ]);
 
