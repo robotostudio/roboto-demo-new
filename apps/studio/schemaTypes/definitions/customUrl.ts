@@ -1,5 +1,9 @@
 import { defineField, defineType } from 'sanity';
-import { allLinkableTypes, createRadioListLayout } from '../../utils/helper';
+import {
+  allLinkableTypes,
+  createRadioListLayout,
+  isValidUrl,
+} from '../../utils/helper';
 
 export const customUrl = defineType({
   name: 'customUrl',
@@ -20,18 +24,19 @@ export const customUrl = defineType({
     }),
     defineField({
       name: 'external',
-      type: 'url',
+      type: 'string',
       title: 'URL',
       hidden: ({ parent }) => parent?.type !== 'external',
       validation: (Rule) => [
         Rule.custom((value, { parent }) => {
+          console.log('🚀 ~ Rule.custom ~ value:', value);
           const type = (parent as { type?: string })?.type;
-          if (type === 'external' && !value) return "Url can't be empty";
+          if (type === 'external') {
+            if (!value) return "Url can't be empty";
+            const isValid = isValidUrl(value);
+            if (!isValid) return 'Invalid URL';
+          }
           return true;
-        }),
-        Rule.uri({
-          scheme: ['http', 'https', 'tel', 'mailto'],
-          allowRelative: true,
         }),
       ],
     }),

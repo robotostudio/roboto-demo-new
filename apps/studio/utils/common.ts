@@ -30,3 +30,8 @@ export const buttonsField = defineField({
   type: 'array',
   of: [{ type: 'button' }],
 });
+
+export const richTextField = defineField({
+  name: 'richText',
+  type: 'richText',
+});

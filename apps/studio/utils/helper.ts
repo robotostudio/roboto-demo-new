@@ -1,5 +1,6 @@
 import {
   CustomValidator,
+  PortableTextBlock,
   PreviewConfig,
   PreviewValue,
   Slug,
@@ -14,6 +15,18 @@ import getUnicodeFlagIcon from 'country-flag-icons/unicode';
 export const getTitleCase = (name: string) => {
   const titleTemp = name.replace(/([A-Z])/g, ' $1');
   return titleTemp.charAt(0).toUpperCase() + titleTemp.slice(1);
+};
+
+export const getTypesArray = (types: string[]) =>
+  types.map((type) => ({ type }));
+
+export const extractTitleFromRichText = (richText: PortableTextBlock[]) => {
+  const title = richText.find((block) => block._type === 'block');
+  if (!title || !Array.isArray(title.children)) return 'No Title';
+  return title.children
+    .filter((child) => child._type === 'span')
+    .map((span) => span.text)
+    .join(' ');
 };
 
 export const isUniqueAcrossAllDocuments: SlugIsUniqueValidator = async (
@@ -152,8 +165,20 @@ export const createRadioListLayout = (
 export const capitalize = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
-
 export const allLinkableTypes = ['page', 'blogIndex', 'blog', 'mainPage'].map(
   (type) => ({ type }),
 );
+
+export const isRelativeUrl = (url: string) =>
+  url.startsWith('/') || url.startsWith('#') || url.startsWith('?');
+
+export const isValidUrl = (url: string) => {
+  console.log('🚀 ~ isValidUrl ~ url:', url.startsWith('/'));
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return isRelativeUrl(url);
+  }
+};
 
