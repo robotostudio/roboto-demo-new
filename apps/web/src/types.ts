@@ -1,4 +1,5 @@
 import { Locale } from './config';
+import { NavDropdownColumn, NavLink, NavLinkColumn } from './schema';
 
 export type PreviewProps<T> = {
   initialData: T;
@@ -23,3 +24,35 @@ export type PageComponentProps<T> = {
   data: PartialResponse<T>;
   preview?: boolean;
 };
+
+export type ProcessedUrl = {
+  openInNewTab: boolean;
+  href: string;
+};
+
+export type SanityButton = {
+  _key: string;
+  buttonText: string;
+  icon?: { svg?: string };
+  variant: 'default' | 'outline';
+  url: ProcessedUrl;
+};
+
+export type SanityButtons = Array<SanityButton>;
+
+export type NavbarLink =
+  | (Omit<NavLink, 'url'> & {
+      _key: string;
+      url: ProcessedUrl;
+    })
+  | (Omit<NavDropdownColumn, 'columns'> & {
+      _key: string;
+      columns: Array<
+        Omit<SanityButton, 'buttonText'> & {
+          description?: string;
+          title: string;
+        }
+      >;
+    });
+
+export type NavbarLinks = Array<NavbarLink>;
