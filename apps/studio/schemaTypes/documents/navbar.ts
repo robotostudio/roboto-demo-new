@@ -16,6 +16,12 @@ export const navbar = defineType({
       type: 'array',
       of: [defineArrayMember({ type: 'navLink' })],
     }),
+    defineField({
+      name: 'buttons',
+      title: 'Call to Action',
+      type: 'array',
+      of: [{ type: 'button' }],
+    }),
   ],
   preview: {
     select: {

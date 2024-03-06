@@ -5,6 +5,7 @@ import {
   Slug,
   SlugIsUniqueValidator,
   SlugifierFn,
+  StringOptions,
   ValidationContext,
 } from 'sanity';
 import slugify from 'slugify';
@@ -126,6 +127,27 @@ export const blockPreview = (
     },
   };
 };
-    
 
+export const createRadioListLayout = (
+  items: Array<string | { title: string; value: string }>,
+  options?: StringOptions,
+): StringOptions => {
+  const list = items.map((item) => {
+    if (typeof item === 'string') {
+      return {
+        title: getTitleCase(item),
+        value: item,
+      };
+    }
+    return item;
+  });
+  // }));
+  return {
+    layout: 'radio',
+    list,
+    ...options,
+  };
+};
 
+export const capitalize = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1);

@@ -23,3 +23,10 @@ export const pageBuilderField = defineField({
   group: CONST.MAIN_CONTENT,
   type: 'pageBuilder',
 });
+
+
+export const buttonsField = defineField({
+  name: 'buttons',
+  type: 'array',
+  of: [{ type: 'button' }],
+});
