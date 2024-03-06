@@ -94,11 +94,19 @@ export const NavItem: FC<{ data: NavbarLink }> = ({ data }) => {
 export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
   const { buttons, links, logo } = data ?? {};
   return (
-    <nav className="flex items-center justify-between bg-purple-300 p-4">
+    <nav className="grid grid-cols-3  bg-purple-300 p-4">
       <div className="flex items-center">
-        <Image src={logo} alt="logo" width={70} height={40} />
+        <Link href="/">
+          <Image
+            src={logo}
+            alt="logo"
+            width={70}
+            height={40}
+            className="h-10 w-16"
+          />
+        </Link>
       </div>
-      <div>
+      <div className="flex items-center justify-center">
         <NavigationMenu>
           <NavigationMenuList>
             {Array.isArray(links) &&
@@ -106,7 +114,7 @@ export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      <div>
+      <div className="ml-auto">
         <Buttons buttons={buttons} />
       </div>
     </nav>

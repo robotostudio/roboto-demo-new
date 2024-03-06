@@ -60,8 +60,23 @@ export const extractIcon = extent('icon', false, ['svg'], false);
 
 export const buttons = extent('buttons', true, [button, extractIcon]);
 
+
+export const customLink = extent(
+  'customLink',
+  false,
+  [extractLink, 'openInNewTab'],
+  false,
+);
+
+export const markDefs = extent('markDefs', true, [customLink]);
+
+export const richText = extent('richText', true, [markDefs]);
+
 export const link = extent('link', false, [button], false);
 
 export const dropDownLink = extent('columns', true, [button, extractIcon]);
 
 export const links = extent('links', true, [button, dropDownLink]);
+
+export const pageBuilder = extent('pageBuilder', true, [buttons, richText]);
+

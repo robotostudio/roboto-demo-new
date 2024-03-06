@@ -470,6 +470,34 @@ export interface Navbar extends SanityDocument {
   buttons?: Array<SanityKeyed<Button>>;
 }
 
+/**
+ * logo
+ *
+ *
+ */
+export interface Logo extends SanityDocument {
+  _type: 'logo';
+
+  /**
+   * title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * image — `image`
+   *
+   *
+   */
+  image?: {
+    _type: 'image';
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+}
+
 export type PageBuilder = Array<SanityKeyed<Hero> | SanityKeyed<Cta>>;
 
 export type NavLink = {
@@ -506,7 +534,7 @@ export type CustomUrl = {
   openInNewTab?: boolean;
 
   /**
-   * URL — `url`
+   * URL — `string`
    *
    *
    */
@@ -606,6 +634,30 @@ export type NavDropdownColumn = {
   columns?: Array<SanityKeyed<NavLinkColumn>>;
 };
 
+export type RichText = Array<
+  | SanityKeyed<SanityBlock>
+  | SanityKeyed<{
+      _type: 'image';
+      asset: SanityReference<SanityImageAsset>;
+      crop?: SanityImageCrop;
+      hotspot?: SanityImageHotspot;
+
+      /**
+       * Caption Text — `string`
+       *
+       *
+       */
+      caption?: string;
+
+      /**
+       * Alt Text — `string`
+       *
+       *
+       */
+      alt?: string;
+    }>
+>;
+
 export type Hero = {
   _type: 'hero';
   /**
@@ -616,11 +668,25 @@ export type Hero = {
   title?: string;
 
   /**
-   * description — `string`
+   * Is It a <h1>? — `boolean`
    *
    *
    */
-  description?: string;
+  isTitleH1?: boolean;
+
+  /**
+   * richText — `richText`
+   *
+   *
+   */
+  richText?: RichText;
+
+  /**
+   * buttons — `array`
+   *
+   *
+   */
+  buttons?: Array<SanityKeyed<Button>>;
 };
 
 export type Cta = {
@@ -640,7 +706,14 @@ export type Cta = {
   subtitle?: string;
 };
 
-export type Documents = Page | Blog | Faq | BlogIndex | MainPage | Navbar;
+export type Documents =
+  | Page
+  | Blog
+  | Faq
+  | BlogIndex
+  | MainPage
+  | Navbar
+  | Logo;
 
 /**
  * This interface is a stub. It was referenced in your sanity schema but

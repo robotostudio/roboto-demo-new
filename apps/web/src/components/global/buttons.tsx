@@ -22,7 +22,7 @@ export const Buttons: FC<ButtonsProps> = ({
     >
       {buttons.map((button) => (
         <Link href={button.url.href} key={button._key}>
-          <Button key={button._key} {...props} {...button}>
+          <Button key={button._key} {...props} variant={button?.variant}>
             {button.buttonText}
           </Button>
         </Link>

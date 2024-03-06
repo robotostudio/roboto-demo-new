@@ -1,16 +1,17 @@
 import { groq } from 'next-sanity';
-import { localeMatch } from '~/lib/sanity/fragment';
+import { localeMatch, pageBuilder } from '~/lib/sanity/fragment';
+import { PageBuilder } from '~/schema';
 
 export const getMainPageDataQuery = groq`
 *[_type == "mainPage" && ${localeMatch}][0]{
-  title,
-  description,
+  ${['title', 'description', pageBuilder].join(',')}
 }
 `;
 
 export type GetMainPageDataQueryResponse = {
   title: string;
   description: string;
+  pageBuilder: PageBuilder;
 };
 
 
