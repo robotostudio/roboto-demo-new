@@ -1,3 +1,5 @@
+import { Locale } from '~/config';
+
 export async function handleErrors<T>(
   promise: Promise<T>,
 ): Promise<[T | undefined, unknown]> {
@@ -16,3 +18,8 @@ export async function handleErrors<T>(
     return [undefined, err];
   }
 }
+
+export const getLocalizedSlug = (slug: string, locale: Locale) => {
+  if (locale === 'en-GB') return `/${slug}`;
+  return `/${locale}/${slug}`;
+};

@@ -15,7 +15,8 @@ export const generateStaticParams = async () => {
 
 export default async function Page({ params }: PageParams<{ slug: string }>) {
   const { locale, slug } = params ?? {};
-  const [data, err] = await getSlugPageData(slug);
+  console.log('🚀 ~ Page ~ slug:', slug, locale);
+  const [data, err] = await getSlugPageData(slug, locale);
   console.log('🚀 ~ Page ~ data, err:', data, err, locale);
 
   if (err || !data) {

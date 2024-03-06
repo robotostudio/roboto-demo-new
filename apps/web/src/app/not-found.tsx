@@ -1,8 +1,13 @@
+import { Navbar } from '~/components/global/navbar';
+
 export default function NotFound() {
   return (
-    <html>
+    <html lang="en-GB">
       <body>
-        <main>Not Found</main>
+        <main>
+          <Navbar />
+          <div>Not Found</div>
+        </main>
       </body>
     </html>
   );
