@@ -8,6 +8,7 @@ import { documentInternationalization } from '@sanity/document-internationalizat
 import { media } from 'sanity-plugin-media';
 import { iconPicker } from 'sanity-plugin-icon-picker';
 import { internationalizedDocuments } from './schemaTypes/documents';
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 
 export default defineConfig({
   name: 'default',
@@ -23,6 +24,7 @@ export default defineConfig({
     }),
     visionTool(),
     assist(),
+    unsplashImageAsset(),
     media(),
     iconPicker(),
     documentInternationalization({

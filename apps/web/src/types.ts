@@ -1,5 +1,5 @@
 import { Locale } from './config';
-import { NavDropdownColumn, NavLink, NavLinkColumn } from './schema';
+import { Blog, NavDropdownColumn, NavLink, NavLinkColumn } from './schema';
 
 export type PreviewProps<T> = {
   initialData: T;
@@ -56,3 +56,6 @@ export type NavbarLink =
     });
 
 export type NavbarLinks = Array<NavbarLink>;
+
+export type SanityImage = NonNullable<Blog['image']>;
+

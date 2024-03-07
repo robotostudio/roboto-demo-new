@@ -176,11 +176,131 @@ export interface Blog extends SanityDocument {
   title?: string;
 
   /**
-   * slug — `slug`
+   * Description — `text`
+   *
+   * Page descriptions shouldn't be too long or too short. Long page descriptions will only be partially shown in search results and short descriptions are unlikely to to be helpful to users. We recommend page descriptions are between 130 and 160 characters for best SEO practice
+   */
+  description?: string;
+
+  /**
+   * Slug — `slug`
    *
    *
    */
   slug?: { _type: 'slug'; current: string };
+
+  /**
+   * Image — `image`
+   *
+   *
+   */
+  image?: {
+    _type: 'image';
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+
+  /**
+   * richText — `richText`
+   *
+   *
+   */
+  richText?: RichText;
+
+  /**
+   * language — `string`
+   *
+   *
+   */
+  language?: string;
+
+  /**
+   * pageBuilder — `pageBuilder`
+   *
+   *
+   */
+  pageBuilder?: PageBuilder;
+
+  /**
+   * SEO meta title override — `string`
+   *
+   * This will override the meta title. If left blank it will inherit the page title.
+   */
+  seoTitle?: string;
+
+  /**
+   * SEO meta description override — `text`
+   *
+   * This will override the meta description. If left blank it will inherit the description from the page description.
+   */
+  seoDescription?: string;
+
+  /**
+   * SEO image override — `image`
+   *
+   * This will override the main image. If left blank it will inherit the image from the main image.
+   */
+  seoImage?: {
+    _type: 'image';
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+
+  /**
+   * Do not index this page — `boolean`
+   *
+   * If checked, this content won't be indexed by search engines.
+   */
+  seoNoIndex?: boolean;
+
+  /**
+   * Hide from lists — `boolean`
+   *
+   * If checked, this content won't appear in any list pages.
+   */
+  seoHideFromLists?: boolean;
+
+  /**
+   * Open graph title override — `string`
+   *
+   * This will override the open graph title. If left blank it will inherit the page title.
+   */
+  ogTitle?: string;
+
+  /**
+   * Open graph description override — `text`
+   *
+   * This will override the meta description. If left blank it will inherit the description from the page description.
+   */
+  ogDescription?: string;
+
+  /**
+   * Card title override — `string`
+   *
+   * This will override the card title. If left blank it will inherit the description from the page title.
+   */
+  cardTitle?: string;
+
+  /**
+   * Card description override — `text`
+   *
+   * This will override the card description. If left blank it will inherit the description from the page description.
+   */
+  cardDescription?: string;
+
+  /**
+   * Card image override — `image`
+   *
+   * This will override the main image. If left blank it will inherit the image from the main image.
+   */
+  cardImage?: {
+    _type: 'image';
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
 }
 
 /**
