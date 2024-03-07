@@ -29,7 +29,6 @@ export const customUrl = defineType({
       hidden: ({ parent }) => parent?.type !== 'external',
       validation: (Rule) => [
         Rule.custom((value, { parent }) => {
-          console.log('🚀 ~ Rule.custom ~ value:', value);
           const type = (parent as { type?: string })?.type;
           if (type === 'external') {
             if (!value) return "Url can't be empty";

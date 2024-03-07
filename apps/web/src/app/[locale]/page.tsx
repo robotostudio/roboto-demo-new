@@ -26,7 +26,6 @@ export const generateMetadata = async ({
 
 export default async function Page({ params }: PageParams) {
   const [data, err] = await getMainPageData(params.locale);
-  console.log('🚀 ~ Page getMainPageData ~ data, err:', data, err);
   if (!data || err) return notFound();
   return <MainPageComponent data={data} />;
 }

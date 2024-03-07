@@ -13,7 +13,6 @@ export default async function LocaleLayout({
   children,
   params: { locale },
 }: Props) {
-  console.log('🚀 ~ locale:', locale);
   const isValidLocale = locales.some((cur) => cur === locale);
   if (!isValidLocale) return notFound();
   unstable_setRequestLocale(locale);

@@ -40,7 +40,6 @@ export const BlogGrid: FC<BlogGridProps> = ({ blogs }) => {
 export type BlogCardProps = { blog: GetBlogIndexDataQuery['blogs'][number] };
 
 export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
-  console.log('🚀 ~ blog:', blog);
   const { title, image, slug, description } = blog ?? {};
   return (
     <div className="flex items-center justify-center gap-4">

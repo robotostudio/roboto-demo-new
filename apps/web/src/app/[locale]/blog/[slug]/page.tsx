@@ -18,7 +18,6 @@ export const generateStaticParams = async () => {
       paths.push({ slug, locale: page.locale });
     }
   });
-  console.log('🚀 ~ generateStaticParams ~ slugs:', paths);
   return paths;
 };
 
