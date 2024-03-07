@@ -1,5 +1,5 @@
 import { Locale } from './config';
-import { Blog, NavDropdownColumn, NavLink, NavLinkColumn } from './schema';
+import { Blog, NavDropdownColumn, NavLink } from './schema';
 
 export type PreviewProps<T> = {
   initialData: T;

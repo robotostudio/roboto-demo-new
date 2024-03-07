@@ -1,9 +1,14 @@
 'use client';
 import { FC } from 'react';
 import { PageComponentProps } from '~/types';
-import { GetBlogIndexDataQuery } from './blog-page-api';
+import {
+  GetBlogIndexDataQuery,
+  GetBlogPageDataQueryResponse,
+} from './blog-page-api';
 import { SanityImage } from '~/components/global/sanity-image';
 import Link from 'next/link';
+import { RichText } from '~/components/global/richText';
+import Balancer from 'react-wrap-balancer';
 
 export type BlogIndexPageProps = PageComponentProps<GetBlogIndexDataQuery>;
 
@@ -58,5 +63,39 @@ export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
         </p>
       </Link>
     </div>
+  );
+};
+
+export type BlogSlugPageProps =
+  PageComponentProps<GetBlogPageDataQueryResponse>;
+
+export const BlogSlugPage: FC<BlogSlugPageProps> = ({ data }) => {
+  const { richText, title, image, description, _createdAt } = data ?? {};
+  return (
+    <main className="animate-fade-up-slow mb-32 mt-12 md:mb-56">
+      <div className="container">
+        <div className="mx-auto mb-12 flex max-w-[500px] flex-col text-center">
+          {_createdAt && (
+            <b className="mb-4 text-sm font-normal">
+              {new Date(_createdAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </b>
+          )}
+          <h1 className="animate-fade-up-slow my-4 text-lg">
+            <Balancer>{title}</Balancer>
+          </h1>
+          <p>{description}</p>
+        </div>
+        <div>
+          <div className="relative mb-20 md:mb-[100px]">
+            <SanityImage image={image} />
+          </div>
+          <RichText value={richText} />
+        </div>
+      </div>
+    </main>
   );
 };

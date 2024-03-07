@@ -21,9 +21,13 @@ export async function handleErrors<T>(
   }
 }
 
-export const getLocalizedSlug = (slug: string, locale: Locale) => {
-  if (locale === 'en-GB') return `/${slug}`;
-  return `/${locale}/${slug}`;
+export const getLocalizedSlug = (
+  slug: string,
+  locale: Locale,
+  prefix?: string,
+) => {
+  if (locale === 'en-GB') return '/' + [prefix, slug].filter(Boolean).join('/');
+  return '/' + [locale, prefix, slug].filter(Boolean).join('/');
 };
 
 export const getImageDimensionProps = (image: NonNullable<SanityImage>) => {

@@ -61,6 +61,10 @@ const config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
+        'neue-haas-unica': ["'Neue Haas Unica'", ...fontFamily.sans],
+        gtamerica: ["'GT-America'", ...fontFamily.sans],
+        gtamericamono: ["'GT-America-Mono'", ...fontFamily.sans],
+        sohne: ["'Sohne'", ...fontFamily.sans],
         // sans: ['var(--font-geist-sans)', ...fontFamily.sans],
         // mono: ['var(--font-mono)', ...fontFamily.mono],
       },

@@ -67,7 +67,6 @@ type PortableRichTextProps = {
 };
 
 export const RichText: FC<PortableRichTextProps> = ({ value }) => {
-  console.log('🚀 ~ value:', value);
   if (!Array.isArray(value)) return <></>;
   return (
     <div className="prose-lg prose-slate prose-invert prose-headings:scroll-m-24 prose-headings:font-bold prose-headings:text-opacity-90 prose-p:text-opacity-80 prose-a:underline prose-a:decoration-dotted  prose-ol:list-decimal prose-ol:text-opacity-80 prose-ul:list-disc prose-ul:text-opacity-80">
