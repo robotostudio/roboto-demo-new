@@ -97,7 +97,14 @@ export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
     <nav className="grid grid-cols-3  bg-purple-300 p-4">
       <div className="flex items-center ">
         <Link href="/">
-          <Image src={logo} alt="logo" width={80} height={40} />
+          <Image
+            src={logo}
+            alt="logo"
+            width={80}
+            height={40}
+            priority
+            className="aspect-video"
+          />
         </Link>
       </div>
       <div className="flex items-center justify-center">
