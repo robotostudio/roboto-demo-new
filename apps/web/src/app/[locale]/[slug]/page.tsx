@@ -1,9 +1,14 @@
+import LiveQuery from 'next-sanity/preview/live-query';
+import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
+import { SlugPageClient } from '~/components/pages/slug-page/slug-page-client';
 import { SlugPage } from '~/components/pages/slug-page/slug-page-component';
 import {
   getAllSlugPagePaths,
   getSlugPageData,
 } from '~/components/pages/slug-page/slug-page-loader';
+import { getSlugPageDataQuery } from '~/components/pages/slug-page/slug-page-query';
+import { getLocalizedSlug } from '~/lib/helper';
 import { PageParams } from '~/types';
 
 export const generateStaticParams = async () => {
@@ -15,12 +20,25 @@ export const generateStaticParams = async () => {
 
 export default async function Page({ params }: PageParams<{ slug: string }>) {
   const { locale, slug } = params ?? {};
-  console.log('🚀 ~ Page ~ slug:', slug, locale);
   const [data, err] = await getSlugPageData(slug, locale);
-  console.log('🚀 ~ Page ~ data, err:', data, err, locale);
 
   if (err || !data) {
     return notFound();
+  }
+  const { isEnabled } = draftMode();
+
+  if (isEnabled) {
+    return (
+      <LiveQuery
+        enabled
+        initialData={data}
+        query={getSlugPageDataQuery}
+        params={{ slug: getLocalizedSlug(slug, locale), locale }}
+        as={SlugPageClient}
+      >
+        <SlugPage data={data} />
+      </LiveQuery>
+    );
   }
   return <SlugPage data={data} />;
 }
