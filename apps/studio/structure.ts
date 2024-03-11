@@ -1,6 +1,9 @@
 import {
+  BookMarked,
   Building2,
+  ClipboardType,
   File,
+  FileText,
   HomeIcon,
   LucideIcon,
   Menu,
@@ -118,13 +121,13 @@ export const structure = (S: StructureBuilder, context: StructureResolverContext
       createSingleTon({ S, type: 'mainPage', icon: HomeIcon }),
       S.divider(),
       createList({ S, type: 'page' }),
-      createList({ S, type: 'faq' }),
+      // createList({ S, type: 'faq' }),
       createIndexList({
         S,
-        index: { type: 'blogIndex' },
-        list: { type: 'blog' },
+        index: { type: 'blogIndex', icon: BookMarked },
+        list: { type: 'blog', icon: FileText },
       }),
-      createList({ S, type: 'form' }),
+      createList({ S, type: 'form', icon: ClipboardType }),
       S.divider(),
       createNestedList({
         S,
