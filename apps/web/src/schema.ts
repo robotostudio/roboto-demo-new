@@ -360,7 +360,7 @@ export interface Form extends SanityDocument {
    *
    *
    */
-  fields?: Array<SanityKeyed<FormFields> | SanityKeyed<FormField>>;
+  fields?: Array<SanityKeyed<FormField>>;
 
   /**
    * buttonText — `string`
@@ -368,20 +368,6 @@ export interface Form extends SanityDocument {
    *
    */
   buttonText?: string;
-
-  /**
-   * terms — `boolean`
-   *
-   *
-   */
-  terms?: boolean;
-
-  /**
-   * Notice text — `richText`
-   *
-   *
-   */
-  termsText?: RichText;
 }
 
 /**

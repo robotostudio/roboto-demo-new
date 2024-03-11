@@ -8,6 +8,7 @@ import { PageParams } from '~/types';
 
 export const generateStaticParams = async () => {
   const [slugs, err] = await getAllSlugPagePaths();
+  console.log('🚀 ~ generateStaticParams ~ slugs:', slugs);
   if (err || !slugs) return [];
   return slugs.map((slug) => ({ slug: slug?.slug, locale: slug?.locale }));
 };

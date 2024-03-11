@@ -1,12 +1,11 @@
 'use client';
-import { FC, useState } from 'react';
-import { Form, FormFields, FormField as IFormField } from '~/schema';
-import { Input } from '../global/input';
-import { PortableRichTextNative } from '../global/richText';
-import { FormSubmitButton } from '../global/buttons';
-import { formBuilderResponseHandler } from '~/action/formspark';
-import { useFormState } from 'react-dom';
 import { CheckCircle } from 'lucide-react';
+import { FC, useState } from 'react';
+import { useFormState } from 'react-dom';
+import { formBuilderResponseHandler } from '~/action/formspark';
+import { Form, FormFields, FormField as IFormField } from '~/schema';
+import { FormSubmitButton } from '../global/buttons';
+import { Input } from '../global/input';
 
 export const INITIAL = {
   message: '',
@@ -21,10 +20,10 @@ type Wrapper = {
 
 const FormFieldWrapper: FC<Wrapper> = ({ field }) => {
   const { _type } = field ?? {};
-  if (_type === 'formField') {
-    return <FormField field={field as IFormField} />;
-  }
-  return <FormFieldRow {...(field as FormFields)} />;
+  // if (_type === 'formField') {
+  return <FormField field={field as IFormField} />;
+  // }
+  // return <FormFieldRow {...(field as FormFields)} />;
 };
 
 const FormFieldRow: FC<FormFields> = ({ fields }) => {
