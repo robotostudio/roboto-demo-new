@@ -1,11 +1,28 @@
 'use client';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Loader2 } from 'lucide-react';
 import { FC, useState } from 'react';
-import { useFormState } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 import { formBuilderResponseHandler } from '~/action/formspark';
-import { Form, FormFields, FormField as IFormField } from '~/schema';
-import { FormSubmitButton } from '../global/buttons';
+import { Form, FormField as IFormField } from '~/schema';
+
 import { Input } from '../global/input';
+import { Button, ButtonProps } from '../ui/button';
+
+export const FormSubmitButton: FC<ButtonProps> = ({ children, ...props }) => {
+  const { pending } = useFormStatus();
+  return (
+    <Button {...props} type="submit" disabled={pending || props.disabled}>
+      {pending ? (
+        <span className="flex items-center justify-center gap-2">
+          <Loader2 className="animate-spin" />
+          Submitting
+        </span>
+      ) : (
+        children
+      )}
+    </Button>
+  );
+};
 
 export const INITIAL = {
   message: '',
@@ -19,21 +36,21 @@ type Wrapper = {
 };
 
 const FormFieldWrapper: FC<Wrapper> = ({ field }) => {
-  const { _type } = field ?? {};
+  // const { _type } = field ?? {};
   // if (_type === 'formField') {
   return <FormField field={field as IFormField} />;
   // }
   // return <FormFieldRow {...(field as FormFields)} />;
 };
 
-const FormFieldRow: FC<FormFields> = ({ fields }) => {
-  return (
-    <div className="flex w-full gap-4">
-      {Array.isArray(fields) &&
-        fields.map((field) => <FormField field={field} key={field?._key} />)}
-    </div>
-  );
-};
+// const FormFieldRow: FC<FormFields> = ({ fields }) => {
+//   return (
+//     <div className="flex w-full gap-4">
+//       {Array.isArray(fields) &&
+//         fields.map((field) => <FormField field={field} key={field?._key} />)}
+//     </div>
+//   );
+// };
 
 const FormField: FC<{ field: IFormField }> = ({ field }) => {
   return <Input field={field} />;

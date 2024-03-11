@@ -1,10 +1,8 @@
+import Link from 'next/link';
 import { ComponentPropsWithoutRef, FC } from 'react';
+import { cn } from '~/lib/utils';
 import { SanityButtons } from '~/types';
 import { Button, ButtonProps } from '../ui/button';
-import Link from 'next/link';
-import { cn } from '~/lib/utils';
-import { useFormStatus } from 'react-dom';
-import { Loader2 } from 'lucide-react';
 
 export type ButtonsProps = {
   buttons?: SanityButtons;
@@ -30,21 +28,5 @@ export const Buttons: FC<ButtonsProps> = ({
         </Link>
       ))}
     </div>
-  );
-};
-
-export const FormSubmitButton: FC<ButtonProps> = ({ children, ...props }) => {
-  const { pending } = useFormStatus();
-  return (
-    <Button {...props} type="submit" disabled={pending || props.disabled}>
-      {pending ? (
-        <span className="flex items-center justify-center gap-2">
-          <Loader2 className="animate-spin" />
-          Submitting
-        </span>
-      ) : (
-        children
-      )}
-    </Button>
   );
 };

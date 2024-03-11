@@ -1,4 +1,3 @@
-'use client';
 import { FC } from 'react';
 import { PageBuilder } from '~/schema';
 import { HeroBlock, CtaBlock } from '../blocks';
