@@ -20,16 +20,16 @@ export const form = defineType({
     defineField({
       name: 'fields',
       type: 'array',
-      of: [{ type: 'formFields' }, { type: 'formField' }],
+      of: [{ type: 'formField' }],
     }),
     defineField({ name: 'buttonText', type: 'string' }),
-    defineField({ name: 'terms', type: 'boolean', initialValue: false }),
-    defineField({
-      name: 'termsText',
-      title: 'Notice text',
-      type: 'richText',
-      hidden: ({ parent }) => !parent.terms,
-    }),
+    // defineField({ name: 'terms', type: 'boolean', initialValue: false }),
+    // defineField({
+    //   name: 'termsText',
+    //   title: 'Notice text',
+    //   type: 'richText',
+    //   hidden: ({ parent }) => !parent.terms,
+    // }),
   ],
   preview: {
     select: {

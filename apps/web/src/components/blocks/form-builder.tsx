@@ -44,8 +44,6 @@ export const FormBuilderBlock: FC<Form> = ({
   fields,
   title,
   formId,
-  termsText,
-  terms,
   buttonText = 'Submit',
 }) => {
   const _action = formBuilderResponseHandler.bind(null, formId ?? '');
@@ -73,7 +71,6 @@ export const FormBuilderBlock: FC<Form> = ({
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           {title}
         </h2>
-        {/* <p className="mt-2 text-lg leading-8 text-gray-600">{description}</p> */}
       </div>
 
       <form
@@ -85,30 +82,34 @@ export const FormBuilderBlock: FC<Form> = ({
             <FormFieldWrapper field={field} key={field?._key} />
           ))}
 
-        {terms && (
-          <div className="mt-4 flex gap-x-3">
-            <div className="flex h-6 items-center">
-              <input
-                id="policy"
-                name="policy"
-                onChange={() => {
-                  setTcCheck(!tcCheck);
-                }}
-                type="checkbox"
-                className="text-hotpink-500 focus:ring-hotpink-500 h-4 w-4 rounded border-gray-300"
-              />
-              <span className="ml-1 inline-block text-red-600">*</span>
-            </div>
-            <label className="flex text-sm leading-6" htmlFor="policy">
-              <div className="inline-block text-sm">
-                <PortableRichTextNative value={termsText} />
-              </div>
-            </label>
+        <div className="mt-4 flex gap-x-3">
+          <div className="flex h-6 items-center">
+            <input
+              id="policy"
+              name="policy"
+              onChange={() => {
+                setTcCheck(!tcCheck);
+              }}
+              type="checkbox"
+              className="text-hotpink-500 focus:ring-hotpink-500 h-4 w-4 rounded border-gray-300"
+            />
+            <span className="ml-1 inline-block text-red-600">*</span>
           </div>
-        )}
-        <FormSubmitButton disabled={terms ? !tcCheck : false}>
-          {buttonText}
-        </FormSubmitButton>
+          <label className="flex text-sm leading-6" htmlFor="policy">
+            <div className="inline-block text-sm">
+              <span className="block font-bold">
+                I agree to receive other communications.
+              </span>
+              <span>
+                You can unsubscribe from these communications at any time. For
+                more information on how to unsubscribe, our privacy practices,
+                and how we are committed to protecting and respecting your
+                privacy
+              </span>
+            </div>
+          </label>
+        </div>
+        <FormSubmitButton disabled={!tcCheck}>{buttonText}</FormSubmitButton>
       </form>
     </div>
   );
