@@ -20,6 +20,7 @@ import {
 } from 'sanity/structure';
 import { SchemaType, SingletonType } from './schemaTypes';
 import { getTitleCase } from './utils/helper';
+import { PreviewIFrame } from './components/preview';
 
 type Base<T = SchemaType> = {
   type: T;
@@ -27,6 +28,8 @@ type Base<T = SchemaType> = {
   title?: string;
   icon?: LucideIcon;
 };
+
+const previewTypes = ['page', 'blog', 'mainPage'];
 
 type CreateSingleTon = {
   S: StructureBuilder;
@@ -43,7 +46,15 @@ const createSingleTon = ({ S, type, title, icon }: CreateSingleTon) => {
     .title(newTitle)
     .icon(icon ?? File)
     .child(
-      S.document().views([S.view.form()]).schemaType(type).documentId(type),
+      S.document()
+        .views([
+          S.view.form(),
+          ...(previewTypes.includes(type)
+            ? [S.view.component(PreviewIFrame).options({}).title('Preview')]
+            : []),
+        ])
+        .schemaType(type)
+        .documentId(type),
     );
 };
 
@@ -114,7 +125,10 @@ const createList = ({ S, type, icon, title }: CreateList) => {
     .icon(icon ?? File);
 };
 
-export const structure = (S: StructureBuilder, context: StructureResolverContext) =>
+export const structure = (
+  S: StructureBuilder,
+  context: StructureResolverContext,
+) =>
   S.list()
     .title('Content')
     .items([
@@ -140,8 +154,16 @@ export const structure = (S: StructureBuilder, context: StructureResolverContext
       }),
     ]);
 
-export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, context) =>
-  S.document().views([
+export const defaultDocumentNode: DefaultDocumentNodeResolver = (
+  S,
+  context,
+) => {
+  const { schemaType } = context ?? {};
+
+  return S.document().views([
     S.view.form(),
-    // S.view.component(PreviewIFrame).options({ context }).title('Preview'),
+    ...(previewTypes.includes(schemaType)
+      ? [S.view.component(PreviewIFrame).options({ context }).title('Preview')]
+      : []),
   ]);
+};
