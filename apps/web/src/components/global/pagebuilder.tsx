@@ -1,6 +1,8 @@
+'use client';
 import { FC } from 'react';
 import { PageBuilder } from '~/schema';
 import { HeroBlock, CtaBlock } from '../blocks';
+import { SplitFormBlock } from '../blocks/split-form';
 
 export type PageBuilderBlockProps = {
   pageBuilder?: PageBuilder;
@@ -12,6 +14,7 @@ type BlockTypeKeys = PageBuilder[number]['_type'];
 const Blocks: Record<BlockTypeKeys, FC<any>> = {
   hero: HeroBlock,
   cta: CtaBlock,
+  splitForm: SplitFormBlock,
 };
 
 const BlockNotFound: FC<{ _type: string }> = ({ _type }) => {

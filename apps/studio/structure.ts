@@ -111,10 +111,7 @@ const createList = ({ S, type, icon, title }: CreateList) => {
     .icon(icon ?? File);
 };
 
-export const structure = (
-  S: StructureBuilder,
-  context: StructureResolverContext,
-) =>
+export const structure = (S: StructureBuilder, context: StructureResolverContext) =>
   S.list()
     .title('Content')
     .items([
@@ -127,6 +124,7 @@ export const structure = (
         index: { type: 'blogIndex' },
         list: { type: 'blog' },
       }),
+      createList({ S, type: 'form' }),
       S.divider(),
       createNestedList({
         S,

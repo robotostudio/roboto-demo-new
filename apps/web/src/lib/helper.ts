@@ -21,6 +21,18 @@ export async function handleErrors<T>(
   }
 }
 
+export const extractFormData = (data: FormData) => {
+  const raw: any = {};
+  data.forEach((val, key) => {
+    console.log('args', val, key);
+    if (!key.startsWith('$')) {
+      raw[key] = val;
+    }
+  });
+  return raw;
+};
+
+
 export const getLocalizedSlug = (
   slug: string,
   locale: Locale,

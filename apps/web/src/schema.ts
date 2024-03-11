@@ -320,6 +320,71 @@ export interface Faq extends SanityDocument {
 }
 
 /**
+ * form
+ *
+ *
+ */
+export interface Form extends SanityDocument {
+  _type: 'form';
+
+  /**
+   * label — `string`
+   *
+   *
+   */
+  label?: string;
+
+  /**
+   * title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * FormSpark Form Id — `string`
+   *
+   *
+   */
+  formId?: string;
+
+  /**
+   * language — `string`
+   *
+   *
+   */
+  language?: string;
+
+  /**
+   * fields — `array`
+   *
+   *
+   */
+  fields?: Array<SanityKeyed<FormFields> | SanityKeyed<FormField>>;
+
+  /**
+   * buttonText — `string`
+   *
+   *
+   */
+  buttonText?: string;
+
+  /**
+   * terms — `boolean`
+   *
+   *
+   */
+  terms?: boolean;
+
+  /**
+   * Notice text — `richText`
+   *
+   *
+   */
+  termsText?: RichText;
+}
+
+/**
  * blogIndex
  *
  *
@@ -618,7 +683,9 @@ export interface Logo extends SanityDocument {
   };
 }
 
-export type PageBuilder = Array<SanityKeyed<Hero> | SanityKeyed<Cta>>;
+export type PageBuilder = Array<
+  SanityKeyed<Hero> | SanityKeyed<Cta> | SanityKeyed<SplitForm>
+>;
 
 export type NavLink = {
   _type: 'navLink';
@@ -778,6 +845,106 @@ export type RichText = Array<
     }>
 >;
 
+export type FormField = {
+  _type: 'formField';
+  /**
+   * Required — `boolean`
+   *
+   *
+   */
+  required?: boolean;
+
+  /**
+   * Field Name — `string`
+   *
+   *
+   */
+  fieldName?: string;
+
+  /**
+   * Placeholder — `string`
+   *
+   *
+   */
+  placeholder?: string;
+
+  /**
+   * fieldId — `string`
+   *
+   *
+   */
+  fieldId?: string;
+
+  /**
+   * Input Type — `string`
+   *
+   *
+   */
+  inputType?: 'text' | 'email' | 'phone' | 'textArea' | 'file' | 'checkbox';
+
+  /**
+   * checkboxFields — `object`
+   *
+   *
+   */
+  checkboxFields?: {
+    _type: 'checkboxFields';
+    /**
+     * checkboxTitle — `string`
+     *
+     *
+     */
+    checkboxTitle?: string;
+
+    /**
+     * items — `array`
+     *
+     *
+     */
+    items?: Array<
+      SanityKeyed<{
+        /**
+         * Required — `boolean`
+         *
+         *
+         */
+        required?: boolean;
+
+        /**
+         * label — `string`
+         *
+         *
+         */
+        label?: string;
+
+        /**
+         * description — `string`
+         *
+         *
+         */
+        description?: string;
+
+        /**
+         * value — `string`
+         *
+         *
+         */
+        value?: string;
+      }>
+    >;
+  };
+};
+
+export type FormFields = {
+  _type: 'formFields';
+  /**
+   * fields — `array`
+   *
+   * This is a way of bundling multiple form fields together
+   */
+  fields?: Array<SanityKeyed<FormField>>;
+};
+
 export type Hero = {
   _type: 'hero';
   /**
@@ -826,10 +993,47 @@ export type Cta = {
   subtitle?: string;
 };
 
+export type SplitForm = {
+  _type: 'splitForm';
+  /**
+   * title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * description — `string`
+   *
+   *
+   */
+  description?: string;
+
+  /**
+   * form — `reference`
+   *
+   *
+   */
+  form?: SanityReference<Form>;
+
+  /**
+   * Image — `image`
+   *
+   *
+   */
+  image?: {
+    _type: 'image';
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+};
+
 export type Documents =
   | Page
   | Blog
   | Faq
+  | Form
   | BlogIndex
   | MainPage
   | Navbar

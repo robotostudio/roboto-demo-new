@@ -1,5 +1,6 @@
 import { groq } from 'next-sanity';
 import { Locale } from '~/config';
+import { pageBuilder } from '~/lib/sanity/fragment';
 import { PageBuilder } from '~/schema';
 
 export const getSlugPageDataQuery = groq`
@@ -7,7 +8,7 @@ export const getSlugPageDataQuery = groq`
     title,
     content,
     "slug":slug.current,
-    pageBuilder
+    ${[pageBuilder].join(',')}
 }
 `;
 

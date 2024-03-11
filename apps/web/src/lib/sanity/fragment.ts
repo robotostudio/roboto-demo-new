@@ -78,5 +78,11 @@ export const dropDownLink = extent('columns', true, [button, extractIcon]);
 
 export const links = extent('links', true, [button, dropDownLink]);
 
-export const pageBuilder = extent('pageBuilder', true, [buttons, richText]);
+export const form = refExtend('form', false, []);
+
+export const pageBuilder = extent('pageBuilder', true, [
+  buttons,
+  richText,
+  form,
+]);
 

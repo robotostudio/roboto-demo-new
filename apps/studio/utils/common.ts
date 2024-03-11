@@ -1,5 +1,6 @@
 import { defineField } from 'sanity';
 import { CONST } from './constant';
+import { CustomSlugField } from '../components/custom-slug-field';
 
 export const languageField = defineField({
   initialValue: () => 'en-GB',
@@ -24,7 +25,6 @@ export const pageBuilderField = defineField({
   type: 'pageBuilder',
 });
 
-
 export const buttonsField = defineField({
   name: 'buttons',
   type: 'array',
@@ -35,3 +35,20 @@ export const richTextField = defineField({
   name: 'richText',
   type: 'richText',
 });
+
+type Props = Pick<
+  Parameters<typeof defineField>['0'],
+  'name' | 'initialValue' | 'group' | 'title'
+>;
+
+export const customSlugField = ({ name, ...props }: Props) =>
+  defineField({
+    name,
+    type: 'string',
+    validation: (rule) => rule.required(),
+    components: {
+      input: CustomSlugField,
+    },
+    ...props,
+  });
+

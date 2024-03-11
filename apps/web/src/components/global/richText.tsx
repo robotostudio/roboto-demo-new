@@ -80,3 +80,20 @@ export const RichText: FC<PortableRichTextProps> = ({ value }) => {
     </div>
   );
 };
+
+
+
+export const PortableRichTextNative: FC<PortableRichTextProps> = ({
+  value,
+}) => {
+  if (!Array.isArray(value)) return <></>;
+  return (
+    <PortableText
+      onMissingComponent={(...args) => {
+        console.log('missing components', args);
+      }}
+      components={nativeComponents}
+      value={value}
+    />
+  );
+};
