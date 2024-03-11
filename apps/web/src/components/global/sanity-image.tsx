@@ -31,12 +31,11 @@ export const getImageBlurProps = (image?: SanityImageProp) => {
 
 export const SanityImage: FC<{
   image?: SanityImageProp;
-  caption?: boolean;
   className?: string;
   options?: Omit<ImageProps, 'className' | 'src' | 'width' | 'height'>;
   width?: number;
   height?: number;
-}> = ({ image, className, options, height, width, caption = false }) => {
+}> = ({ image, className, options, height, width }) => {
   if (!image?.asset) return <></>;
 
   const dimension = getDimension(image, width, height);

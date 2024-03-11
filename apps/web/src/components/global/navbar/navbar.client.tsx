@@ -95,15 +95,9 @@ export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
   const { buttons, links, logo } = data ?? {};
   return (
     <nav className="grid grid-cols-3  bg-purple-300 p-4">
-      <div className="flex items-center">
+      <div className="flex items-center ">
         <Link href="/">
-          <Image
-            src={logo}
-            alt="logo"
-            width={70}
-            height={40}
-            className="h-10 w-16"
-          />
+          <Image src={logo} alt="logo" width={80} height={40} />
         </Link>
       </div>
       <div className="flex items-center justify-center">

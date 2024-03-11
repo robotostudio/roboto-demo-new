@@ -44,10 +44,13 @@ export const coalesceConditions = (key: string, inputs: string[]) => {
 
 export const internal = groq`internal->slug.current`;
 
-export const extractLink = coalesceConditions('href', [
-  'internal->slug.current',
-  'external',
-]);
+
+
+export const extractLink = groq`"href": select(
+  type== "internal"=>internal->slug.current,
+  type== "external"=>external,
+  "#"
+  )`;
 
 export const button = extent(
   'url',

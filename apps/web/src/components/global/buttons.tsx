@@ -21,7 +21,11 @@ export const Buttons: FC<ButtonsProps> = ({
       className={cn('flex w-full items-center gap-4', wrapperProps?.className)}
     >
       {buttons.map((button) => (
-        <Link href={button.url.href} key={button._key}>
+        <Link
+          href={button.url.href}
+          key={button._key}
+          target={button.url.openInNewTab ? '_blank' : '_self'}
+        >
           <Button key={button._key} {...props} variant={button?.variant}>
             {button.buttonText}
           </Button>

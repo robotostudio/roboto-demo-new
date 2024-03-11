@@ -304,22 +304,6 @@ export interface Blog extends SanityDocument {
 }
 
 /**
- * faq
- *
- *
- */
-export interface Faq extends SanityDocument {
-  _type: 'faq';
-
-  /**
-   * question — `string`
-   *
-   *
-   */
-  question?: string;
-}
-
-/**
  * form
  *
  *
@@ -670,7 +654,10 @@ export interface Logo extends SanityDocument {
 }
 
 export type PageBuilder = Array<
-  SanityKeyed<Hero> | SanityKeyed<Cta> | SanityKeyed<SplitForm>
+  | SanityKeyed<Hero>
+  | SanityKeyed<Cta>
+  | SanityKeyed<SplitForm>
+  | SanityKeyed<ImageCarousel>
 >;
 
 export type NavLink = {
@@ -1015,10 +1002,69 @@ export type SplitForm = {
   };
 };
 
+export type ImageCarousel = {
+  _type: 'imageCarousel';
+  /**
+   * eyebrow — `string`
+   *
+   *
+   */
+  eyebrow?: string;
+
+  /**
+   * title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * richText — `richText`
+   *
+   *
+   */
+  richText?: RichText;
+
+  /**
+   * buttons — `array`
+   *
+   *
+   */
+  buttons?: Array<SanityKeyed<Button>>;
+
+  /**
+   * carousel — `array`
+   *
+   *
+   */
+  carousel?: Array<SanityKeyed<CarouselField>>;
+};
+
+export type CarouselField = {
+  _type: 'carouselField';
+  /**
+   * image — `image`
+   *
+   *
+   */
+  image?: {
+    _type: 'image';
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+
+  /**
+   * caption — `string`
+   *
+   *
+   */
+  caption?: string;
+};
+
 export type Documents =
   | Page
   | Blog
-  | Faq
   | Form
   | BlogIndex
   | MainPage
