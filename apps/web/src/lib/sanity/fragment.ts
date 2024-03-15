@@ -44,8 +44,6 @@ export const coalesceConditions = (key: string, inputs: string[]) => {
 
 export const internal = groq`internal->slug.current`;
 
-
-
 export const extractLink = groq`"href": select(
   type== "internal"=>internal->slug.current,
   type== "external"=>external,
@@ -62,7 +60,6 @@ export const button = extent(
 export const extractIcon = extent('icon', false, ['svg'], false);
 
 export const buttons = extent('buttons', true, [button, extractIcon]);
-
 
 export const customLink = extent(
   'customLink',
@@ -88,4 +85,3 @@ export const pageBuilder = extent('pageBuilder', true, [
   richText,
   form,
 ]);
-

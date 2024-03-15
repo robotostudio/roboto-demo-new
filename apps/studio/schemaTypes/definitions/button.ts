@@ -11,7 +11,12 @@ export const button = defineType({
       name: 'variant',
       type: 'string',
       initialValue: () => 'default',
-      options: createRadioListLayout(['default', 'outline', 'link']),
+      options: createRadioListLayout([
+        'default',
+        'secondary',
+        'outline',
+        'link',
+      ]),
     }),
     iconField,
     defineField({

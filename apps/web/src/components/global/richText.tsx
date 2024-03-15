@@ -7,6 +7,7 @@ import {
 } from '@portabletext/react';
 import Link from 'next/link';
 import { FC } from 'react';
+import { cn } from '~/lib/utils';
 import { ProcessedUrl } from '~/types';
 
 export const CustomLinkResolver: FC<
@@ -64,12 +65,18 @@ const nativeComponents: PortableTextReactComponents = {
 
 type PortableRichTextProps = {
   value?: PortableTextProps['value'];
+  className?: string; // Added className prop
 };
 
-export const RichText: FC<PortableRichTextProps> = ({ value }) => {
+export const RichText: FC<PortableRichTextProps> = ({ value, className }) => {
   if (!Array.isArray(value)) return <></>;
   return (
-    <div className="prose-lg prose-slate prose-invert prose-headings:scroll-m-24 prose-headings:font-bold prose-headings:text-opacity-90 prose-p:text-opacity-80 prose-a:underline prose-a:decoration-dotted  prose-ol:list-decimal prose-ol:text-opacity-80 prose-ul:list-disc prose-ul:text-opacity-80">
+    <div
+      className={cn(
+        `prose-lg prose-slate prose-headings:scroll-m-24 prose-headings:font-bold prose-headings:text-opacity-90 prose-p:text-opacity-80 prose-a:underline prose-a:decoration-dotted  prose-ol:list-decimal prose-ol:text-opacity-80 prose-ul:list-disc prose-ul:text-opacity-80`,
+        className,
+      )}
+    >
       <PortableText
         onMissingComponent={(_args, { type }) => {
           console.log('missing components', type);
@@ -81,19 +88,22 @@ export const RichText: FC<PortableRichTextProps> = ({ value }) => {
   );
 };
 
-
-
 export const PortableRichTextNative: FC<PortableRichTextProps> = ({
   value,
+  className, // Added className prop
 }) => {
   if (!Array.isArray(value)) return <></>;
   return (
-    <PortableText
-      onMissingComponent={(...args) => {
-        console.log('missing components', args);
-      }}
-      components={nativeComponents}
-      value={value}
-    />
+    <div className={className}>
+      {' '}
+      {/* Wrapped PortableText in a div with className */}
+      <PortableText
+        onMissingComponent={(...args) => {
+          console.log('missing components', args);
+        }}
+        components={nativeComponents}
+        value={value}
+      />
+    </div>
   );
 };

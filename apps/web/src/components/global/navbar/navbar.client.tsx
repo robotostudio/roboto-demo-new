@@ -94,17 +94,10 @@ export const NavItem: FC<{ data: NavbarLink }> = ({ data }) => {
 export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
   const { buttons, links, logo } = data ?? {};
   return (
-    <nav className="grid grid-cols-3  bg-purple-300 p-4">
+    <nav className="grid grid-cols-3 bg-white bg-opacity-90  p-4 backdrop-blur-2xl">
       <div className="flex items-center ">
         <Link href="/">
-          <Image
-            src={logo}
-            alt="logo"
-            width={80}
-            height={40}
-            priority
-            className="aspect-video"
-          />
+          <Image src={logo} alt="logo" width={80} height={40} priority />
         </Link>
       </div>
       <div className="flex items-center justify-center">

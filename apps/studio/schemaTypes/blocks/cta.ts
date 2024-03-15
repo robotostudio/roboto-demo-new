@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity';
 import { blockPreview } from '../../utils/helper';
 import { PhoneForwarded } from 'lucide-react';
+import { buttonsField, richTextField } from '../../utils/common';
 
 export const cta = defineType({
   name: 'cta',
@@ -11,10 +12,8 @@ export const cta = defineType({
       name: 'title',
       type: 'string',
     }),
-    defineField({
-      name: 'subtitle',
-      type: 'string',
-    }),
+    richTextField,
+    buttonsField,
   ],
   preview: blockPreview('cta'),
 });
