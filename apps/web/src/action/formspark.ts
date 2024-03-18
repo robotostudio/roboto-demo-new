@@ -1,6 +1,6 @@
 'use server';
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { extractFormData } from '~/lib/helper';
 
 export async function formBuilderResponseHandler<T>(
@@ -17,11 +17,26 @@ export async function formBuilderResponseHandler<T>(
   }
 
   const extractData = extractFormData(form);
-
-  await axios.post(`https://submit-form.com/${formId}`, {
-    ...extractData,
-    type: 'formBuilderResponse',
-  });
+  try {
+    await axios.post(`https://submit-form.com/${formId}`, {
+      ...extractData,
+      type: 'formBuilderResponse',
+    });
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      console.log('🚀 ~ err:', err?.message);
+      return {
+        message: JSON.stringify(err.response?.data) ?? 'Something went wrong',
+        hasError: true,
+        isComplete: false,
+      };
+    }
+    return {
+      message: 'Something Went Wrong',
+      hasError: true,
+      isComplete: false,
+    };
+  }
 
   return { message: 'done', hasError: false, isComplete: true };
 }
