@@ -66,7 +66,7 @@ export const getMetaData = (data: any): Metadata => {
       url: getPageUrl(slug?.current),
     },
   };
-  console.log('🚀 ~ getMetaData ~ metadata:', metadata);
+  // console.log('🚀 ~ getMetaData ~ metadata:', metadata);
 
   return metadata;
 };
