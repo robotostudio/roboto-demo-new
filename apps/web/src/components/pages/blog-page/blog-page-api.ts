@@ -12,7 +12,7 @@ import { SanityImage } from '~/types';
 
 export const getBlogIndexData = async (locale: Locale) => {
   return await handleErrors(
-    sanityFetch({
+    sanityFetch<GetBlogIndexDataQuery>({
       query: getBlogIndexDataQuery,
       params: { locale },
     }),
@@ -51,7 +51,7 @@ export type GetBlogIndexDataQuery = {
 
 export const getBlogPageData = async (slug: string, locale: Locale) => {
   return await handleErrors(
-    sanityFetch({
+    sanityFetch<GetBlogPageDataQueryResponse>({
       query: getBlogPageDataQuery,
       params: { slug: getLocalizedSlug(slug, locale, 'blog'), locale },
     }),

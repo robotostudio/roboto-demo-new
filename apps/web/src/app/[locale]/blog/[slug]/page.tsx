@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import LiveQuery from 'next-sanity/preview/live-query';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
@@ -11,6 +12,7 @@ import {
 import { BlogSlugPageClient } from '~/components/pages/blog-page/blog-page-client';
 import { Locale } from '~/config';
 import { getLocalizedSlug } from '~/lib/helper';
+import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
 
 export const generateStaticParams = async () => {
@@ -24,6 +26,14 @@ export const generateStaticParams = async () => {
     }
   });
   return paths;
+};
+
+export const generateMetadata = async ({
+  params,
+}: PageParams<{ slug: string }>): Promise<Metadata> => {
+  const [data, err] = await getBlogPageData(params.slug, params.locale);
+  if (!data || err) return {};
+  return getMetaData(data);
 };
 
 export default async function SlugPage({
