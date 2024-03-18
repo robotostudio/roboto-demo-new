@@ -5,12 +5,16 @@ import { FormBuilderBlock } from './form-builder';
 
 export type SplitFormBlockProps = Omit<SplitForm, 'form'> & { form: Form };
 
-export const SplitFormBlock: FC<SplitFormBlockProps> = ({ form, image, title }) => {
+export const SplitFormBlock: FC<SplitFormBlockProps> = ({
+  form,
+  image,
+  title,
+}) => {
   return (
     <section className="flex items-center justify-center">
       <div className="grid max-w-6xl grid-cols-2 place-items-center">
         <div>
-          <SanityImage image={image} className="aspect-video" />
+          <SanityImage image={image} />
         </div>
         <div className="flex items-center justify-center">
           <FormBuilderBlock {...form} title={title} />

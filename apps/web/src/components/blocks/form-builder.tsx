@@ -109,13 +109,14 @@ export const FormBuilderBlock: FC<Form> = ({
               type="checkbox"
               className="text-hotpink-500 focus:ring-hotpink-500 h-4 w-4 rounded border-gray-300"
             />
-            <span className="ml-1 inline-block text-red-600">*</span>
           </div>
           <label className="flex text-sm leading-6" htmlFor="policy">
             <div className="inline-block text-sm">
               <span className="block font-bold">
                 I agree to receive other communications.
+                <span className="ml-1 inline-block text-red-600">*</span>
               </span>
+
               <span>
                 You can unsubscribe from these communications at any time. For
                 more information on how to unsubscribe, our privacy practices,

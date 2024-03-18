@@ -959,11 +959,18 @@ export type Cta = {
   title?: string;
 
   /**
-   * subtitle — `string`
+   * richText — `richText`
    *
    *
    */
-  subtitle?: string;
+  richText?: RichText;
+
+  /**
+   * buttons — `array`
+   *
+   *
+   */
+  buttons?: Array<SanityKeyed<Button>>;
 };
 
 export type SplitForm = {
