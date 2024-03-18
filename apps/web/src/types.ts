@@ -40,20 +40,22 @@ export type SanityButton = {
 
 export type SanityButtons = Array<SanityButton>;
 
-export type NavbarLink =
-  | (Omit<NavLink, 'url'> & {
-      _key: string;
-      url: ProcessedUrl;
-    })
-  | (Omit<NavDropdownColumn, 'columns'> & {
-      _key: string;
-      columns: Array<
-        Omit<SanityButton, 'buttonText'> & {
-          description?: string;
-          title: string;
-        }
-      >;
-    });
+export type NavLinkExt = Omit<NavLink, 'url'> & {
+  _key: string;
+  url: ProcessedUrl;
+};
+
+export type NavDropdownColumnExt = Omit<NavDropdownColumn, 'columns'> & {
+  _key: string;
+  columns: Array<
+    Omit<SanityButton, 'buttonText'> & {
+      description?: string;
+      title: string;
+    }
+  >;
+};
+
+export type NavbarLink = NavLinkExt | NavDropdownColumnExt;
 
 export type NavbarLinks = Array<NavbarLink>;
 
