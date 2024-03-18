@@ -59,3 +59,8 @@ export type NavbarLinks = Array<NavbarLink>;
 
 export type SanityImage = NonNullable<Blog['image']>;
 
+
+export type SitemapProjection = {
+  _updatedAt: string;
+  slug: string;
+};
