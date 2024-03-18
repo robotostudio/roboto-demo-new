@@ -722,7 +722,7 @@ export type Button = {
    *
    *
    */
-  variant?: 'default' | 'outline' | 'link';
+  variant?: 'default' | 'secondary' | 'outline' | 'link';
 
   /**
    * Icon — `iconPicker`

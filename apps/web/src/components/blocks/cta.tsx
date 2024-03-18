@@ -3,8 +3,11 @@ import { Cta, SanityKeyed } from '~/schema';
 import Meteors from '../global/meteor';
 import { Buttons } from '../global/buttons';
 import { RichText } from '../global/richText';
+import { SanityButtons } from '~/types';
 
-export type CtaBlockProps = SanityKeyed<Cta>;
+export type CtaBlockProps = SanityKeyed<Cta> & {
+  buttons: SanityButtons;
+};
 
 export const CtaBlock: FC<CtaBlockProps> = ({ title, richText, buttons }) => {
   return (
