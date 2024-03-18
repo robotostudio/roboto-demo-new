@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef, FC } from 'react';
 import { cn } from '~/lib/utils';
 import { SanityButtons } from '~/types';
 import { Button, ButtonProps } from '../ui/button';
+import { SanityIcon } from './sanity-icon';
 
 export type ButtonsProps = {
   buttons?: SanityButtons;
@@ -15,6 +16,7 @@ export const Buttons: FC<ButtonsProps> = ({
   ...props
 }) => {
   if (!Array.isArray(buttons)) return <></>;
+
   return (
     <div
       {...wrapperProps}
@@ -28,6 +30,7 @@ export const Buttons: FC<ButtonsProps> = ({
               target={button.url.openInNewTab ? '_blank' : '_self'}
             >
               <Button key={button._key} {...props} variant={button?.variant}>
+                <SanityIcon icon={button.icon} fontSize={16} />
                 {button.buttonText}
               </Button>
             </Link>
