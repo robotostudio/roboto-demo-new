@@ -653,11 +653,35 @@ export interface Logo extends SanityDocument {
   };
 }
 
+/**
+ * Navbar
+ *
+ *
+ */
+export interface Footer extends SanityDocument {
+  _type: 'footer';
+
+  /**
+   * Title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * links — `array`
+   *
+   *
+   */
+  links?: Array<SanityKeyed<NavLink>>;
+}
+
 export type PageBuilder = Array<
   | SanityKeyed<Hero>
   | SanityKeyed<Cta>
   | SanityKeyed<SplitForm>
   | SanityKeyed<ImageCarousel>
+  | SanityKeyed<DynamicIntro>
 >;
 
 export type NavLink = {
@@ -1047,6 +1071,44 @@ export type ImageCarousel = {
   carousel?: Array<SanityKeyed<CarouselField>>;
 };
 
+export type DynamicIntro = {
+  _type: 'dynamicIntro';
+  /**
+   * title — `string`
+   *
+   *
+   */
+  title?: string;
+
+  /**
+   * paramKey — `string`
+   *
+   * The `paramKey` is the URL search parameter. For example, if the URL is `https://example.com?paramKey=value`, then `paramKey` is `value`.
+   */
+  paramKey?: string;
+
+  /**
+   * fallback — `string`
+   *
+   * This value will be used if the `paramKey` is not present in the URL
+   */
+  fallback?: string;
+
+  /**
+   * richText — `richText`
+   *
+   *
+   */
+  richText?: RichText;
+
+  /**
+   * buttons — `array`
+   *
+   *
+   */
+  buttons?: Array<SanityKeyed<Button>>;
+};
+
 export type CarouselField = {
   _type: 'carouselField';
   /**
@@ -1076,7 +1138,8 @@ export type Documents =
   | BlogIndex
   | MainPage
   | Navbar
-  | Logo;
+  | Logo
+  | Footer;
 
 /**
  * This interface is a stub. It was referenced in your sanity schema but

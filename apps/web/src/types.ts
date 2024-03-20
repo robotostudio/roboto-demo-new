@@ -66,3 +66,11 @@ export type SitemapProjection = {
   _updatedAt: string;
   slug: string;
 };
+
+
+export type ProcessPageBuilderBlock<T> = T &
+  (T extends { buttons?: any }
+    ? { buttons?: SanityButtons }
+    : // eslint-disable-next-line @typescript-eslint/ban-types
+      {});
+

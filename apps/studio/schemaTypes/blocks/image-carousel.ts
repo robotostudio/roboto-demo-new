@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity';
 import { buttonsField, richTextField } from '../../utils/common';
 import { blockPreview } from '../../utils/helper';
+import { GalleryThumbnails } from 'lucide-react';
 
 export const carouselField = defineField({
   name: 'carouselField',
@@ -18,6 +19,7 @@ export const carouselField = defineField({
 export const imageCarousel = defineType({
   name: 'imageCarousel',
   type: 'object',
+  icon: GalleryThumbnails,
   fields: [
     defineField({ name: 'eyebrow', type: 'string' }),
     defineField({ name: 'title', type: 'string' }),

@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity';
 import { capitalize, createRadioListLayout } from '../../utils/helper';
 import { iconField } from '../../utils/common';
+import { preview } from 'sanity-plugin-icon-picker';
 
 export const button = defineType({
   name: 'button',
@@ -34,11 +35,20 @@ export const button = defineType({
     select: {
       title: 'buttonText',
       variant: 'variant',
+      icon: 'icon',
     },
-    prepare: ({ title, variant }) => {
+    prepare: ({ title, variant, icon }) => {
       return {
         title,
-        subtitle: `${capitalize(variant ?? 'default')} button`,
+        subtitle: `${capitalize(variant ?? 'default')} button ${
+          icon ? 'With Icon' : ''
+        }`,
+        media: icon
+          ? preview(icon)
+          : preview({
+              name: 'cursor-click',
+              provider: 'hi',
+            }),
       };
     },
   },
