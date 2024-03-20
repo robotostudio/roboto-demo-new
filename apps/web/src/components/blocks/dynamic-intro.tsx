@@ -1,11 +1,15 @@
 'use client';
 import { FC, Suspense } from 'react';
-import { SearchParamsText } from '../atoms/searchParamsText';
+// import { SearchParamsText } from '../atoms/searchParamsText';
 import { DynamicIntro } from '~/schema';
 import { ProcessPageBuilderBlock } from '~/types';
 import { RichText } from '../global/richText';
 import { Buttons } from '../global/buttons';
+import dynamic from 'next/dynamic';
 
+const SearchParamsText = dynamic(() =>
+  import('../atoms/searchParamsText').then((mod) => mod.SearchParamsText),
+);
 export type DynamicIntroBlockProps = ProcessPageBuilderBlock<DynamicIntro>;
 
 export const DynamicIntroBlock: FC<DynamicIntroBlockProps> = ({
@@ -32,14 +36,13 @@ export const DynamicIntroBlock: FC<DynamicIntroBlockProps> = ({
                   />
                 </Suspense>
               )}
-              |
-              <Suspense>
+              {/* <Suspense>
                 <SearchParamsText
                   param={'name'}
                   fallback={'Buddy'}
                   className=""
                 />
-              </Suspense>
+              </Suspense> */}
             </h2>
             <div className="max-w-4xl">
               <p className=" text-gray-500 dark:text-gray-400 md:text-xl/relaxed">
