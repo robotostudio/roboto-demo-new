@@ -12,20 +12,6 @@ export const dynamicIntro = defineField({
       name: 'title',
       type: 'string',
     }),
-    defineField({
-      name: 'paramKey',
-      type: 'string',
-      description:
-        'The `paramKey` is the URL search parameter. For example, if the URL is `https://example.com?paramKey=value`, then `paramKey` is `value`.',
-
-      validation: (r) => r.required(),
-    }),
-    defineField({
-      name: 'fallback',
-      description:
-        'This value will be used if the `paramKey` is not present in the URL',
-      type: 'string',
-    }),
     richTextField,
     buttonsField,
   ],

@@ -1,25 +1,17 @@
-'use client';
 import { FC, Suspense } from 'react';
-// import { SearchParamsText } from '../atoms/searchParamsText';
+import { SearchParamsText } from '../atoms/searchParamsText';
 import { DynamicIntro } from '~/schema';
 import { ProcessPageBuilderBlock } from '~/types';
 import { RichText } from '../global/richText';
 import { Buttons } from '../global/buttons';
-import dynamic from 'next/dynamic';
 
-const SearchParamsText = dynamic(() =>
-  import('../atoms/searchParamsText').then((mod) => mod.SearchParamsText),
-);
 export type DynamicIntroBlockProps = ProcessPageBuilderBlock<DynamicIntro>;
 
 export const DynamicIntroBlock: FC<DynamicIntroBlockProps> = ({
   buttons,
   richText,
   title,
-  fallback,
-  paramKey,
 }) => {
-  console.log('🚀 ~ fallback,paramKey,:', fallback, paramKey, title);
   return (
     <section>
       <div className="w-full py-6">
@@ -27,22 +19,13 @@ export const DynamicIntroBlock: FC<DynamicIntroBlockProps> = ({
           <div className="space-y-2 text-left">
             <h2 className="text-3xl font-bold tracking-tighter">
               Hey!{' '}
-              {paramKey && (
-                <Suspense>
-                  <SearchParamsText
-                    param={paramKey}
-                    fallback={fallback}
-                    className=""
-                  />
-                </Suspense>
-              )}
-              {/* <Suspense>
+              <Suspense>
                 <SearchParamsText
                   param={'name'}
                   fallback={'Buddy'}
                   className=""
                 />
-              </Suspense> */}
+              </Suspense>
             </h2>
             <div className="max-w-4xl">
               <p className=" text-gray-500 dark:text-gray-400 md:text-xl/relaxed">
