@@ -32,20 +32,20 @@ export default async function Page({ params }: PageParams) {
   const [data, err] = await getMainPageData(params.locale);
   if (!data || err) return notFound();
 
-const { isEnabled } = draftMode();
-if (isEnabled) {
-  return (
-    <LiveQuery
-      enabled
-      initialData={data}
-      query={getMainPageDataQuery}
-      params={{ locale: params.locale }}
-      as={MainPageComponentClient}
-    >
-      <MainPageComponent data={data} />
-    </LiveQuery>
-  );
-}
+  const { isEnabled } = draftMode();
+  if (isEnabled) {
+    return (
+      <LiveQuery
+        enabled
+        initialData={data}
+        query={getMainPageDataQuery}
+        params={{ locale: params.locale }}
+        as={MainPageComponentClient}
+      >
+        <MainPageComponent data={data} />
+      </LiveQuery>
+    );
+  }
 
   return <MainPageComponent data={data} />;
 }

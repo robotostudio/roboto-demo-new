@@ -17,6 +17,7 @@ import { cn } from '~/lib/utils';
 import { SanityIcon } from '../sanity-icon';
 import { Buttons } from '../buttons';
 import Image from 'next/image';
+import { useFeatureFlagVariantKey, usePostHog } from 'posthog-js/react';
 
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
@@ -93,6 +94,11 @@ export const NavItem: FC<{ data: NavbarLink }> = ({ data }) => {
 
 export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
   const { buttons, links, logo } = data ?? {};
+
+  // const feature = useFeatureFlagVariantKey('slug-page-redirect') ?? '';
+  // const posthog = usePostHog();
+  // console.log('🚀 ~ feature:', feature, posthog);
+
   return (
     <nav className="grid grid-cols-3 bg-white bg-opacity-90  p-4 backdrop-blur-2xl">
       <div className="flex items-center ">
