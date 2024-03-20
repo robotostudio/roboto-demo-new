@@ -15,7 +15,7 @@ export const DynamicIntroBlock: FC<DynamicIntroBlockProps> = ({
   fallback,
   paramKey,
 }) => {
-  console.log('🚀 ~ fallback,paramKey,:', fallback, paramKey);
+  console.log('🚀 ~ fallback,paramKey,:', fallback, paramKey, title);
   return (
     <section>
       <div className="w-full py-6">
@@ -23,10 +23,20 @@ export const DynamicIntroBlock: FC<DynamicIntroBlockProps> = ({
           <div className="space-y-2 text-left">
             <h2 className="text-3xl font-bold tracking-tighter">
               Hey!{' '}
+              {paramKey && (
+                <Suspense>
+                  <SearchParamsText
+                    param={paramKey}
+                    fallback={fallback}
+                    className=""
+                  />
+                </Suspense>
+              )}
+              |
               <Suspense>
                 <SearchParamsText
-                  param={paramKey}
-                  fallback={fallback}
+                  param={'name'}
+                  fallback={'Buddy'}
                   className=""
                 />
               </Suspense>
