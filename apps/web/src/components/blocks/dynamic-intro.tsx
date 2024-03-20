@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 import { SearchParamsText } from '../atoms/searchParamsText';
 import { DynamicIntro } from '~/schema';
 import { ProcessPageBuilderBlock } from '~/types';
@@ -19,7 +19,9 @@ export const DynamicIntroBlock: FC<DynamicIntroBlockProps> = ({
           <div className="space-y-2 text-left">
             <h2 className="text-3xl font-bold tracking-tighter">
               Hey!{' '}
-              <SearchParamsText param="name" fallback="Buddy" className="" />
+              <Suspense>
+                <SearchParamsText param="name" fallback="Buddy" className="" />
+              </Suspense>
             </h2>
             <div className="max-w-4xl">
               <p className=" text-gray-500 dark:text-gray-400 md:text-xl/relaxed">
