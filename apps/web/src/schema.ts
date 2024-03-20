@@ -1081,6 +1081,20 @@ export type DynamicIntro = {
   title?: string;
 
   /**
+   * paramKey — `string`
+   *
+   * The `paramKey` is the URL search parameter. For example, if the URL is `https://example.com?paramKey=value`, then `paramKey` is `value`.
+   */
+  paramKey?: string;
+
+  /**
+   * fallback — `string`
+   *
+   * This value will be used if the `paramKey` is not present in the URL
+   */
+  fallback?: string;
+
+  /**
    * richText — `richText`
    *
    *

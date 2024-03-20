@@ -11,6 +11,8 @@ export const DynamicIntroBlock: FC<DynamicIntroBlockProps> = ({
   buttons,
   richText,
   title,
+  fallback,
+  paramKey,
 }) => {
   return (
     <section>
@@ -20,7 +22,11 @@ export const DynamicIntroBlock: FC<DynamicIntroBlockProps> = ({
             <h2 className="text-3xl font-bold tracking-tighter">
               Hey!{' '}
               <Suspense>
-                <SearchParamsText param="name" fallback="Buddy" className="" />
+                <SearchParamsText
+                  param={paramKey}
+                  fallback={fallback}
+                  className=""
+                />
               </Suspense>
             </h2>
             <div className="max-w-4xl">
