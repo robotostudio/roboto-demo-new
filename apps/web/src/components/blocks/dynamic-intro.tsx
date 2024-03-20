@@ -1,3 +1,4 @@
+'use client';
 import { FC, Suspense } from 'react';
 import { SearchParamsText } from '../atoms/searchParamsText';
 import { DynamicIntro } from '~/schema';
@@ -14,6 +15,7 @@ export const DynamicIntroBlock: FC<DynamicIntroBlockProps> = ({
   fallback,
   paramKey,
 }) => {
+  console.log('🚀 ~ fallback,paramKey,:', fallback, paramKey);
   return (
     <section>
       <div className="w-full py-6">
