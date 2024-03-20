@@ -20,7 +20,9 @@ const Blocks: Record<BlockTypeKeys, FC<any>> = {
 };
 
 const BlockNotFound: FC<{ _type: string }> = ({ _type }) => {
-  return <div className="">Block Not Found : {_type}</div>;
+  return (
+    <div className="grid place-items-center">Block Not Found : {_type}</div>
+  );
 };
 
 export const PageBuilderBlock: FC<PageBuilderBlockProps> = ({

@@ -43,7 +43,6 @@ export const Buttons: FC<ButtonsProps> = ({
   ...props
 }) => {
   if (!Array.isArray(buttons)) return <></>;
-
   return (
     <div
       {...wrapperProps}
