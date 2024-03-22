@@ -17,6 +17,23 @@ import { cn } from '~/lib/utils';
 import { SanityIcon } from '../sanity-icon';
 import { Buttons } from '../buttons';
 import Image from 'next/image';
+import { useMediaQuery } from '~/lib/helper';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerPortal,
+  DrawerTitle,
+  DrawerTrigger,
+} from '~/components/ui/drawer';
+import { ChevronDownIcon, MenuIcon } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@radix-ui/react-accordion';
 
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
@@ -91,26 +108,95 @@ export const NavItem: FC<{ data: NavbarLink }> = ({ data }) => {
   );
 };
 
-export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
+export const MobileNav: FC<PageComponentProps<NavbarData>> = ({ data }) => {
   const { buttons, links, logo } = data ?? {};
   return (
-    <nav className="grid grid-cols-3 bg-white bg-opacity-90  p-4 backdrop-blur-2xl">
+    <>
+      <Drawer direction="right">
+        <DrawerTrigger>
+          <MenuIcon />
+        </DrawerTrigger>
+        <DrawerPortal>
+          <DrawerContent>
+            <DrawerHeader>
+              <Link href="/">
+                <Image src={logo} alt="logo" width={80} height={40} priority />
+              </Link>
+            </DrawerHeader>
+            <div className="mt-6 flex flex-col pl-4">
+              <NavigationMenu>
+                <NavigationMenuList className="flex flex-col items-start gap-4">
+                  {Array.isArray(links) &&
+                    links.map((link) =>
+                      link._type === 'navLink' ? (
+                        <Link href={link?.url?.href ?? '#'} className="!ml-0">
+                          {link.title}
+                        </Link>
+                      ) : (
+                        <Accordion type="single" collapsible className="!ml-0">
+                          <AccordionItem value={link._key}>
+                            <AccordionTrigger className="flex items-center gap-2">
+                              {link.title}{' '}
+                              <ChevronDownIcon className="h-4 w-4" />{' '}
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <ul className="ml-4 mt-4 flex flex-col items-start gap-4">
+                                {Array.isArray(link?.columns) &&
+                                  link.columns.map((column) => (
+                                    <li>
+                                      <Link href={column?.url?.href ?? '#'}>
+                                        {column.title}
+                                      </Link>
+                                    </li>
+                                  ))}
+                              </ul>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      ),
+                    )}
+                </NavigationMenuList>
+              </NavigationMenu>
+            </div>
+            <DrawerFooter className="flex">
+              <div className="flex">
+                <Buttons buttons={buttons} />
+              </div>
+            </DrawerFooter>
+          </DrawerContent>
+        </DrawerPortal>
+      </Drawer>
+    </>
+  );
+};
+
+export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
+  const { buttons, links, logo } = data ?? {};
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+  return (
+    <nav className="flex justify-between bg-white bg-opacity-90 p-4 backdrop-blur-2xl  md:grid md:grid-cols-3">
       <div className="flex items-center ">
         <Link href="/">
           <Image src={logo} alt="logo" width={80} height={40} priority />
         </Link>
       </div>
-      <div className="flex items-center justify-center">
-        <NavigationMenu>
-          <NavigationMenuList>
-            {Array.isArray(links) &&
-              links.map((link) => <NavItem data={link} key={link._key} />)}
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
-      <div className="ml-auto">
-        <Buttons buttons={buttons} />
-      </div>
+      {isDesktop ? (
+        <>
+          <div className="flex items-center justify-center">
+            <NavigationMenu>
+              <NavigationMenuList>
+                {Array.isArray(links) &&
+                  links.map((link) => <NavItem data={link} key={link._key} />)}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+          <div className="ml-auto">
+            <Buttons buttons={buttons} />
+          </div>
+        </>
+      ) : (
+        <MobileNav data={data} />
+      )}
     </nav>
   );
 };

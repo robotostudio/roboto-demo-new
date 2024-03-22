@@ -1,6 +1,7 @@
 import { getImageDimensions } from '@sanity/asset-utils';
 import { Locale } from '~/config';
 import { SanityImage } from '~/types';
+import * as React from 'react';
 
 export async function handleErrors<T>(
   promise: Promise<T>,
@@ -32,7 +33,6 @@ export const extractFormData = (data: FormData) => {
   return raw;
 };
 
-
 export const getLocalizedSlug = (
   slug: string,
   locale: Locale,
@@ -49,3 +49,21 @@ export const getImageDimensionProps = (image: NonNullable<SanityImage>) => {
     width,
   };
 };
+
+export function useMediaQuery(query: string) {
+  const [value, setValue] = React.useState(false);
+
+  React.useEffect(() => {
+    function onChange(event: MediaQueryListEvent) {
+      setValue(event.matches);
+    }
+
+    const result = matchMedia(query);
+    result.addEventListener('change', onChange);
+    setValue(result.matches);
+
+    return () => result.removeEventListener('change', onChange);
+  }, [query]);
+
+  return value;
+}
