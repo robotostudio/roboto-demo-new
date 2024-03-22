@@ -20,6 +20,7 @@ import Image from 'next/image';
 import { useMediaQuery } from '~/lib/helper';
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
@@ -27,7 +28,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/ui/drawer';
-import { ChevronDownIcon, MenuIcon } from 'lucide-react';
+import { ChevronDownIcon, MenuIcon, X } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -88,7 +89,13 @@ export const NavItem: FC<{ data: NavbarLink }> = ({ data }) => {
   }
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger>{title}</NavigationMenuTrigger>
+      <NavigationMenuTrigger
+        onPointerEnter={(e) => e.preventDefault()}
+        onPointerLeave={(e) => e.preventDefault()}
+        onPointerMove={(e) => e.preventDefault()}
+      >
+        {title}
+      </NavigationMenuTrigger>
       <NavigationMenuContent>
         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
           {Array.isArray(data?.columns) &&
@@ -113,15 +120,18 @@ export const MobileNav: FC<PageComponentProps<NavbarData>> = ({ data }) => {
   return (
     <>
       <Drawer direction="right">
-        <DrawerTrigger>
+        <DrawerTrigger className="md:hidden">
           <MenuIcon />
         </DrawerTrigger>
         <DrawerPortal>
           <DrawerContent>
-            <DrawerHeader>
+            <DrawerHeader className="flex justify-between">
               <Link href="/">
                 <Image src={logo} alt="logo" width={80} height={40} priority />
               </Link>
+              <DrawerClose>
+                <X />
+              </DrawerClose>
             </DrawerHeader>
             <div className="mt-6 flex flex-col pl-4">
               <NavigationMenu>
