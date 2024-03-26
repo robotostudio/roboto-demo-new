@@ -5,9 +5,8 @@ import { PageBuilderBlock } from '~/components/global/pagebuilder';
 
 export type SlugPageProps = PageComponentProps<GetSlugPageDataQueryResponse>;
 
-export const SlugPage: FC<SlugPageProps> = ({ data, ...props }, ...args) => {
-  console.log('🚀 ~ props:', props, args);
-  const { slug, title, pageBuilder } = data ?? {};
+export const SlugPage: FC<SlugPageProps> = ({ data }) => {
+  const { title, pageBuilder } = data ?? {};
   return (
     <main>
       <div>

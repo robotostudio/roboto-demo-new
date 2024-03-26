@@ -4,6 +4,7 @@ import {
   ClipboardType,
   File,
   FileText,
+  Footprints,
   HomeIcon,
   LucideIcon,
   Menu,
@@ -125,10 +126,7 @@ const createList = ({ S, type, icon, title }: CreateList) => {
     .icon(icon ?? File);
 };
 
-export const structure = (
-  S: StructureBuilder,
-  context: StructureResolverContext,
-) =>
+export const structure = (S: StructureBuilder, context: StructureResolverContext) =>
   S.list()
     .title('Content')
     .items([
@@ -149,6 +147,7 @@ export const structure = (
         icon: Settings,
         items: [
           createSingleTon({ S, type: 'navbar', icon: Menu }),
+          createSingleTon({ S, type: 'footer', icon: Footprints }),
           createSingleTon({ S, type: 'logo', icon: Building2 }),
         ],
       }),

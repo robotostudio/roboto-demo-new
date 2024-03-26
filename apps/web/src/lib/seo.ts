@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { ogImageDimensions, webConfig } from '~/config';
 
-// import { ImageProps } from '~/types';
 
 export const getPageUrl = (slug?: string) => `${webConfig.root}${slug ?? ''}`;
 
@@ -41,13 +40,11 @@ export const getMetaData = (data: any): Metadata => {
     id: _id,
   });
 
-  //   const faviconImage = getFaviconImage(icon);
-
   const metadata: Metadata = {
     title: meta.seoTitle,
     description: meta.seoDescription,
     metadataBase: new URL(webConfig.root),
-    creator: 'Roboto Studio',
+    creator: 'Roboto Studio Demo',
     authors: {
       name: 'Roboto',
     },
@@ -69,6 +66,7 @@ export const getMetaData = (data: any): Metadata => {
       url: getPageUrl(slug?.current),
     },
   };
+  // console.log('🚀 ~ getMetaData ~ metadata:', metadata);
 
   return metadata;
 };

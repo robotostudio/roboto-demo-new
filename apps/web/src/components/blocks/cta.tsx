@@ -4,6 +4,7 @@ import { SanityButtons } from '~/types';
 import Meteors from '../global/meteor';
 import { Buttons } from '../global/buttons';
 import { RichText } from '../global/richText';
+import { SanityButtons } from '~/types';
 
 export type CtaBlockProps = SanityKeyed<Cta> & {
   buttons: SanityButtons;

@@ -1,4 +1,3 @@
-'use client';
 import { FC } from 'react';
 import { PageComponentProps } from '~/types';
 import {
@@ -13,7 +12,7 @@ import Balancer from 'react-wrap-balancer';
 export type BlogIndexPageProps = PageComponentProps<GetBlogIndexDataQuery>;
 
 export const BlogIndexPage: FC<BlogIndexPageProps> = ({ data }) => {
-  const { blogs, seo } = data ?? {};
+  const { blogs } = data ?? {};
   return (
     <main>
       <BlogGrid blogs={blogs ?? []} />
@@ -42,7 +41,7 @@ export type BlogCardProps = { blog: GetBlogIndexDataQuery['blogs'][number] };
 export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
   const { title, image, slug, description } = blog ?? {};
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className="flex items-start justify-center gap-4 ">
       <Link href={slug}>
         {image && (
           <div className="relative flex items-center">
@@ -56,7 +55,7 @@ export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
             />
           </div>
         )}
-        <h2 className="mt-3 text-center">{title}</h2>
+        <h2 className="mt-3 text-center font-bold">{title}</h2>
         <p className="text-backgroundGray mx-auto mt-1 line-clamp-2 max-w-xs overflow-hidden text-center text-xs">
           {description}
         </p>
