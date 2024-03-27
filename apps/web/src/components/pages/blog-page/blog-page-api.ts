@@ -1,4 +1,3 @@
-import { groq } from 'next-sanity';
 import { Locale } from '~/config';
 import { getLocalizedSlug, handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
@@ -19,18 +18,18 @@ export const getBlogIndexData = async (locale: Locale) => {
   );
 };
 
-export const getBlogIndexDataQuery = groq`
+export const getBlogIndexDataQuery = `
 {
     "seo":*[_type == "blogIndex" && ${localeMatch}][0]{
         ...,
     },
     "blogs":*[_type == "blog" && ${localeMatch}]{
         ${[
-          groq`"_id":_id`,
+          `"_id":_id`,
           coalesceConditions('title', ['cardTitle', 'title']),
           coalesceConditions('description', ['cardDescription', 'description']),
           coalesceConditions('image', ['cardImage', 'image']),
-          groq`"slug":slug.current`,
+          `"slug":slug.current`,
         ].join(',')}
     }
 }
@@ -58,7 +57,7 @@ export const getBlogPageData = async (slug: string, locale: Locale) => {
   );
 };
 
-export const getBlogPageDataQuery = groq`
+export const getBlogPageDataQuery = `
 *[_type == "blog" && slug.current == $slug && ${localeMatch}][0]{
     ...,
     ${[richText].join(',')}
@@ -75,7 +74,7 @@ export const getAllBlogIndexTranslations = async () => {
   );
 };
 
-export const getAllBlogIndexTranslationsQuery = groq`
+export const getAllBlogIndexTranslationsQuery = `
 *[_type == "blogIndex"].language
 `;
 
@@ -87,7 +86,7 @@ export const getAllBlogsPaths = async () => {
   );
 };
 
-export const getAllBlogsPathsQuery = groq`
+export const getAllBlogsPathsQuery = `
 *[_type == "blog" && defined(slug.current) && !seoNoIndex]{
   "slug":slug.current,
   "locale":language
@@ -103,4 +102,3 @@ export const cleanBlogSlug = (str: string) => {
   const arr = str.split('/');
   return arr[arr.length - 1];
 };
-

@@ -1,4 +1,3 @@
-import { groq } from 'next-sanity';
 import { handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
 import { buttons, links } from '~/lib/sanity/fragment';
@@ -10,7 +9,7 @@ export const getNavbarData = async () => {
   );
 };
 
-export const getNavbarDataQuery = groq`
+export const getNavbarDataQuery = `
 *[_type == "navbar"][0]{
     _id,
     title,

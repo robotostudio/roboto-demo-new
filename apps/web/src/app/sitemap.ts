@@ -29,12 +29,6 @@ export const sitemapQuery = groq`
   _id
 }`;
 
-// const createConstPages = (arr: string[]): SitemapProjection[] => {
-//   return arr.map((doc) => ({
-//     _updatedAt: `${new Date()}`,
-//     slug: doc,
-//   }));
-// };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const client = getClient();

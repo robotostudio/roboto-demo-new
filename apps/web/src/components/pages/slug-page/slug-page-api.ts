@@ -1,11 +1,10 @@
-import { groq } from 'next-sanity';
 import { Locale } from '~/config';
 import { getLocalizedSlug, handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
 import { pageBuilder } from '~/lib/sanity/fragment';
 import { PageBuilder } from '~/schema';
 
-export const getSlugPageDataQuery = groq`
+export const getSlugPageDataQuery = `
 *[_type == "page" && slug.current == $slug ][0]{
     title,
     content,
@@ -20,7 +19,7 @@ export type GetSlugPageDataQueryResponse = {
   pageBuilder: PageBuilder;
 };
 
-export const getAllSlugPagePathsQuery = groq`
+export const getAllSlugPagePathsQuery = `
 *[_type == "page" && defined(slug.current) && !seoNoIndex]{
   "slug":string::split(slug.current,"/")[1],
   "locale":language

@@ -1,13 +1,11 @@
-import { groq } from 'next-sanity';
-
-export const localeMatch = groq`select(($locale == 'en-GB' || $locale == '' ) => 
+export const localeMatch = `select(($locale == 'en-GB' || $locale == '' ) => 
   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)`;
 
 export const refExtend = (
   name: string,
   isArray = false,
   ext: Array<string> = [],
-) => groq`
+) => `
   defined(${name})=>{
     ${name}${isArray ? '[]->' : '->'}{
       ...,
@@ -22,7 +20,7 @@ export const extent = (
   ext: Array<string> = [],
   spread = true,
 ) =>
-  groq`defined(${name})=>{${name}${isArray ? '[]' : ''}{${
+  `defined(${name})=>{${name}${isArray ? '[]' : ''}{${
     spread ? '...,' : ''
   } ${ext.join(',')}}}`;
 
@@ -32,19 +30,19 @@ export const selectConditions = (
   fallback?: unknown,
 ) => {
   const ifCondition = [
-    ...inputs.map((input) => groq`defined(${input})=>${input}`),
+    ...inputs.map((input) => `defined(${input})=>${input}`),
     JSON.stringify(fallback),
   ].join(',');
-  return groq`"${key}": select(${ifCondition})`;
+  return `"${key}": select(${ifCondition})`;
 };
 
 export const coalesceConditions = (key: string, inputs: string[]) => {
-  return groq`"${key}": coalesce(${inputs.join(',')})`;
+  return `"${key}": coalesce(${inputs.join(',')})`;
 };
 
-export const internal = groq`internal->slug.current`;
+export const internal = `internal->slug.current`;
 
-export const extractLink = groq`"href": select(
+export const extractLink = `"href": select(
   type== "internal"=>internal->slug.current,
   type== "external"=>external,
   "#"

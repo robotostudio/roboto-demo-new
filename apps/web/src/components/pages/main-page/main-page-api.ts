@@ -1,11 +1,10 @@
-import { groq } from 'next-sanity';
 import { Locale } from '~/config';
 import { handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
 import { localeMatch, pageBuilder } from '~/lib/sanity/fragment';
 import { PageBuilder } from '~/schema';
 
-export const getMainPageDataQuery = groq`
+export const getMainPageDataQuery = `
 *[_type == "mainPage" && ${localeMatch}][0]{
   ${['title', 'description', pageBuilder].join(',')}
 }
@@ -17,7 +16,7 @@ export type GetMainPageDataQueryResponse = {
   pageBuilder: PageBuilder;
 };
 
-export const getAllMainPageTranslationsQuery = groq`
+export const getAllMainPageTranslationsQuery = `
 *[_type == "mainPage"].language
 `;
 

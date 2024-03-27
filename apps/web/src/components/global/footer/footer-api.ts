@@ -1,4 +1,3 @@
-import { groq } from 'next-sanity';
 import { handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
 import { links } from '~/lib/sanity/fragment';
@@ -10,7 +9,7 @@ export const getFooterData = async () => {
   );
 };
 
-export const getFooterDataQuery = groq`
+export const getFooterDataQuery = `
 *[_type == "footer"][0]{
     _id,
     title,
