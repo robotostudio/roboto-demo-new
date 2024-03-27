@@ -1,7 +1,6 @@
 import { handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
-import { buttons, links } from '~/lib/sanity/fragment';
-import { NavbarLinks, SanityButtons } from '~/types';
+import { NavbarData, getNavbarDataQuery } from '~/lib/sanity/query';
 
 export const getNavbarData = async () => {
   return await handleErrors(
@@ -9,19 +8,3 @@ export const getNavbarData = async () => {
   );
 };
 
-export const getNavbarDataQuery = `
-*[_type == "navbar"][0]{
-    _id,
-    title,
-    ${[buttons, links].join(',')},
-    "logo":*[_type == "logo"][0].image.asset->url
-}
-`;
-
-export type NavbarData = {
-  _id: string;
-  title: string;
-  buttons: SanityButtons;
-  links: NavbarLinks;
-  logo: any;
-};

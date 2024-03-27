@@ -2,7 +2,8 @@ import { FC } from 'react';
 import { PageComponentProps } from '~/types';
 
 import { PageBuilderBlock } from '~/components/global/pagebuilder';
-import { GetMainPageDataQueryResponse } from './main-page-api';
+import { GetMainPageDataQueryResponse } from '~/lib/sanity/query';
+
 
 export type MainPageComponentProps =
   PageComponentProps<GetMainPageDataQueryResponse>;

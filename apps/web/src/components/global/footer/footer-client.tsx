@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { FooterData } from './footer-api';
 import { PageComponentProps } from '~/types';
 import Link from 'next/link';
+import { FooterData } from '~/lib/sanity/query';
 
 export const FooterClient: FC<PageComponentProps<FooterData>> = ({ data }) => {
   const { links } = data ?? {};

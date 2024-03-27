@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { PageComponentProps } from '~/types';
 import { PageBuilderBlock } from '~/components/global/pagebuilder';
-import { GetSlugPageDataQueryResponse } from './slug-page-api';
+import { GetSlugPageDataQueryResponse } from '~/lib/sanity/query';
+import { PageComponentProps } from '~/types';
 
 export type SlugPageProps = PageComponentProps<GetSlugPageDataQueryResponse>;
 

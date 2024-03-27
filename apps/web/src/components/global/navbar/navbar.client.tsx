@@ -2,7 +2,6 @@
 
 import React, { FC } from 'react';
 import { NavbarLink, PageComponentProps } from '~/types';
-import { NavbarData } from './navbar-api';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -17,6 +16,7 @@ import { cn } from '~/lib/utils';
 import { SanityIcon } from '../sanity-icon';
 import { Buttons } from '../buttons';
 import Image from 'next/image';
+import { NavbarData } from '~/lib/sanity/query';
 
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,

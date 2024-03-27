@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import { PageComponentProps } from '~/types';
-import {
-  GetBlogIndexDataQuery,
-  GetBlogPageDataQueryResponse,
-} from './blog-page-api';
 import { SanityImage } from '~/components/global/sanity-image';
 import Link from 'next/link';
 import { RichText } from '~/components/global/richText';
 import Balancer from 'react-wrap-balancer';
+import {
+  GetBlogIndexDataQuery,
+  GetBlogPageDataQueryResponse,
+} from '~/lib/sanity/query';
 
 export type BlogIndexPageProps = PageComponentProps<GetBlogIndexDataQuery>;
 

@@ -7,11 +7,11 @@ import {
   cleanBlogSlug,
   getAllBlogsPaths,
   getBlogPageData,
-  getBlogPageDataQuery,
 } from '~/components/pages/blog-page/blog-page-api';
 import { BlogSlugPageClient } from '~/components/pages/blog-page/blog-page-client';
 import { Locale } from '~/config';
 import { getLocalizedSlug } from '~/lib/helper';
+import { getBlogPageDataQuery } from '~/lib/sanity/query';
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
 

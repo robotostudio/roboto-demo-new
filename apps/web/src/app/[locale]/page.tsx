@@ -6,9 +6,9 @@ import { MainPageComponent } from '~/components/pages/main-page';
 import {
   getAllMainPageTranslations,
   getMainPageData,
-  getMainPageDataQuery,
 } from '~/components/pages/main-page/main-page-api';
 import { MainPageComponentClient } from '~/components/pages/main-page/main-page-client';
+import { getMainPageDataQuery } from '~/lib/sanity/query';
 
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
