@@ -3,12 +3,13 @@ import LiveQuery from 'next-sanity/preview/live-query';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { MainPageComponent } from '~/components/pages/main-page';
-import { MainPageComponentClient } from '~/components/pages/main-page/main-page-client';
 import {
   getAllMainPageTranslations,
   getMainPageData,
-} from '~/components/pages/main-page/main-page-loader';
-import { getMainPageDataQuery } from '~/components/pages/main-page/main-page-query';
+  getMainPageDataQuery,
+} from '~/components/pages/main-page/main-page-api';
+import { MainPageComponentClient } from '~/components/pages/main-page/main-page-client';
+
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
 

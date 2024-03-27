@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { PageComponentProps } from '~/types';
-import { GetMainPageDataQueryResponse } from './main-page-query';
+
 import { PageBuilderBlock } from '~/components/global/pagebuilder';
+import { GetMainPageDataQueryResponse } from './main-page-api';
 
 export type MainPageComponentProps =
   PageComponentProps<GetMainPageDataQueryResponse>;

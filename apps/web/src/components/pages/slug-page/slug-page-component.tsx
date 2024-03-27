@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { PageComponentProps } from '~/types';
-import { GetSlugPageDataQueryResponse } from './slug-page-query';
 import { PageBuilderBlock } from '~/components/global/pagebuilder';
+import { GetSlugPageDataQueryResponse } from './slug-page-api';
 
 export type SlugPageProps = PageComponentProps<GetSlugPageDataQueryResponse>;
 

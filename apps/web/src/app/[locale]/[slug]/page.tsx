@@ -7,8 +7,8 @@ import { SlugPage } from '~/components/pages/slug-page/slug-page-component';
 import {
   getAllSlugPagePaths,
   getSlugPageData,
-} from '~/components/pages/slug-page/slug-page-loader';
-import { getSlugPageDataQuery } from '~/components/pages/slug-page/slug-page-query';
+  getSlugPageDataQuery,
+} from '~/components/pages/slug-page/slug-page-api';
 import { getLocalizedSlug } from '~/lib/helper';
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
