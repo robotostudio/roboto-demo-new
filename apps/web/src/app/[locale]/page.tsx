@@ -32,7 +32,6 @@ export const generateMetadata = async ({
 
 export default async function Page({ params }: PageParams) {
   const [data, err] = await getMainPageData(params.locale);
-  console.log('🚀 ~ Page ~ data, err:', data, err);
   if (!data || err) return notFound();
 
 const { isEnabled } = draftMode();

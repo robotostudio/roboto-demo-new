@@ -1,6 +1,5 @@
 import { Locale } from './config';
 import { CarouselField } from './sanity.types';
-// import { Blog, NavDropdownColumn, NavLink } from './schema';
 
 export type PreviewProps<T> = {
   initialData: T;
@@ -41,24 +40,6 @@ export type SanityButton = {
 
 export type SanityButtons = Array<SanityButton>;
 
-// export type NavLinkExt = Omit<NavLink, 'url'> & {
-//   _key: string;
-//   url: ProcessedUrl;
-// };
-
-// export type NavDropdownColumnExt = Omit<NavDropdownColumn, 'columns'> & {
-//   _key: string;
-//   columns: Array<
-//     Omit<SanityButton, 'buttonText'> & {
-//       description?: string;
-//       title: string;
-//     }
-//   >;
-// };
-
-// export type NavbarLink = NavLinkExt | NavDropdownColumnExt;
-
-// export type NavbarLinks = Array<NavbarLink>;
 
 export type SanityImage = NonNullable<CarouselField['image']>;
 
