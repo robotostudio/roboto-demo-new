@@ -2,15 +2,17 @@ import { Locale } from '~/config';
 import { handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
 import {
-  GetAllMainPageTranslationsQueryResponse,
-  GetMainPageDataQueryResponse,
   getAllMainPageTranslationsQuery,
   getMainPageDataQuery,
 } from '~/lib/sanity/query';
+import {
+  GetAllMainPageTranslationsQueryResult,
+  GetMainPageDataQueryResult,
+} from '~/sanity.types';
 
 export const getMainPageData = async (locale: Locale) => {
   return await handleErrors(
-    sanityFetch<GetMainPageDataQueryResponse>({
+    sanityFetch<GetMainPageDataQueryResult>({
       query: getMainPageDataQuery,
       params: { locale },
     }),
@@ -19,7 +21,7 @@ export const getMainPageData = async (locale: Locale) => {
 
 export const getAllMainPageTranslations = async () => {
   return await handleErrors(
-    sanityFetch<GetAllMainPageTranslationsQueryResponse>({
+    sanityFetch<GetAllMainPageTranslationsQueryResult>({
       query: getAllMainPageTranslationsQuery,
     }),
   );

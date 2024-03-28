@@ -18,7 +18,8 @@ export const dynamicParams = false;
 export const generateStaticParams = async () => {
   const [slugs, err] = await getAllMainPageTranslations();
   if (err || !slugs) return [];
-  return slugs.map((locale) => ({ locale }));
+  const locales = slugs.filter(Boolean) as string[];
+  return locales.map((locale) => ({ locale }));
 };
 
 export const generateMetadata = async ({

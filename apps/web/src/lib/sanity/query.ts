@@ -1,7 +1,7 @@
 import { groq } from 'next-sanity';
 import { Locale } from '~/config';
-import { PageBuilder, BlogIndex, Blog } from '~/schema';
-import { SanityButtons, NavLinkExt, NavbarLinks, SanityImage } from '~/types';
+import { Blog, BlogIndex, PageBuilder } from '~/schema';
+import { SanityImage } from '~/types';
 
 export const localeMatch = `select(($locale == 'en-GB' || $locale == '' ) => 
   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)`;
@@ -78,7 +78,7 @@ export type GetSlugPageDataQueryResponse = {
 
 export const getAllSlugPagePathsQuery = groq`
 *[_type == "page" && defined(slug.current) && !seoNoIndex]{
-  "slug":string::split(slug.current,"/")[1],
+  "slug":slug.current,
   "locale":language
 }
 `;
@@ -152,22 +152,6 @@ export type GetAllBlogsPathsQuery = {
   locale: Locale;
 }[];
 
-export type FooterData = {
-  _id: string;
-  title: string;
-  buttons: SanityButtons;
-  links: NavLinkExt[];
-  logo: any;
-};
-
-export type NavbarData = {
-  _id: string;
-  title: string;
-  buttons: SanityButtons;
-  links: NavbarLinks;
-  logo: any;
-};
-
 const _url = `defined(url)=>{
   url{
     openInNewTab,
@@ -196,6 +180,8 @@ const _icon = `defined(icon)=>{
 const _columns = `defined(columns)=>{
   columns[]{
     ...,
+    title,
+    description,
     ${_icon},
     ${_url}
   }
@@ -204,6 +190,8 @@ const _columns = `defined(columns)=>{
 const _links = `defined(links)=>{
   links[]{
     ...,
+    title,
+    _type,
     ${_url},
     ${_columns}
   }
@@ -234,6 +222,7 @@ const _form = `defined(form)=>{
 const _pageBuilder = `defined(pageBuilder)=>{
   pageBuilder[]{
     ...,
+    _type,
     ${_buttons},
     ${_richText},
     ${_form}

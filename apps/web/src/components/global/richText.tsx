@@ -64,7 +64,7 @@ const nativeComponents: PortableTextReactComponents = {
 };
 
 type PortableRichTextProps = {
-  value?: PortableTextProps['value'];
+  value?: PortableTextProps['value'] | null;
   className?: string; // Added className prop
 };
 

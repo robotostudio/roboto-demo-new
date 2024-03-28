@@ -1,9 +1,10 @@
 import { handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
-import { FooterData, getFooterDataQuery } from '~/lib/sanity/query';
+import { getFooterDataQuery } from '~/lib/sanity/query';
+import { GetFooterDataQueryResult } from '~/sanity.types';
 
 export const getFooterData = async () => {
   return await handleErrors(
-    sanityFetch<FooterData>({ query: getFooterDataQuery }),
+    sanityFetch<GetFooterDataQueryResult>({ query: getFooterDataQuery }),
   );
 };

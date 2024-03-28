@@ -2,17 +2,15 @@ import { FC } from 'react';
 import { PageComponentProps } from '~/types';
 
 import { PageBuilderBlock } from '~/components/global/pagebuilder';
-import { GetMainPageDataQueryResponse } from '~/lib/sanity/query';
+import { GetMainPageDataQueryResult, PageBuilder } from '~/sanity.types';
 
-
-export type MainPageComponentProps =
-  PageComponentProps<GetMainPageDataQueryResponse>;
+export type MainPageComponentProps = PageComponentProps<GetMainPageDataQueryResult>;
 
 export const MainPageComponent: FC<MainPageComponentProps> = ({ data }) => {
-  const { description, title, pageBuilder } = data ?? {};
+  const { pageBuilder } = data ?? {};
   return (
     <main>
-      <PageBuilderBlock pageBuilder={pageBuilder} />
+      <PageBuilderBlock pageBuilder={pageBuilder as unknown as PageBuilder} />
     </main>
   );
 };

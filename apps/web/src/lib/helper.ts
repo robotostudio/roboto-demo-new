@@ -1,6 +1,4 @@
-import { getImageDimensions } from '@sanity/asset-utils';
 import { Locale } from '~/config';
-import { SanityImage } from '~/types';
 
 export async function handleErrors<T>(
   promise: Promise<T>,
@@ -32,7 +30,6 @@ export const extractFormData = (data: FormData) => {
   return raw;
 };
 
-
 export const getLocalizedSlug = (
   slug: string,
   locale: Locale,
@@ -40,12 +37,4 @@ export const getLocalizedSlug = (
 ) => {
   if (locale === 'en-GB') return '/' + [prefix, slug].filter(Boolean).join('/');
   return '/' + [locale, prefix, slug].filter(Boolean).join('/');
-};
-
-export const getImageDimensionProps = (image: NonNullable<SanityImage>) => {
-  const { height, width } = getImageDimensions(image);
-  return {
-    height,
-    width,
-  };
 };

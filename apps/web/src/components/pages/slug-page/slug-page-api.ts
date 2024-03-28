@@ -1,16 +1,18 @@
 import { Locale } from '~/config';
-import { handleErrors, getLocalizedSlug } from '~/lib/helper';
+import { getLocalizedSlug, handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
 import {
-  GetSlugPageDataQueryResponse,
-  getSlugPageDataQuery,
-  GetAllSlugPagePathsQueryResponse,
   getAllSlugPagePathsQuery,
+  getSlugPageDataQuery,
 } from '~/lib/sanity/query';
+import {
+  GetAllSlugPagePathsQueryResult,
+  GetSlugPageDataQueryResult,
+} from '~/sanity.types';
 
 export const getSlugPageData = async (slug: string, locale: Locale) => {
   return await handleErrors(
-    sanityFetch<GetSlugPageDataQueryResponse>({
+    sanityFetch<GetSlugPageDataQueryResult>({
       query: getSlugPageDataQuery,
       params: { slug: getLocalizedSlug(slug, locale), locale },
     }),
@@ -18,9 +20,32 @@ export const getSlugPageData = async (slug: string, locale: Locale) => {
 };
 
 export const getAllSlugPagePaths = async () => {
-  return await handleErrors(
-    sanityFetch<GetAllSlugPagePathsQueryResponse>({
+  const [data, err] = await handleErrors(
+    sanityFetch<GetAllSlugPagePathsQueryResult>({
       query: getAllSlugPagePathsQuery,
     }),
   );
+  if (!data || err) {
+    return [];
+  }
+  const paths: { slug: string; locale: Locale }[] = [];
+  data.forEach((page) => {
+    if (page?.slug && page?.locale) {
+      const slugFragments = page.slug.split('/').filter(Boolean);
+      if (slugFragments.length > 1) {
+        const [, slug] = slugFragments;
+        paths.push({
+          locale: page.locale as Locale,
+          slug,
+        });
+      } else {
+        const [slug] = slugFragments;
+        paths.push({
+          locale: page.locale as Locale,
+          slug,
+        });
+      }
+    }
+  });
+  return paths;
 };

@@ -1,26 +1,30 @@
 'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
 import React, { FC } from 'react';
-import { NavbarLink, PageComponentProps } from '~/types';
 import {
   NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
   NavigationMenuContent,
+  NavigationMenuItem,
   NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '~/components/ui/navigation-menu';
-import Link from 'next/link';
 import { cn } from '~/lib/utils';
-import { SanityIcon } from '../sanity-icon';
+import { GetNavbarDataQueryResult } from '~/sanity.types';
+import { PageComponentProps } from '~/types';
 import { Buttons } from '../buttons';
-import Image from 'next/image';
-import { NavbarData } from '~/lib/sanity/query';
+import { SanityIcon } from '../sanity-icon';
+
+type NavN = NonNullable<NonNullable<GetNavbarDataQueryResult>['links']>[number];
 
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'> & { icon?: { svg?: string } }
+  React.ComponentPropsWithoutRef<'a'> & {
+    icon?: { svg?: string | null } | null;
+  }
 >(({ className, title, icon, children, ...props }, ref) => {
   return (
     <li>
@@ -34,7 +38,7 @@ const ListItem = React.forwardRef<
           {...props}
         >
           <div className="flex items-center gap-2 hover:bg-accent">
-            <span>{icon && <SanityIcon icon={icon} />}</span>
+            <span>{icon?.svg && <SanityIcon icon={icon} />}</span>
             <div className="">
               <div className="text-sm font-medium leading-none">{title}</div>
               <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -49,7 +53,7 @@ const ListItem = React.forwardRef<
 });
 ListItem.displayName = 'ListItem';
 
-export const NavItem: FC<{ data: NavbarLink }> = ({ data }) => {
+export const NavItem: FC<{ data: NavN }> = ({ data }) => {
   const { _type, title } = data;
   if (_type === 'navLink') {
     const { href, openInNewTab } = data?.url ?? {};
@@ -78,9 +82,9 @@ export const NavItem: FC<{ data: NavbarLink }> = ({ data }) => {
             data.columns.map((item) => (
               <ListItem
                 key={item._key}
-                title={item.title}
-                href={item.url.href}
-                icon={item.icon}
+                title={item.title ?? ''}
+                href={item?.url?.href ?? '#'}
+                icon={item?.icon}
               >
                 {item.description}
               </ListItem>
@@ -91,14 +95,18 @@ export const NavItem: FC<{ data: NavbarLink }> = ({ data }) => {
   );
 };
 
-export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
+export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
+  data,
+}) => {
   const { buttons, links, logo } = data ?? {};
   return (
     <nav className="grid grid-cols-3 bg-white bg-opacity-90  p-4 backdrop-blur-2xl">
       <div className="flex items-center ">
-        <Link href="/">
-          <Image src={logo} alt="logo" width={80} height={40} priority />
-        </Link>
+        {logo && (
+          <Link href="/">
+            <Image src={logo} alt="logo" width={80} height={40} priority />
+          </Link>
+        )}
       </div>
       <div className="flex items-center justify-center">
         <NavigationMenu>

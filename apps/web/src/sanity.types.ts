@@ -938,9 +938,9 @@ export type SitemapQueryResult = Array<{
 
 // Source: ../web/src/lib/sanity/query.ts
 // Variable: getAllSlugPagePathsQuery
-// Query: *[_type == "page" && defined(slug.current) && !seoNoIndex]{  "slug":string::split(slug.current,"/")[1],  "locale":language}
+// Query: *[_type == "page" && defined(slug.current) && !seoNoIndex]{  "slug":slug.current,  "locale":language}
 export type GetAllSlugPagePathsQueryResult = Array<{
-  slug: unknown;
+  slug: string | null;
   locale: string | null;
 }>;
 // Variable: getAllMainPageTranslationsQuery
@@ -1018,12 +1018,14 @@ export type GetAllBlogsPathsQueryResult = Array<{
   locale: string | null;
 }>;
 // Variable: getFooterDataQuery
-// Query: *[_type == "footer"][0]{    _id,    title,    defined(links)=>{  links[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(columns)=>{  columns[]{    ...,    defined(icon)=>{  icon{    svg  }},    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}  }}  }},    "logo":*[_type == "logo"][0].image.asset->url}
+// Query: *[_type == "footer"][0]{    _id,    title,    defined(links)=>{  links[]{    ...,    title,    _type,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(columns)=>{  columns[]{    ...,    title,    description,    defined(icon)=>{  icon{    svg  }},    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}  }}  }},    "logo":*[_type == "logo"][0].image.asset->url}
 export type GetFooterDataQueryResult = {
   _id: string;
   title: string | null;
   links: Array<{
     _key: string;
+    title: string | null;
+    _type: "navLink";
     url: {
       openInNewTab: boolean | null;
       href: string | null;
@@ -1033,15 +1035,19 @@ export type GetFooterDataQueryResult = {
   logo: string | null;
 } | null;
 // Variable: getNavbarDataQuery
-// Query: *[_type == "navbar"][0]{    _id,    title,    defined(links)=>{  links[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(columns)=>{  columns[]{    ...,    defined(icon)=>{  icon{    svg  }},    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}  }}  }},    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    "logo":*[_type == "logo"][0].image.asset->url  }  
+// Query: *[_type == "navbar"][0]{    _id,    title,    defined(links)=>{  links[]{    ...,    title,    _type,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(columns)=>{  columns[]{    ...,    title,    description,    defined(icon)=>{  icon{    svg  }},    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}  }}  }},    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    "logo":*[_type == "logo"][0].image.asset->url  }  
 export type GetNavbarDataQueryResult = {
   _id: string;
   title: string | null;
   links: Array<{
     _key: string;
+    title: string | null;
+    _type: "navDropdownColumn";
     url: null;
     columns: Array<{
       _key: string;
+      title: string | null;
+      description: string | null;
       icon: {
         svg: string | null;
       } | null;
@@ -1052,6 +1058,8 @@ export type GetNavbarDataQueryResult = {
     }> | null;
   } | {
     _key: string;
+    title: string | null;
+    _type: "navLink";
     url: {
       openInNewTab: boolean | null;
       href: string | null;
@@ -1157,31 +1165,13 @@ export type GetBlogPageDataQueryResult = {
   };
 } | null;
 // Variable: getMainPageDataQuery
-// Query: *[_type == "mainPage" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{  title,  description,  defined(pageBuilder)=>{  pageBuilder[]{    ...,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}}
+// Query: *[_type == "mainPage" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{  title,  description,  defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}}
 export type GetMainPageDataQueryResult = {
   title: string | null;
   description: string | null;
   pageBuilder: Array<{
     _key: string;
-    buttons: null;
-    richText: null;
-    form: {
-      _id: string;
-      _type: "form";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      label?: string;
-      title?: string;
-      formId?: string;
-      language?: string;
-      fields?: Array<{
-        _key: string;
-      } & FormField>;
-      buttonText?: string;
-    } | null;
-  } | {
-    _key: string;
+    _type: "cta";
     buttons: Array<{
       _key: string;
       url: {
@@ -1224,35 +1214,172 @@ export type GetMainPageDataQueryResult = {
       _type: "block";
     }> | null;
     form: null;
+  } | {
+    _key: string;
+    _type: "dynamicIntro";
+    buttons: Array<{
+      _key: string;
+      url: {
+        openInNewTab: boolean | null;
+        href: string | null;
+      } | null;
+      icon: {
+        svg: string | null;
+      } | null;
+    }> | null;
+    richText: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      caption?: string;
+      alt?: string;
+      _type: "image";
+      markDefs: null;
+    } | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
+      listItem?: "bullet" | "check" | "number";
+      markDefs: Array<{
+        customLink: {
+          openInNewTab: boolean | null;
+          href: string | null;
+        } | null;
+      }> | null;
+      level?: number;
+      _type: "block";
+    }> | null;
+    form: null;
+  } | {
+    _key: string;
+    _type: "hero";
+    buttons: Array<{
+      _key: string;
+      url: {
+        openInNewTab: boolean | null;
+        href: string | null;
+      } | null;
+      icon: {
+        svg: string | null;
+      } | null;
+    }> | null;
+    richText: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      caption?: string;
+      alt?: string;
+      _type: "image";
+      markDefs: null;
+    } | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
+      listItem?: "bullet" | "check" | "number";
+      markDefs: Array<{
+        customLink: {
+          openInNewTab: boolean | null;
+          href: string | null;
+        } | null;
+      }> | null;
+      level?: number;
+      _type: "block";
+    }> | null;
+    form: null;
+  } | {
+    _key: string;
+    _type: "imageCarousel";
+    buttons: Array<{
+      _key: string;
+      url: {
+        openInNewTab: boolean | null;
+        href: string | null;
+      } | null;
+      icon: {
+        svg: string | null;
+      } | null;
+    }> | null;
+    richText: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      caption?: string;
+      alt?: string;
+      _type: "image";
+      markDefs: null;
+    } | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
+      listItem?: "bullet" | "check" | "number";
+      markDefs: Array<{
+        customLink: {
+          openInNewTab: boolean | null;
+          href: string | null;
+        } | null;
+      }> | null;
+      level?: number;
+      _type: "block";
+    }> | null;
+    form: null;
+  } | {
+    _key: string;
+    _type: "splitForm";
+    buttons: null;
+    richText: null;
+    form: {
+      _id: string;
+      _type: "form";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      label?: string;
+      title?: string;
+      formId?: string;
+      language?: string;
+      fields?: Array<{
+        _key: string;
+      } & FormField>;
+      buttonText?: string;
+    } | null;
   }> | null;
 } | null;
 // Variable: getSlugPageDataQuery
-// Query: *[_type == "page" && slug.current == $slug ][0]{    title,    content,    "slug":slug.current,    defined(pageBuilder)=>{  pageBuilder[]{    ...,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}    }
+// Query: *[_type == "page" && slug.current == $slug ][0]{    title,    content,    "slug":slug.current,    defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}    }
 export type GetSlugPageDataQueryResult = {
   title: string | null;
   content: null;
   slug: string | null;
   pageBuilder: Array<{
     _key: string;
-    buttons: null;
-    richText: null;
-    form: {
-      _id: string;
-      _type: "form";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      label?: string;
-      title?: string;
-      formId?: string;
-      language?: string;
-      fields?: Array<{
-        _key: string;
-      } & FormField>;
-      buttonText?: string;
-    } | null;
-  } | {
-    _key: string;
+    _type: "cta";
     buttons: Array<{
       _key: string;
       url: {
@@ -1295,6 +1422,161 @@ export type GetSlugPageDataQueryResult = {
       _type: "block";
     }> | null;
     form: null;
+  } | {
+    _key: string;
+    _type: "dynamicIntro";
+    buttons: Array<{
+      _key: string;
+      url: {
+        openInNewTab: boolean | null;
+        href: string | null;
+      } | null;
+      icon: {
+        svg: string | null;
+      } | null;
+    }> | null;
+    richText: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      caption?: string;
+      alt?: string;
+      _type: "image";
+      markDefs: null;
+    } | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
+      listItem?: "bullet" | "check" | "number";
+      markDefs: Array<{
+        customLink: {
+          openInNewTab: boolean | null;
+          href: string | null;
+        } | null;
+      }> | null;
+      level?: number;
+      _type: "block";
+    }> | null;
+    form: null;
+  } | {
+    _key: string;
+    _type: "hero";
+    buttons: Array<{
+      _key: string;
+      url: {
+        openInNewTab: boolean | null;
+        href: string | null;
+      } | null;
+      icon: {
+        svg: string | null;
+      } | null;
+    }> | null;
+    richText: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      caption?: string;
+      alt?: string;
+      _type: "image";
+      markDefs: null;
+    } | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
+      listItem?: "bullet" | "check" | "number";
+      markDefs: Array<{
+        customLink: {
+          openInNewTab: boolean | null;
+          href: string | null;
+        } | null;
+      }> | null;
+      level?: number;
+      _type: "block";
+    }> | null;
+    form: null;
+  } | {
+    _key: string;
+    _type: "imageCarousel";
+    buttons: Array<{
+      _key: string;
+      url: {
+        openInNewTab: boolean | null;
+        href: string | null;
+      } | null;
+      icon: {
+        svg: string | null;
+      } | null;
+    }> | null;
+    richText: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      caption?: string;
+      alt?: string;
+      _type: "image";
+      markDefs: null;
+    } | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
+      listItem?: "bullet" | "check" | "number";
+      markDefs: Array<{
+        customLink: {
+          openInNewTab: boolean | null;
+          href: string | null;
+        } | null;
+      }> | null;
+      level?: number;
+      _type: "block";
+    }> | null;
+    form: null;
+  } | {
+    _key: string;
+    _type: "splitForm";
+    buttons: null;
+    richText: null;
+    form: {
+      _id: string;
+      _type: "form";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      label?: string;
+      title?: string;
+      formId?: string;
+      language?: string;
+      fields?: Array<{
+        _key: string;
+      } & FormField>;
+      buttonText?: string;
+    } | null;
   }> | null;
 } | null;
 

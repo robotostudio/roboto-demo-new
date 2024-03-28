@@ -22,7 +22,7 @@ export const generateStaticParams = async () => {
   slugs.forEach((page) => {
     const slug = page?.slug ? cleanBlogSlug(page.slug) : undefined;
     if (slug && page?.locale) {
-      paths.push({ slug, locale: page.locale });
+      paths.push({ slug, locale: page.locale as Locale });
     }
   });
   return paths;
