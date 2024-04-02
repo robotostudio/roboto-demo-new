@@ -3,12 +3,13 @@ import LiveQuery from 'next-sanity/preview/live-query';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { MainPageComponent } from '~/components/pages/main-page';
-import { MainPageComponentClient } from '~/components/pages/main-page/main-page-client';
 import {
   getAllMainPageTranslations,
   getMainPageData,
-} from '~/components/pages/main-page/main-page-loader';
-import { getMainPageDataQuery } from '~/components/pages/main-page/main-page-query';
+} from '~/components/pages/main-page/main-page-api';
+import { MainPageComponentClient } from '~/components/pages/main-page/main-page-client';
+import { getMainPageDataQuery } from '~/lib/sanity/query';
+
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
 
@@ -17,7 +18,8 @@ export const dynamicParams = false;
 export const generateStaticParams = async () => {
   const [slugs, err] = await getAllMainPageTranslations();
   if (err || !slugs) return [];
-  return slugs.map((locale) => ({ locale }));
+  const locales = slugs.filter(Boolean) as string[];
+  return locales.map((locale) => ({ locale }));
 };
 
 export const generateMetadata = async ({

@@ -1,6 +1,5 @@
-import { getImageDimensions } from '@sanity/asset-utils';
 import { Locale } from '~/config';
-import { SanityImage } from '~/types';
+// import { SanityImage } from '~/types';
 import * as React from 'react';
 
 export async function handleErrors<T>(
@@ -42,13 +41,13 @@ export const getLocalizedSlug = (
   return '/' + [locale, prefix, slug].filter(Boolean).join('/');
 };
 
-export const getImageDimensionProps = (image: NonNullable<SanityImage>) => {
-  const { height, width } = getImageDimensions(image);
-  return {
-    height,
-    width,
-  };
-};
+// export const getImageDimensionProps = (image: NonNullable<SanityImage>) => {
+//   const { height, width } = getImageDimensions(image);
+//   return {
+//     height,
+//     width,
+//   };
+// };
 
 export function useMediaQuery(query: string) {
   const [value, setValue] = React.useState(false);

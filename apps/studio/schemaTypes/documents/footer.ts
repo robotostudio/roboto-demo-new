@@ -14,10 +14,7 @@ export const footer = defineType({
     defineField({
       name: 'links',
       type: 'array',
-      of: [
-        defineArrayMember({ type: 'navLink' }),
-        // defineArrayMember({ type: 'navDropdownColumn' }),
-      ],
+      of: [defineArrayMember({ type: 'navLink' })],
     }),
   ],
   preview: {
