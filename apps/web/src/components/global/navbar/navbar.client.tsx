@@ -1,23 +1,22 @@
 'use client';
 
-import Link from 'next/link';
 import React, { FC } from 'react';
+import { NavbarLink, PageComponentProps } from '~/types';
+import { NavbarData } from './navbar-api';
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuItem,
   NavigationMenuTrigger,
+  NavigationMenuContent,
+  NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from '~/components/ui/navigation-menu';
+import Link from 'next/link';
 import { cn } from '~/lib/utils';
-import { GetNavbarDataQueryResult } from '~/sanity.types';
-import { PageComponentProps } from '~/types';
-import { Buttons } from '../buttons';
 import { SanityIcon } from '../sanity-icon';
-
-type NavN = NonNullable<NonNullable<GetNavbarDataQueryResult>['links']>[number];
+import { Buttons } from '../buttons';
+import Image from 'next/image';
 import { useMediaQuery } from '~/lib/helper';
 import {
   Drawer,
@@ -36,13 +35,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion';
-import Image from 'next/image';
 
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'> & {
-    icon?: { svg?: string | null } | null;
-  }
+  React.ComponentPropsWithoutRef<'a'> & { icon?: { svg?: string } }
 >(({ className, title, icon, children, ...props }, ref) => {
   return (
     <li>
@@ -56,7 +52,7 @@ const ListItem = React.forwardRef<
           {...props}
         >
           <div className="flex items-center gap-2 hover:bg-accent">
-            <span>{icon?.svg && <SanityIcon icon={icon} />}</span>
+            <span>{icon && <SanityIcon icon={icon} />}</span>
             <div className="">
               <div className="text-sm font-medium leading-none">{title}</div>
               <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -71,7 +67,7 @@ const ListItem = React.forwardRef<
 });
 ListItem.displayName = 'ListItem';
 
-export const NavItem: FC<{ data: NavN }> = ({ data }) => {
+export const NavItem: FC<{ data: NavbarLink }> = ({ data }) => {
   const { _type, title } = data;
   if (_type === 'navLink') {
     const { href, openInNewTab } = data?.url ?? {};
@@ -106,9 +102,9 @@ export const NavItem: FC<{ data: NavN }> = ({ data }) => {
             data.columns.map((item) => (
               <ListItem
                 key={item._key}
-                title={item.title ?? ''}
-                href={item?.url?.href ?? '#'}
-                icon={item?.icon}
+                title={item.title}
+                href={item.url.href}
+                icon={item.icon}
               >
                 {item.description}
               </ListItem>
@@ -119,7 +115,7 @@ export const NavItem: FC<{ data: NavN }> = ({ data }) => {
   );
 };
 
-export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({ data }) => {
+export const MobileNav: FC<PageComponentProps<NavbarData>> = ({ data }) => {
   const { buttons, links, logo } = data ?? {};
   return (
     <>
@@ -131,7 +127,7 @@ export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({ da
           <DrawerContent>
             <DrawerHeader className="flex justify-between">
               <Link href="/">
-                <Image src={logo ?? ''} alt="logo" width={80} height={40} priority />
+                <Image src={logo} alt="logo" width={80} height={40} priority />
               </Link>
               <DrawerClose>
                 <X />
@@ -156,7 +152,7 @@ export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({ da
                             <AccordionContent>
                               <ul className="ml-4 mt-4 flex flex-col items-start gap-4">
                                 {Array.isArray(link?.columns) &&
-                                  link.columns.map((column : any) => (
+                                  link.columns.map((column) => (
                                     <li>
                                       <Link href={column?.url?.href ?? '#'}>
                                         {column.title}
@@ -184,19 +180,15 @@ export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({ da
   );
 };
 
-export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
-  data,
-}) => {
+export const NavbarClient: FC<PageComponentProps<NavbarData>> = ({ data }) => {
   const { buttons, links, logo } = data ?? {};
   const isDesktop = useMediaQuery('(min-width: 768px)');
   return (
     <nav className="flex justify-between bg-white bg-opacity-90 p-4 backdrop-blur-2xl  md:grid md:grid-cols-3">
       <div className="flex items-center ">
-        {logo && (
-          <Link href="/">
-            <Image src={logo} alt="logo" width={80} height={40} priority />
-          </Link>
-        )}
+        <Link href="/">
+          <Image src={logo} alt="logo" width={80} height={40} priority />
+        </Link>
       </div>
       {isDesktop ? (
         <>
@@ -213,7 +205,7 @@ export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
           </div>
         </>
       ) : (
-        <MobileNav data={data ?? {}} />
+        <MobileNav data={data} />
       )}
     </nav>
   );

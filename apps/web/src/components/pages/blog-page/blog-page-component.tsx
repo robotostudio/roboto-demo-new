@@ -1,16 +1,15 @@
-import Link from 'next/link';
 import { FC } from 'react';
-import Balancer from 'react-wrap-balancer';
-import { RichText } from '~/components/global/richText';
-import { SanityImage } from '~/components/global/sanity-image';
-import {
-  GetBlogIndexDataQueryResult,
-  GetBlogPageDataQueryResult,
-} from '~/sanity.types';
 import { PageComponentProps } from '~/types';
+import {
+  GetBlogIndexDataQuery,
+  GetBlogPageDataQueryResponse,
+} from './blog-page-api';
+import { SanityImage } from '~/components/global/sanity-image';
+import Link from 'next/link';
+import { RichText } from '~/components/global/richText';
+import Balancer from 'react-wrap-balancer';
 
-export type BlogIndexPageProps =
-  PageComponentProps<GetBlogIndexDataQueryResult>;
+export type BlogIndexPageProps = PageComponentProps<GetBlogIndexDataQuery>;
 
 export const BlogIndexPage: FC<BlogIndexPageProps> = ({ data }) => {
   const { blogs } = data ?? {};
@@ -21,7 +20,7 @@ export const BlogIndexPage: FC<BlogIndexPageProps> = ({ data }) => {
   );
 };
 
-export type BlogGridProps = Pick<GetBlogIndexDataQueryResult, 'blogs'>;
+export type BlogGridProps = Pick<GetBlogIndexDataQuery, 'blogs'>;
 
 export const BlogGrid: FC<BlogGridProps> = ({ blogs }) => {
   if (!Array.isArray(blogs)) return <></>;
@@ -37,39 +36,36 @@ export const BlogGrid: FC<BlogGridProps> = ({ blogs }) => {
   );
 };
 
-export type BlogCardProps = {
-  blog: GetBlogIndexDataQueryResult['blogs'][number];
-};
+export type BlogCardProps = { blog: GetBlogIndexDataQuery['blogs'][number] };
 
 export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
   const { title, image, slug, description } = blog ?? {};
   return (
     <div className="flex items-start justify-center gap-4 ">
-      {slug && (
-        <Link href={slug}>
-          {image && (
-            <div className="relative flex items-center">
-              <SanityImage
-                image={image}
-                className="aspect-video"
-                options={{
-                  loading: 'lazy',
-                  alt: title ?? slug,
-                }}
-              />
-            </div>
-          )}
-          <h2 className="mt-3 text-center font-bold">{title}</h2>
-          <p className="text-backgroundGray mx-auto mt-1 line-clamp-2 max-w-xs overflow-hidden text-center text-xs">
-            {description}
-          </p>
-        </Link>
-      )}
+      <Link href={slug}>
+        {image && (
+          <div className="relative flex items-center">
+            <SanityImage
+              image={image}
+              className="aspect-video"
+              options={{
+                loading: 'lazy',
+                alt: title,
+              }}
+            />
+          </div>
+        )}
+        <h2 className="mt-3 text-center font-bold">{title}</h2>
+        <p className="text-backgroundGray mx-auto mt-1 line-clamp-2 max-w-xs overflow-hidden text-center text-xs">
+          {description}
+        </p>
+      </Link>
     </div>
   );
 };
 
-export type BlogSlugPageProps = PageComponentProps<GetBlogPageDataQueryResult>;
+export type BlogSlugPageProps =
+  PageComponentProps<GetBlogPageDataQueryResponse>;
 
 export const BlogSlugPage: FC<BlogSlugPageProps> = ({ data }) => {
   const { richText, title, image, description, _createdAt } = data ?? {};

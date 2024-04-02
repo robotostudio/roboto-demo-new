@@ -7,11 +7,11 @@ import {
   cleanBlogSlug,
   getAllBlogsPaths,
   getBlogPageData,
+  getBlogPageDataQuery,
 } from '~/components/pages/blog-page/blog-page-api';
 import { BlogSlugPageClient } from '~/components/pages/blog-page/blog-page-client';
 import { Locale } from '~/config';
 import { getLocalizedSlug } from '~/lib/helper';
-import { getBlogPageDataQuery } from '~/lib/sanity/query';
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
 
@@ -22,7 +22,7 @@ export const generateStaticParams = async () => {
   slugs.forEach((page) => {
     const slug = page?.slug ? cleanBlogSlug(page.slug) : undefined;
     if (slug && page?.locale) {
-      paths.push({ slug, locale: page.locale as Locale });
+      paths.push({ slug, locale: page.locale });
     }
   });
   return paths;

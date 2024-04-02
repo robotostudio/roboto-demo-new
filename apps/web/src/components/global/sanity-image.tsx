@@ -1,17 +1,16 @@
-import { getImageDimensions } from '@sanity/asset-utils';
 import Image, { ImageProps } from 'next/image';
 import { FC } from 'react';
+import { getImageDimensionProps } from '~/lib/helper';
 import { urlFor } from '~/lib/sanity';
 
 import { SanityImage as SanityImageProp } from '~/types';
 
 const getDimension = (
-  image: NonNullable<SanityImageProp['asset']>,
+  image: SanityImageProp,
   width?: number,
   height?: number,
 ) => {
-  const dimension = getImageDimensions(image);
-
+  const dimension = getImageDimensionProps(image);
   return {
     width: width ?? dimension.width,
     height: height ?? dimension.height,
@@ -39,7 +38,7 @@ export const SanityImage: FC<{
 }> = ({ image, className, options, height, width }) => {
   if (!image?.asset) return <></>;
 
-  const dimension = getDimension(image.asset, width, height);
+  const dimension = getDimension(image, width, height);
 
   const blurProps = getImageBlurProps(image);
 
@@ -47,7 +46,7 @@ export const SanityImage: FC<{
     <div className="flex flex-col items-center justify-center">
       <Image
         alt={image?.asset._ref ?? 'image-broken'}
-        src={urlFor(image.asset)
+        src={urlFor(image)
           .width(dimension.width)
           .height(dimension.height)
           .quality(100)

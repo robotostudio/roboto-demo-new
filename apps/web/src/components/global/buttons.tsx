@@ -6,7 +6,7 @@ import { Button, ButtonProps } from '../ui/button';
 import { SanityIcon } from './sanity-icon';
 
 export type ButtonsProps = {
-  buttons?: SanityButtons | null;
+  buttons?: SanityButtons;
   wrapperProps?: ComponentPropsWithoutRef<'div'>;
 } & ButtonProps;
 
@@ -26,7 +26,7 @@ const SanityLinkButton: FC<{ button: SanityButton } & ButtonProps> = ({
   return (
     <Link href={url.href} target={url.openInNewTab ? '_blank' : '_self'}>
       <Button {...props} variant={variant}>
-        {icon?.svg && (
+        {icon && (
           <span className="grid size-7 place-items-center">
             <SanityIcon icon={icon} fontSize={16} />
           </span>
