@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -122,19 +122,20 @@ export const NavItem: FC<{ data: NavN }> = ({ data }) => {
 
 export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({ data }) => {
   const { buttons, links, logo } = data ?? {};
+  const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <>
-      <Drawer direction="right">
+      <Drawer direction="right" open={openDrawer} onOpenChange={setOpenDrawer}>
         <DrawerTrigger className="md:hidden">
           <MenuIcon />
         </DrawerTrigger>
         <DrawerPortal>
           <DrawerContent>
             <DrawerHeader className="flex justify-between">
-              <Link href="/">
+              <Link href="/" onClick={() => setOpenDrawer(false)}>
                 <Image src={logo ?? ''} alt="logo" width={80} height={40} priority />
               </Link>
-              <DrawerClose>
+              <DrawerClose asChild>
                 <X />
               </DrawerClose>
             </DrawerHeader>
@@ -144,7 +145,7 @@ export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({ da
                   {Array.isArray(links) &&
                     links.map((link) =>
                       link._type === 'navLink' ? (
-                        <Link href={link?.url?.href ?? '#'} className="!ml-0">
+                        <Link href={link?.url?.href ?? '#'} className="!ml-0" onClick={() => setOpenDrawer(false)}>
                           {link.title}
                         </Link>
                       ) : (
@@ -159,7 +160,7 @@ export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({ da
                                 {Array.isArray(link?.columns) &&
                                   link.columns.map((column) => (
                                     <li>
-                                      <Link href={column?.url?.href ?? '#'}>
+                                      <Link href={column?.url?.href ?? '#'} onClick={() => setOpenDrawer(false)}>
                                         {column.title}
                                       </Link>
                                     </li>
