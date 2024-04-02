@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { PageComponentProps } from '~/types';
-import { GetSlugPageDataQueryResponse } from './slug-page-query';
 import { PageBuilderBlock } from '~/components/global/pagebuilder';
+import { GetSlugPageDataQueryResult, PageBuilder } from '~/sanity.types';
+import { PageComponentProps } from '~/types';
 
-export type SlugPageProps = PageComponentProps<GetSlugPageDataQueryResponse>;
+export type SlugPageProps = PageComponentProps<GetSlugPageDataQueryResult>;
 
 export const SlugPage: FC<SlugPageProps> = ({ data }) => {
   const { title, pageBuilder } = data ?? {};
@@ -12,7 +12,9 @@ export const SlugPage: FC<SlugPageProps> = ({ data }) => {
       <div>
         <h1>{title}</h1>
       </div>
-      <PageBuilderBlock pageBuilder={pageBuilder} />
+      {Array.isArray(pageBuilder) && (
+        <PageBuilderBlock pageBuilder={pageBuilder as unknown as PageBuilder} />
+      )}
     </main>
   );
 };

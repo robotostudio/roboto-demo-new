@@ -1,28 +1,10 @@
-import { groq } from 'next-sanity';
 import { handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
-import { links } from '~/lib/sanity/fragment';
-import { NavLinkExt, SanityButtons } from '~/types';
+import { getFooterDataQuery } from '~/lib/sanity/query';
+import { GetFooterDataQueryResult } from '~/sanity.types';
 
 export const getFooterData = async () => {
   return await handleErrors(
-    sanityFetch<FooterData>({ query: getFooterDataQuery }),
+    sanityFetch<GetFooterDataQueryResult>({ query: getFooterDataQuery }),
   );
-};
-
-export const getFooterDataQuery = groq`
-*[_type == "footer"][0]{
-    _id,
-    title,
-    ${[links].join(',')},
-    "logo":*[_type == "logo"][0].image.asset->url
-}
-`;
-
-export type FooterData = {
-  _id: string;
-  title: string;
-  buttons: SanityButtons;
-  links: NavLinkExt[];
-  logo: any;
 };

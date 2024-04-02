@@ -11,7 +11,8 @@ import { PageParams } from '~/types';
 export const generateStaticParams = async () => {
   const [slugs, err] = await getAllBlogIndexTranslations();
   if (err || !Array.isArray(slugs)) return [];
-  return slugs.map((locale) => ({ locale }));
+  const locales = slugs.filter(Boolean) as string[];
+  return locales.map((locale) => ({ locale }));
 };
 
 export const generateMetadata = async ({

@@ -4,15 +4,10 @@ import Svg from 'react-inlinesvg';
 
 type IconProps = Omit<ComponentProps<typeof Svg>, 'src'> & {
   icon?: {
-    svg?: string;
+    svg?: string | null;
   };
 };
 
-export type SanityIcon = {
-  icon?: {
-    svg?: string;
-  };
-};
 
 export const SanityIcon: FC<IconProps> = ({ icon, ...props }) => {
   const { svg } = icon ?? {};

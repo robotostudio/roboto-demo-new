@@ -15,6 +15,5 @@ export const SearchParamsText: FC<SearchParamsTextProps> = ({
 }) => {
   const search = useSearchParams();
   const text = param ? search.get(param) ?? fallback : fallback;
-  console.log('🚀 ~   param,fallback,:', param, fallback, { text });
   return <span {...rest}>{text}</span>;
 };
