@@ -1,4 +1,6 @@
 import { Locale } from '~/config';
+// import { SanityImage } from '~/types';
+import * as React from 'react';
 
 export async function handleErrors<T>(
   promise: Promise<T>,
@@ -38,3 +40,29 @@ export const getLocalizedSlug = (
   if (locale === 'en-GB') return '/' + [prefix, slug].filter(Boolean).join('/');
   return '/' + [locale, prefix, slug].filter(Boolean).join('/');
 };
+
+// export const getImageDimensionProps = (image: NonNullable<SanityImage>) => {
+//   const { height, width } = getImageDimensions(image);
+//   return {
+//     height,
+//     width,
+//   };
+// };
+
+export function useMediaQuery(query: string) {
+  const [value, setValue] = React.useState(false);
+
+  React.useEffect(() => {
+    function onChange(event: MediaQueryListEvent) {
+      setValue(event.matches);
+    }
+
+    const result = matchMedia(query);
+    result.addEventListener('change', onChange);
+    setValue(result.matches);
+
+    return () => result.removeEventListener('change', onChange);
+  }, [query]);
+
+  return value;
+}
