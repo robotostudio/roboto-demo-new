@@ -1,11 +1,13 @@
 import { FC } from 'react';
-import { PageBuilder } from '~/schema';
-import { HeroBlock, CtaBlock } from '../blocks';
+
+import { HeroBlock, CtaBlock, DynamicIntroBlock } from '../blocks';
 import { SplitFormBlock } from '../blocks/split-form';
 import { ImageCarouselBlock } from '../blocks/image-carousel';
+import { PageBuilder } from '~/sanity.types';
 
-export type PageBuilderBlockProps = {
-  pageBuilder?: PageBuilder;
+export type PageBuilderBlockProps<T> = {
+  // pageBuilder?: PageBuilder;
+  pageBuilder?: T | null;
 };
 
 type BlockTypeKeys = PageBuilder[number]['_type'];
@@ -14,15 +16,18 @@ type BlockTypeKeys = PageBuilder[number]['_type'];
 const Blocks: Record<BlockTypeKeys, FC<any>> = {
   hero: HeroBlock,
   cta: CtaBlock,
+  dynamicIntro: DynamicIntroBlock,
   splitForm: SplitFormBlock,
   imageCarousel: ImageCarouselBlock,
 };
 
 const BlockNotFound: FC<{ _type: string }> = ({ _type }) => {
-  return <div className="">Block Not Found : {_type}</div>;
+  return (
+    <div className="grid place-items-center">Block Not Found : {_type}</div>
+  );
 };
 
-export const PageBuilderBlock: FC<PageBuilderBlockProps> = ({
+export const PageBuilderBlock: FC<PageBuilderBlockProps<PageBuilder>> = ({
   pageBuilder,
 }) => {
   if (!Array.isArray(pageBuilder)) return <section></section>;

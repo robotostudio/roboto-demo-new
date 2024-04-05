@@ -7,16 +7,14 @@ import { SlugPage } from '~/components/pages/slug-page/slug-page-component';
 import {
   getAllSlugPagePaths,
   getSlugPageData,
-} from '~/components/pages/slug-page/slug-page-loader';
-import { getSlugPageDataQuery } from '~/components/pages/slug-page/slug-page-query';
+} from '~/components/pages/slug-page/slug-page-api';
 import { getLocalizedSlug } from '~/lib/helper';
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
+import { getSlugPageDataQuery } from '~/lib/sanity/query';
 
 export const generateStaticParams = async () => {
-  const [slugs, err] = await getAllSlugPagePaths();
-  console.log('🚀 ~ generateStaticParams ~ slugs:', slugs);
-  if (err || !slugs) return [];
+  const slugs = await getAllSlugPagePaths();
   const pages = slugs.map((slug) => ({
     slug: slug?.slug,
     locale: slug?.locale,
