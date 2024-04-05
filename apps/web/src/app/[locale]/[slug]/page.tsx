@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import LiveQuery from 'next-sanity/preview/live-query';
-import { cookies, draftMode, headers } from 'next/headers';
+import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { SlugPageClient } from '~/components/pages/slug-page/slug-page-client';
 import { SlugPage } from '~/components/pages/slug-page/slug-page-component';
@@ -10,7 +10,6 @@ import {
 } from '~/components/pages/slug-page/slug-page-loader';
 import { getSlugPageDataQuery } from '~/components/pages/slug-page/slug-page-query';
 import { getLocalizedSlug } from '~/lib/helper';
-import { distinctId, distinctIdValue, posthogClient } from '~/lib/posthog';
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
 
@@ -35,15 +34,6 @@ export const generateMetadata = async ({
 export default async function Page({ params }: PageParams<{ slug: string }>) {
   const { locale, slug } = params ?? {};
   const [data, err] = await getSlugPageData(slug, locale);
-
-  // const id = posthogClient.getPersistedProperty(distinctId);
-  // const feature = await posthogClient.getFeatureFlag('slug-page-redirect', id);
-  console.log(
-    '🚀 ~ SlugPage Page ~ feature:',
-    //   feature,
-    //   id,
-    posthogClient.distinctIdHasSentFlagCalls,
-  );
 
   if (err || !data) {
     return notFound();

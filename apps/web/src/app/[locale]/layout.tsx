@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { Loader2 } from 'lucide-react';
 import { NextIntlClientProvider } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
@@ -11,7 +10,7 @@ import { Navbar } from '~/components/global/navbar';
 import { CSPostHogProvider } from '~/components/global/posthog-provider';
 import { PreviewBar } from '~/components/global/preview-bar';
 import { locales } from '~/config';
-import { distinctId, posthogClient } from '~/lib/posthog';
+import { getBootstrapData } from '~/lib/posthog';
 import { token } from '~/lib/sanity/sanity-server-fetch';
 
 type Props = {
@@ -23,26 +22,19 @@ const PreviewProvider = dynamic(
   () => import('~/components/global/preview-provider'),
 );
 
-const getDistinctUserIdCookie = () => {
-  const isExist = posthogClient.getPersistedProperty(distinctId);
-  if (isExist) return;
-  const uuid = randomUUID();
-  posthogClient.setPersistedProperty(distinctId, uuid);
-};
-
 export default async function LocaleLayout({
   children,
   params: { locale },
 }: Props) {
   const isValidLocale = locales.some((cur) => cur === locale);
   if (!isValidLocale) return notFound();
-  getDistinctUserIdCookie();
   unstable_setRequestLocale(locale);
+  const bootstrapData = await getBootstrapData();
 
   const { isEnabled } = draftMode();
   return (
     <html lang={locale}>
-      <CSPostHogProvider>
+      <CSPostHogProvider bootstrapData={bootstrapData}>
         <body>
           <NextIntlClientProvider locale={locale}>
             <Navbar />
