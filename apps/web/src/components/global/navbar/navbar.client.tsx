@@ -207,6 +207,7 @@ export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
   data,
   feature,
 }) => {
+  console.log('🚀 ~ feature:', feature);
   const { buttons, links, logo } = data ?? {};
   const isDesktop = useMediaQuery('(min-width: 768px)', true);
   return (
