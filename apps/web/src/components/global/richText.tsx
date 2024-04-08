@@ -6,6 +6,7 @@ import {
   PortableTextProps,
   PortableTextReactComponents,
 } from '@portabletext/react';
+import { CheckSquare } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
 import { cn } from '~/lib/utils';
@@ -66,12 +67,24 @@ const nativeComponents: PortableTextReactComponents = {
     customLink: CustomLinkResolver,
   },
   list: {
-    bullet: ({ children }) => <ul>{children}</ul>,
-    number: ({ children }) => <ol>{children}</ol>,
+    bullet: ({ children }) => (
+      <ul className="list-disc px-8 py-2">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal px-8 py-2">{children}</ol>
+    ),
+    check: ({ children }) => (
+      <ol className="list-inside px-8 py-2">{children}</ol>
+    ),
   },
   listItem: {
     bullet: ({ children }) => <li>{children}</li>,
     number: ({ children }) => <li>{children}</li>,
+    check: ({ children }) => (
+      <li className="flex items-center gap-2">
+        <CheckSquare /> {children}
+      </li>
+    ),
   },
 };
 
