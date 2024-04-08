@@ -1,6 +1,7 @@
 'use client';
 import {
   PortableText,
+  PortableTextComponentProps,
   PortableTextMarkComponentProps,
   PortableTextProps,
   PortableTextReactComponents,
@@ -8,7 +9,8 @@ import {
 import Link from 'next/link';
 import { FC } from 'react';
 import { cn } from '~/lib/utils';
-import { ProcessedUrl } from '~/types';
+import { ProcessedUrl, SanityImage as SanityImageProps } from '~/types';
+import { SanityImage } from './sanity-image';
 
 export const CustomLinkResolver: FC<
   PortableTextMarkComponentProps<{
@@ -31,6 +33,16 @@ export const CustomLinkResolver: FC<
   );
 };
 
+const NextImageResolver = ({
+  value,
+}: PortableTextComponentProps<SanityImageProps>) => {
+  return (
+    <div className="my-4">
+      <SanityImage image={value} className="rounded-xl" />
+    </div>
+  );
+};
+
 const nativeComponents: PortableTextReactComponents = {
   unknownList: () => <></>,
   unknownListItem: () => <></>,
@@ -48,7 +60,7 @@ const nativeComponents: PortableTextReactComponents = {
     inline: ({ children }) => <span>{children}</span>,
   },
   types: {
-    // image: NextImageResolver,
+    image: NextImageResolver,
   },
   marks: {
     customLink: CustomLinkResolver,

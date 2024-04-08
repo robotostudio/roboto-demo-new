@@ -1079,7 +1079,7 @@ export type GetNavbarDataQueryResult = {
   logo: string | null;
 } | null;
 // Variable: getBlogPageDataQuery
-// Query: *[_type == "blog" && slug.current == $slug && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{    ...,    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }}  }  
+// Query: *[_type == "blog" && slug.current == $slug && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{    ...,    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }}  }  
 export type GetBlogPageDataQueryResult = {
   _id: string;
   _type: "blog";
@@ -1127,6 +1127,7 @@ export type GetBlogPageDataQueryResult = {
         openInNewTab: boolean | null;
         href: string | null;
       } | null;
+      _type: "customLink";
     }> | null;
     level?: number;
     _type: "block";
@@ -1165,7 +1166,7 @@ export type GetBlogPageDataQueryResult = {
   };
 } | null;
 // Variable: getMainPageDataQuery
-// Query: *[_type == "mainPage" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{  title,  description,  defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}}
+// Query: *[_type == "mainPage" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{  title,  description,  defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}}
 export type GetMainPageDataQueryResult = {
   title: string | null;
   description: string | null;
@@ -1209,6 +1210,7 @@ export type GetMainPageDataQueryResult = {
           openInNewTab: boolean | null;
           href: string | null;
         } | null;
+        _type: "customLink";
       }> | null;
       level?: number;
       _type: "block";
@@ -1254,6 +1256,7 @@ export type GetMainPageDataQueryResult = {
           openInNewTab: boolean | null;
           href: string | null;
         } | null;
+        _type: "customLink";
       }> | null;
       level?: number;
       _type: "block";
@@ -1299,6 +1302,7 @@ export type GetMainPageDataQueryResult = {
           openInNewTab: boolean | null;
           href: string | null;
         } | null;
+        _type: "customLink";
       }> | null;
       level?: number;
       _type: "block";
@@ -1344,6 +1348,7 @@ export type GetMainPageDataQueryResult = {
           openInNewTab: boolean | null;
           href: string | null;
         } | null;
+        _type: "customLink";
       }> | null;
       level?: number;
       _type: "block";
@@ -1372,7 +1377,7 @@ export type GetMainPageDataQueryResult = {
   }> | null;
 } | null;
 // Variable: getSlugPageDataQuery
-// Query: *[_type == "page" && slug.current == $slug ][0]{    title,    content,    "slug":slug.current,    defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}    }
+// Query: *[_type == "page" && slug.current == $slug ][0]{    title,    content,    "slug":slug.current,    defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}    }
 export type GetSlugPageDataQueryResult = {
   title: string | null;
   content: null;
@@ -1417,6 +1422,7 @@ export type GetSlugPageDataQueryResult = {
           openInNewTab: boolean | null;
           href: string | null;
         } | null;
+        _type: "customLink";
       }> | null;
       level?: number;
       _type: "block";
@@ -1462,6 +1468,7 @@ export type GetSlugPageDataQueryResult = {
           openInNewTab: boolean | null;
           href: string | null;
         } | null;
+        _type: "customLink";
       }> | null;
       level?: number;
       _type: "block";
@@ -1507,6 +1514,7 @@ export type GetSlugPageDataQueryResult = {
           openInNewTab: boolean | null;
           href: string | null;
         } | null;
+        _type: "customLink";
       }> | null;
       level?: number;
       _type: "block";
@@ -1552,6 +1560,7 @@ export type GetSlugPageDataQueryResult = {
           openInNewTab: boolean | null;
           href: string | null;
         } | null;
+        _type: "customLink";
       }> | null;
       level?: number;
       _type: "block";

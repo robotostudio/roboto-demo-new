@@ -168,6 +168,7 @@ const _customLink = `defined(customLink)=>{
 
 const _markDefs = ` defined(markDefs)=>{
   markDefs[]{
+    ...,
     ${_customLink}   
   }
 }`;
