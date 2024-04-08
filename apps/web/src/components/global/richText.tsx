@@ -21,7 +21,7 @@ export const CustomLinkResolver: FC<
   const { href, openInNewTab } = value?.customLink ?? {};
   if (!href) return <span>Link Broken</span>;
   return (
-    <span>
+    <span className="underline underline-offset-2">
       <Link
         href={href}
         target={openInNewTab ? '_blank' : '_self'}
