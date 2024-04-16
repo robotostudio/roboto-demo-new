@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FC } from 'react';
 import Balancer from 'react-wrap-balancer';
-import { RichText } from '~/components/global/richText';
+import { ArticleRichText } from '~/components/global/richText';
 import { SanityImage } from '~/components/global/sanity-image';
 import {
   GetBlogIndexDataQueryResult,
@@ -78,13 +78,13 @@ export const BlogSlugPage: FC<BlogSlugPageProps> = ({ data }) => {
       <div className="container">
         <div className="text-center">
           {_createdAt && (
-            <b className="mb-2 text-sm font-normal text-slate-800">
+            <time className="mb-2 text-sm font-normal text-slate-800">
               {new Date(_createdAt).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })}
-            </b>
+            </time>
           )}
           <h1 className="animate-fade-up-slow my-4 text-5xl font-bold">
             <Balancer>{title}</Balancer>
@@ -100,7 +100,7 @@ export const BlogSlugPage: FC<BlogSlugPageProps> = ({ data }) => {
           />
         </div>
         <div className="mx-auto max-w-2xl">
-          <RichText value={richText} />
+          <ArticleRichText value={richText} />
         </div>
       </div>
     </main>
