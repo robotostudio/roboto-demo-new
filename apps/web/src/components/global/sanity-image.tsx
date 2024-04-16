@@ -52,7 +52,7 @@ export const SanityImage: FC<{
           .height(dimension.height)
           .quality(100)
           .url()}
-        sizes="(max-width: 640px) 100vw, 80vw"
+        sizes="(max-width: 640px) 80vw, 80vw"
         width={dimension.width}
         height={dimension.height}
         className={className}
