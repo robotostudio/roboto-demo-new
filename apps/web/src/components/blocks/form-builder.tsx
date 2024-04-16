@@ -7,6 +7,7 @@ import { Form, FormField as IFormField } from '~/schema';
 
 import { Input } from '../global/input';
 import { Button, ButtonProps } from '../ui/button';
+import { RichText } from '../global/richText';
 
 export const FormSubmitButton: FC<ButtonProps> = ({ children, ...props }) => {
   const { pending } = useFormStatus();
@@ -59,6 +60,7 @@ const FormField: FC<{ field: IFormField }> = ({ field }) => {
 export const FormBuilderBlock: FC<Form> = ({
   fields,
   title,
+  description,
   formId,
   buttonText = 'Submit',
 }) => {
@@ -88,6 +90,11 @@ export const FormBuilderBlock: FC<Form> = ({
           {title}
         </h2>
       </div>
+      {description && (
+        <div className="mx-auto max-w-2xl text-center">
+          <RichText value={description} />
+        </div>
+      )}
 
       <form
         action={action}

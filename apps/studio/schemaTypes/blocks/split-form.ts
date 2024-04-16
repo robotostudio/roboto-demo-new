@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity';
 import { FormInput } from 'lucide-react';
 import { blockPreview } from '../../utils/helper';
+import { richTextField } from '../../utils/common';
 
 export const splitForm = defineType({
   name: 'splitForm',
@@ -8,7 +9,7 @@ export const splitForm = defineType({
   icon: FormInput,
   fields: [
     defineField({ name: 'title', type: 'string' }),
-    defineField({ name: 'description', type: 'string' }),
+    richTextField,
     defineField({ name: 'form', type: 'reference', to: [{ type: 'form' }] }),
     defineField({
       name: 'image',

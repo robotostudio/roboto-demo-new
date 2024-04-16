@@ -86,14 +86,19 @@ export const BlogSlugPage: FC<BlogSlugPageProps> = ({ data }) => {
               })}
             </b>
           )}
-          <h1 className="animate-fade-up-slow my-4 text-lg">
+          <h1 className="animate-fade-up-slow my-4 text-5xl font-bold">
             <Balancer>{title}</Balancer>
           </h1>
           <p>{description}</p>
         </div>
         <div>
           <div className="relative mb-20 md:mb-[100px]">
-            <SanityImage image={image} />
+            <SanityImage
+              image={image}
+              width={800}
+              height={400}
+              className="rounded-lg shadow-2xl"
+            />
           </div>
           <RichText value={richText} />
         </div>
