@@ -20,6 +20,13 @@ const PreviewProvider = dynamic(
   () => import('~/components/global/preview-provider'),
 );
 
+export const metadata = {
+  title: {
+    template: '%s | Roboto Studio',
+    default: 'Roboto Studio',
+  },
+};
+
 export default async function LocaleLayout({
   children,
   params: { locale },
