@@ -1,7 +1,6 @@
 import { getImageDimensions } from '@sanity/asset-utils';
 import Image, { ImageProps } from 'next/image';
 import { FC } from 'react';
-import { preload } from 'react-dom';
 import { urlFor } from '~/lib/sanity';
 
 import { SanityImage as SanityImageProp } from '~/types';
@@ -64,17 +63,12 @@ export const SanityImage: FC<SanityImageProps> = ({
     .quality(100)
     .url();
 
-  if (loading === 'eager') {
-    preload(url, {
-      as: 'image',
-    });
-  }
-
   return (
     <div className="flex flex-col items-center justify-center">
       <Image
         alt={image?.asset._ref ?? 'image-broken'}
         src={url}
+        loading={loading}
         sizes="(max-width: 640px) 80vw, 80vw"
         width={dimension.width}
         height={dimension.height}

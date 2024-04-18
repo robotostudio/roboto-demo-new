@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
+import { preconnect, prefetchDNS } from 'react-dom';
 import { Footer } from '~/components/global/footer';
 import { Navbar } from '~/components/global/navbar';
 import { PreviewBar } from '~/components/global/preview-bar';
@@ -27,6 +28,9 @@ export default async function LocaleLayout({
   const isValidLocale = locales.some((cur) => cur === locale);
   if (!isValidLocale) return notFound();
   unstable_setRequestLocale(locale);
+
+  preconnect('https://cdn.sanity.io');
+  prefetchDNS('https://cdn.sanity.io');
 
   const { isEnabled } = draftMode();
   return (
