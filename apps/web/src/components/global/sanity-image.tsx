@@ -40,6 +40,10 @@ export const SanityImage: FC<{
   if (!image?.asset) return <></>;
 
   const dimension = getDimension(image.asset, width, height);
+  const _image = {
+    ...image,
+    _id: image.asset._ref,
+  };
 
   const blurProps = getImageBlurProps(image);
 
@@ -47,7 +51,7 @@ export const SanityImage: FC<{
     <div className="flex flex-col items-center justify-center">
       <Image
         alt={image?.asset._ref ?? 'image-broken'}
-        src={urlFor(image.asset)
+        src={urlFor(_image)
           .width(dimension.width)
           .height(dimension.height)
           .quality(100)

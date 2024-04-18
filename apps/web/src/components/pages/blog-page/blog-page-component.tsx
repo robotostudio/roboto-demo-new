@@ -52,10 +52,8 @@ export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
               <SanityImage
                 image={image}
                 className="aspect-video"
-                options={{
-                  loading: 'lazy',
-                  alt: title ?? slug,
-                }}
+                width={800}
+                height={450}
               />
             </div>
           )}
