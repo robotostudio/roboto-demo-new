@@ -1007,11 +1007,11 @@ export type SplitForm = {
   title?: string;
 
   /**
-   * description — `string`
+   * richText — `richText`
    *
    *
    */
-  description?: string;
+  richText?: RichText;
 
   /**
    * form — `reference`
@@ -1074,11 +1074,11 @@ export type ImageCarousel = {
 export type DynamicIntro = {
   _type: 'dynamicIntro';
   /**
-   * title — `string`
+   * eyebrow — `string`
    *
    *
    */
-  title?: string;
+  eyebrow?: string;
 
   /**
    * richText — `richText`

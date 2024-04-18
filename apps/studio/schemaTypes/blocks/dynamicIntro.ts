@@ -9,7 +9,7 @@ export const dynamicIntro = defineField({
   icon: Zap,
   fields: [
     defineField({
-      name: 'title',
+      name: 'eyebrow',
       type: 'string',
     }),
     richTextField,

@@ -23,7 +23,13 @@ export default defineConfig({
       defaultDocumentNode,
     }),
     visionTool(),
-    assist(),
+    assist({
+      translate: {
+        document: {
+          languageField: 'language',
+        },
+      },
+    }),
     unsplashImageAsset(),
     media(),
     iconPicker(),

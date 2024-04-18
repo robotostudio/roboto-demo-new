@@ -1,8 +1,24 @@
 'use client';
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@radix-ui/react-accordion';
+import { ChevronDownIcon, MenuIcon, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { FC, useState } from 'react';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerPortal,
+  DrawerTrigger,
+} from '~/components/ui/drawer';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,28 +28,11 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '~/components/ui/navigation-menu';
+import { useMediaQuery } from '~/lib/helper';
 import { cn } from '~/lib/utils';
 import { GetNavbarDataQueryResult } from '~/sanity.types';
 import { PageComponentProps } from '~/types';
 import { Buttons } from '../buttons';
-import { useMediaQuery } from '~/lib/helper';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerPortal,
-  DrawerTitle,
-  DrawerTrigger,
-} from '~/components/ui/drawer';
-import { ChevronDownIcon, MenuIcon, X } from 'lucide-react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@radix-ui/react-accordion';
 
 import { SanityIcon } from '../sanity-icon';
 
@@ -120,73 +119,93 @@ export const NavItem: FC<{ data: NavN }> = ({ data }) => {
   );
 };
 
-export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({ data }) => {
+export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
+  data,
+}) => {
   const { buttons, links, logo } = data ?? {};
   const [openDrawer, setOpenDrawer] = useState(false);
   return (
-    <>
-      <Drawer direction="right" open={openDrawer} onOpenChange={setOpenDrawer}>
-        <DrawerTrigger className="md:hidden">
-          <MenuIcon />
-        </DrawerTrigger>
-        <DrawerPortal>
-          <DrawerContent>
-            <DrawerHeader className="flex justify-between">
-              <Link href="/" onClick={() => setOpenDrawer(false)}>
-                <Image src={logo ?? ''} alt="logo" width={80} height={40} priority />
-              </Link>
-              <DrawerClose asChild>
-                <X />
-              </DrawerClose>
-            </DrawerHeader>
-            <div className="mt-6 flex flex-col pl-4">
-              <NavigationMenu>
-                <NavigationMenuList className="flex flex-col items-start gap-4">
-                  {Array.isArray(links) &&
-                    links.map((link) =>
-                      link._type === 'navLink' ? (
-                        <Link href={link?.url?.href ?? '#'} className="!ml-0" onClick={() => setOpenDrawer(false)}>
-                          {link.title}
-                        </Link>
-                      ) : (
-                        <Accordion type="single" collapsible className="!ml-0">
-                          <AccordionItem value={link._key}>
-                            <AccordionTrigger className="flex items-center gap-2">
-                              {link.title}{' '}
-                              <ChevronDownIcon className="h-4 w-4" />{' '}
-                            </AccordionTrigger>
-                            <AccordionContent>
-                              <ul className="ml-4 mt-4 flex flex-col items-start gap-4">
-                                {Array.isArray(link?.columns) &&
-                                  link.columns.map((column) => (
-                                    <li>
-                                      <Link href={column?.url?.href ?? '#'} onClick={() => setOpenDrawer(false)}>
-                                        {column.title}
-                                      </Link>
-                                    </li>
-                                  ))}
-                              </ul>
-                            </AccordionContent>
-                          </AccordionItem>
-                        </Accordion>
-                      ),
-                    )}
-                </NavigationMenuList>
-              </NavigationMenu>
+    <Drawer direction="right" open={openDrawer} onOpenChange={setOpenDrawer}>
+      <DrawerTrigger className="md:hidden">
+        <MenuIcon />
+      </DrawerTrigger>
+      <DrawerPortal>
+        <DrawerContent>
+          <DrawerHeader className="flex justify-between">
+            <Link href="/" onClick={() => setOpenDrawer(false)}>
+              <Image
+                src={logo ?? ''}
+                alt="logo"
+                width={80}
+                height={40}
+                priority
+              />
+            </Link>
+            <DrawerClose asChild>
+              <X />
+            </DrawerClose>
+          </DrawerHeader>
+          <div className="mt-6 flex flex-col pl-4">
+            <NavigationMenu>
+              <NavigationMenuList className="flex flex-col items-start gap-4">
+                {Array.isArray(links) &&
+                  links.map((link) =>
+                    link._type === 'navLink' ? (
+                      <Link
+                        key={link._key}
+                        href={link?.url?.href ?? '#'}
+                        className="!ml-0"
+                        onClick={() => setOpenDrawer(false)}
+                      >
+                        {link.title}
+                      </Link>
+                    ) : (
+                      <Accordion
+                        key={link._key}
+                        type="single"
+                        collapsible
+                        className="!ml-0"
+                      >
+                        <AccordionItem value={link._key}>
+                          <AccordionTrigger className="flex items-center gap-2">
+                            {link.title} <ChevronDownIcon className="h-4 w-4" />{' '}
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <ul className="ml-4 mt-4 flex flex-col items-start gap-4">
+                              {Array.isArray(link?.columns) &&
+                                link.columns.map((column) => (
+                                  <li key={column._key}>
+                                    <Link
+                                      href={column?.url?.href ?? '#'}
+                                      onClick={() => setOpenDrawer(false)}
+                                    >
+                                      {column.title}
+                                    </Link>
+                                  </li>
+                                ))}
+                            </ul>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    ),
+                  )}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+          <DrawerFooter className="flex">
+            <div className="flex">
+              <Buttons buttons={buttons} />
             </div>
-            <DrawerFooter className="flex">
-              <div className="flex">
-                <Buttons buttons={buttons} />
-              </div>
-            </DrawerFooter>
-          </DrawerContent>
-        </DrawerPortal>
-      </Drawer>
-    </>
+          </DrawerFooter>
+        </DrawerContent>
+      </DrawerPortal>
+    </Drawer>
   );
 };
 
-export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({ data }) => {
+export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
+  data,
+}) => {
   const { buttons, links, logo } = data ?? {};
   const isDesktop = useMediaQuery('(min-width: 768px)');
   return (
@@ -194,7 +213,14 @@ export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
       <div className="flex items-center ">
         {logo && (
           <Link href="/">
-            <Image src={logo} alt="logo" width={80} height={40} priority />
+            <Image
+              src={logo}
+              className="h-auto"
+              alt="logo"
+              width={80}
+              height={40}
+              priority
+            />
           </Link>
         )}
       </div>
