@@ -126,8 +126,8 @@ export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
   const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <Drawer direction="right" open={openDrawer} onOpenChange={setOpenDrawer}>
-      <DrawerTrigger className="md:hidden">
-        <MenuIcon />
+      <DrawerTrigger className="md:hidden" aria-label="Menu" id="menu-button">
+        <MenuIcon aria-label="Menu-icon" id="menu-icon" />
       </DrawerTrigger>
       <DrawerPortal>
         <DrawerContent>
