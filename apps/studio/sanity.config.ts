@@ -5,6 +5,7 @@ import { schemaTypes } from './schemaTypes';
 import { defaultDocumentNode, structure } from './structure';
 import { assist } from '@sanity/assist';
 import { documentInternationalization } from '@sanity/document-internationalization';
+import { abTest } from 'sanity-plugin-roboto-ab-test';
 import { media } from 'sanity-plugin-media';
 import { iconPicker } from 'sanity-plugin-icon-picker';
 import { internationalizedDocuments } from './schemaTypes/documents';
@@ -22,6 +23,7 @@ export default defineConfig({
       structure,
       defaultDocumentNode,
     }),
+    abTest({ schemaTypes: ['page', 'blog'] }),
     visionTool(),
     assist(),
     unsplashImageAsset(),

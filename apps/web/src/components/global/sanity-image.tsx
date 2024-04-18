@@ -50,8 +50,9 @@ export const SanityImage: FC<{
         src={urlFor(image.asset)
           .width(dimension.width)
           .height(dimension.height)
-          .quality(100)
+          .quality(100).format("webp")
           .url()}
+          decoding='async'
         sizes="(max-width: 640px) 100vw, 80vw"
         width={dimension.width}
         height={dimension.height}

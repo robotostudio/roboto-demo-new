@@ -22,9 +22,10 @@ import {
 import { SchemaType, SingletonType } from './schemaTypes';
 import { getTitleCase } from './utils/helper';
 import { PreviewIFrame } from './components/preview';
+import { ABTestPane } from 'sanity-plugin-roboto-ab-test';
 
 type Base<T = SchemaType> = {
-  type: T;
+  type: T | string;
   preview?: boolean;
   title?: string;
   icon?: LucideIcon;
@@ -141,6 +142,7 @@ export const structure = (S: StructureBuilder, context: StructureResolverContext
       }),
       createList({ S, type: 'form', icon: ClipboardType }),
       S.divider(),
+      createList({ S, type: 'abTest' }),
       createNestedList({
         S,
         title: 'Settings',
@@ -159,10 +161,12 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
 ) => {
   const { schemaType } = context ?? {};
 
-  return S.document().views([
-    S.view.form(),
-    ...(previewTypes.includes(schemaType)
-      ? [S.view.component(PreviewIFrame).options({ context }).title('Preview')]
-      : []),
-  ]);
+  const previewViews = previewTypes.includes(schemaType)
+    ? [S.view.component(PreviewIFrame).options({ context }).title('Preview')]
+    : [];
+  const abTestViews = ['page', 'blog'].includes(schemaType)
+    ? [S.view.component(ABTestPane).options({ context }).title('AB Test')]
+    : [];
+
+  return S.document().views([S.view.form(), ...previewViews, ...abTestViews]);
 };
