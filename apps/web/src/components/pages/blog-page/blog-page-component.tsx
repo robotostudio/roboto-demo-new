@@ -53,6 +53,7 @@ export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
                 image={image}
                 className="aspect-video"
                 width={800}
+                loading="eager"
                 height={450}
               />
             </div>
@@ -94,6 +95,7 @@ export const BlogSlugPage: FC<BlogSlugPageProps> = ({ data }) => {
             image={image}
             width={800}
             height={400}
+            loading="eager"
             className="rounded-lg shadow-2xl"
           />
         </div>

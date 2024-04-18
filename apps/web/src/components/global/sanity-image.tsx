@@ -1,6 +1,7 @@
 import { getImageDimensions } from '@sanity/asset-utils';
 import Image, { ImageProps } from 'next/image';
 import { FC } from 'react';
+import { preload } from 'react-dom';
 import { urlFor } from '~/lib/sanity';
 
 import { SanityImage as SanityImageProp } from '~/types';
@@ -30,13 +31,23 @@ export const getImageBlurProps = (image?: SanityImageProp) => {
   return {};
 };
 
-export const SanityImage: FC<{
+type SanityImageProps = {
   image?: SanityImageProp;
   className?: string;
   options?: Omit<ImageProps, 'className' | 'src' | 'width' | 'height'>;
   width?: number;
   height?: number;
-}> = ({ image, className, options, height, width }) => {
+  loading?: 'lazy' | 'eager';
+};
+
+export const SanityImage: FC<SanityImageProps> = ({
+  image,
+  className,
+  options,
+  loading = 'lazy',
+  height,
+  width,
+}) => {
   if (!image?.asset) return <></>;
 
   const dimension = getDimension(image.asset, width, height);
@@ -47,15 +58,23 @@ export const SanityImage: FC<{
 
   const blurProps = getImageBlurProps(image);
 
+  const url = urlFor(_image)
+    .width(dimension.width)
+    .height(dimension.height)
+    .quality(100)
+    .url();
+
+  if (loading === 'eager') {
+    preload(url, {
+      as: 'image',
+    });
+  }
+
   return (
     <div className="flex flex-col items-center justify-center">
       <Image
         alt={image?.asset._ref ?? 'image-broken'}
-        src={urlFor(_image)
-          .width(dimension.width)
-          .height(dimension.height)
-          .quality(100)
-          .url()}
+        src={url}
         sizes="(max-width: 640px) 80vw, 80vw"
         width={dimension.width}
         height={dimension.height}
