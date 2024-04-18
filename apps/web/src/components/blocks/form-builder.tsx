@@ -60,7 +60,6 @@ const FormField: FC<{ field: IFormField }> = ({ field }) => {
 export const FormBuilderBlock: FC<Form> = ({
   fields,
   title,
-  description,
   formId,
   buttonText = 'Submit',
 }) => {
@@ -90,11 +89,11 @@ export const FormBuilderBlock: FC<Form> = ({
           {title}
         </h2>
       </div>
-      {description && (
+      {/* {description && (
         <div className="mx-auto max-w-2xl text-center">
           <RichText value={description} />
         </div>
-      )}
+      )} */}
 
       <form
         action={action}

@@ -8,7 +8,6 @@ export type SplitFormBlockProps = Omit<SplitForm, 'form'> & { form: Form };
 export const SplitFormBlock: FC<SplitFormBlockProps> = ({
   form,
   image,
-  description,
   title,
 }) => {
   return (
@@ -18,7 +17,7 @@ export const SplitFormBlock: FC<SplitFormBlockProps> = ({
           <SanityImage image={image} />
         </div>
         <div className="flex items-center justify-center">
-          <FormBuilderBlock {...form} title={title} description={description} />
+          <FormBuilderBlock {...form} title={title} />
         </div>
       </div>
     </section>
