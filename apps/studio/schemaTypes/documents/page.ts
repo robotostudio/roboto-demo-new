@@ -28,7 +28,6 @@ export const page = defineType({
       type: 'text',
       rows: 2,
       group: CONST.MAIN_CONTENT,
-
       validation: (rule) => [
         rule.required(),
         rule

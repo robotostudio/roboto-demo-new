@@ -140,6 +140,7 @@ export const structure = (S: StructureBuilder, context: StructureResolverContext
         list: { type: 'blog', icon: FileText },
       }),
       createList({ S, type: 'form', icon: ClipboardType }),
+      createList({ S, type: 'marketingModal', icon: ClipboardType }),
       S.divider(),
       createNestedList({
         S,

@@ -6,69 +6,6 @@ import { SanityImage } from '~/types';
 export const localeMatch = `select(($locale == 'en-GB' || $locale == '' ) => 
   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)`;
 
-// const refExtend = (name: string, isArray = false, ext: Array<string> = []) =>
-//   `defined(${name})=>{${name}${isArray ? '[]->' : '->'}{...,${ext.join(',')}}}`;
-
-// const extent = (
-//   name: string,
-//   isArray = false,
-//   ext: Array<string> = [],
-//   spread = true,
-// ) =>
-//   `defined(${name})=>{${name}${isArray ? '[]' : ''}{${
-//     spread ? '...,' : ''
-//   } ${ext.join(',')}}}`;
-
-// const selectConditions = (
-//   key: string,
-//   inputs: string[],
-//   fallback?: unknown,
-// ) => {
-//   const ifCondition = [
-//     ...inputs.map((input) => `defined(${input})=>${input}`),
-//     JSON.stringify(fallback),
-//   ].join(',');
-//   return `"${key}": select(${ifCondition})`;
-// };
-
-// const coalesceConditions = (key: string, inputs: string[]) => {
-//   return `"${key}": coalesce(${inputs.join(',')})` as const;
-// };
-
-// const internal = `internal->slug.current`;
-
-// const extractLink = `"href": select(
-//   type== "internal"=>internal->slug.current,
-//   type== "external"=>external,
-//   "#"
-//   )`;
-
-// const button = extent('url', false, ['openInNewTab', extractLink], false);
-
-// const extractIcon = extent('icon', false, ['svg'], false);
-
-// const buttons = extent('buttons', true, [button, extractIcon]);
-
-// const customLink = extent(
-//   'customLink',
-//   false,
-//   [extractLink, 'openInNewTab'],
-//   false,
-// );
-
-// const markDefs = extent('markDefs', true, [customLink]);
-
-// const richText = extent('richText', true, [markDefs]);
-
-// const link = extent('link', false, [button], false);
-
-// const dropDownLink = extent('columns', true, [button, extractIcon]);
-
-// const links = extent('links', true, [button, dropDownLink]);
-
-// const form = refExtend('form', false, []);
-
-// const pageBuilder = extent('pageBuilder', true, [buttons, richText, form]);
 
 export type GetSlugPageDataQueryResponse = {
   title: string;
@@ -274,3 +211,13 @@ export const getSlugPageDataQuery = groq`
     
 }
 `;
+
+export const getMarketingModalDataQuery = groq`
+*[_type == "marketingModal" && isActive][0]{
+    _id,
+    title,
+    description,
+    ${_form}    
+}
+`;
+

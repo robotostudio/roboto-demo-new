@@ -86,7 +86,7 @@ export type CarouselField = {
 
 export type DynamicIntro = {
   _type: "dynamicIntro";
-  title?: string;
+  eyebrow?: string;
   richText?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -169,7 +169,37 @@ export type ImageCarousel = {
 export type SplitForm = {
   _type: "splitForm";
   title?: string;
-  description?: string;
+  richText?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "inline";
+    listItem?: "number" | "bullet" | "check";
+    markDefs?: Array<{
+      customLink?: CustomUrl;
+      _type: "customLink";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    caption?: string;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
   form?: {
     _ref: string;
     _type: "reference";
@@ -412,6 +442,26 @@ export type Navbar = {
   } & NavLink) | ({
     _key: string;
   } & NavDropdownColumn)>;
+  buttons?: Array<{
+    _key: string;
+  } & Button>;
+};
+
+export type MarketingModal = {
+  _id: string;
+  _type: "marketingModal";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  isActive?: boolean;
+  title?: string;
+  description?: string;
+  form?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "form";
+  };
   buttons?: Array<{
     _key: string;
   } & Button>;
@@ -912,6 +962,11 @@ export type SitemapQueryResult = Array<{
 } | {
   slug: null;
   _updatedAt: string;
+  _type: "marketingModal";
+  _id: string;
+} | {
+  slug: null;
+  _updatedAt: string;
   _type: "media.tag";
   _id: string;
 } | {
@@ -1358,7 +1413,38 @@ export type GetMainPageDataQueryResult = {
     _key: string;
     _type: "splitForm";
     buttons: null;
-    richText: null;
+    richText: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      caption?: string;
+      alt?: string;
+      _type: "image";
+      markDefs: null;
+    } | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
+      listItem?: "bullet" | "check" | "number";
+      markDefs: Array<{
+        customLink: {
+          openInNewTab: boolean | null;
+          href: string | null;
+        } | null;
+        _type: "customLink";
+      }> | null;
+      level?: number;
+      _type: "block";
+    }> | null;
     form: {
       _id: string;
       _type: "form";
@@ -1570,7 +1656,38 @@ export type GetSlugPageDataQueryResult = {
     _key: string;
     _type: "splitForm";
     buttons: null;
-    richText: null;
+    richText: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      caption?: string;
+      alt?: string;
+      _type: "image";
+      markDefs: null;
+    } | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
+      listItem?: "bullet" | "check" | "number";
+      markDefs: Array<{
+        customLink: {
+          openInNewTab: boolean | null;
+          href: string | null;
+        } | null;
+        _type: "customLink";
+      }> | null;
+      level?: number;
+      _type: "block";
+    }> | null;
     form: {
       _id: string;
       _type: "form";
@@ -1587,5 +1704,27 @@ export type GetSlugPageDataQueryResult = {
       buttonText?: string;
     } | null;
   }> | null;
+} | null;
+// Variable: getMarketingModalDataQuery
+// Query: *[_type == "marketingModal" && isActive][0]{    _id,    title,    description,    defined(form)=>{  form->{    ...,  }}    }
+export type GetMarketingModalDataQueryResult = {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  form: {
+    _id: string;
+    _type: "form";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    label?: string;
+    title?: string;
+    formId?: string;
+    language?: string;
+    fields?: Array<{
+      _key: string;
+    } & FormField>;
+    buttonText?: string;
+  } | null;
 } | null;
 
