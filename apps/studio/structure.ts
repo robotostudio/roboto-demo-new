@@ -22,10 +22,10 @@ import {
 import { SchemaType, SingletonType } from './schemaTypes';
 import { getTitleCase } from './utils/helper';
 import { PreviewIFrame } from './components/preview';
-import { ABTestPane } from 'sanity-plugin-roboto-ab-test';
+import { ABTestPane, abTestStructureList } from 'sanity-plugin-roboto-ab-test';
 
 type Base<T = SchemaType> = {
-  type: T | string;
+  type: T;
   preview?: boolean;
   title?: string;
   icon?: LucideIcon;
@@ -127,7 +127,10 @@ const createList = ({ S, type, icon, title }: CreateList) => {
     .icon(icon ?? File);
 };
 
-export const structure = (S: StructureBuilder, context: StructureResolverContext) =>
+export const structure = (
+  S: StructureBuilder,
+  context: StructureResolverContext,
+) =>
   S.list()
     .title('Content')
     .items([
@@ -142,7 +145,7 @@ export const structure = (S: StructureBuilder, context: StructureResolverContext
       }),
       createList({ S, type: 'form', icon: ClipboardType }),
       S.divider(),
-      createList({ S, type: 'abTest' }),
+      abTestStructureList(S),
       createNestedList({
         S,
         title: 'Settings',

@@ -205,9 +205,7 @@ export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
 
 export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
   data,
-  feature,
 }) => {
-  console.log('🚀 ~ feature:', feature);
   const { buttons, links, logo } = data ?? {};
   const isDesktop = useMediaQuery('(min-width: 768px)', true);
   return (
@@ -230,12 +228,7 @@ export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
             </NavigationMenu>
           </div>
           <div className="ml-auto">
-            {feature !== 'without-cta' && (
-              <Buttons
-                buttons={buttons}
-                showIcon={feature !== 'without-button-icons'}
-              />
-            )}
+            <Buttons buttons={buttons} />
           </div>
         </>
       ) : (

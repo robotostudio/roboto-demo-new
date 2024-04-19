@@ -3,10 +3,13 @@ import { getLocalizedSlug, handleErrors } from '~/lib/helper';
 import { sanityFetch } from '~/lib/sanity';
 import {
   getAllSlugPagePathsQuery,
+  getPageLinkedFeatureFlagVariantQuery,
+  getPageLinkedFeatureFlagsQuery,
   getSlugPageDataQuery,
 } from '~/lib/sanity/query';
 import {
   GetAllSlugPagePathsQueryResult,
+  GetPageLinkedFeatureFlagsQueryResult,
   GetSlugPageDataQueryResult,
 } from '~/sanity.types';
 
@@ -49,3 +52,25 @@ export const getAllSlugPagePaths = async () => {
   });
   return paths;
 };
+
+export const getPageLinkedFeatureFlags = async (id: string) => {
+  return await handleErrors(
+    sanityFetch<GetPageLinkedFeatureFlagsQueryResult>({
+      query: getPageLinkedFeatureFlagsQuery,
+      params: { id },
+    }),
+  );
+};
+
+export const getPageLinkedFeatureFlagVariant = async (
+  id: string,
+  key: string,
+) => {
+  return await handleErrors(
+    sanityFetch<{ slug: string; language: Locale } | null>({
+      query: getPageLinkedFeatureFlagVariantQuery,
+      params: { id, key },
+    }),
+  );
+};
+
