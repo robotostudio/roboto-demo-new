@@ -36,3 +36,6 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+.yalc
+yalc.lock
+yalc.sig
