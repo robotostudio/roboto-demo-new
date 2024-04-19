@@ -38,11 +38,9 @@ export const generateMetadata = async ({
 
 const getPageVariantData = async (slug: string, locale: Locale) => {
   const [data, err] = await getSlugPageData(slug, locale);
-
   if (err || !data?._id) {
     return notFound();
   }
-
   const [featureFlag] = await getPageLinkedFeatureFlags(data._id);
   if (featureFlag) {
     const bootStrapData = await getBootstrapData();

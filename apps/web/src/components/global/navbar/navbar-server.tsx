@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { getBootstrapData } from '~/lib/posthog';
 import { getNavbarData } from './navbar-api';
 import { NavbarClient } from './navbar.client';
 
