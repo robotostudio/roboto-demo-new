@@ -15,21 +15,18 @@ export type CarouselBlockProps = Pick<ImageCarouselBlockProps, 'carousel'>;
 export const CarouselBlock: FC<CarouselBlockProps> = ({ carousel }) => {
   if (!Array.isArray(carousel)) return <></>;
   return (
-    <div className="grid grid-cols-2 gap-2">
-      {carousel.map((slide) => (
-        <div key={slide?._key}>
-          <div className="flex flex-col items-center">
-            <SanityImage
-              image={slide.image}
-              width={900}
-              height={600}
-              className="aspect-video h-auto w-auto"
-            />
-            <span>{slide?.caption}</span>
+    <section className="overflow-x-auto">
+      {/* Grid container - this is what makes them into a row of cards */}
+      <div className="grid grid-flow-col gap-4 bg-orange-500 p-4">
+        {carousel.map((slide) => (
+          // Card container - This contains the image and title, one below each other
+          <div key={slide?._key} className="w-[600px] bg-green-500">
+            <SanityImage image={slide.image} width={900} height={600} />
+            {slide?.caption && <span>{slide?.caption}</span>}
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </section>
   );
 };
 
@@ -41,21 +38,21 @@ export const ImageCarouselBlock: FC<ImageCarouselBlockProps> = ({
   title,
 }) => {
   return (
-    <section className="flex items-center justify-center">
-      <div className="mx-auto w-full max-w-6xl">
+    <section>
+      <div className="mx-auto w-full max-w-6xl bg-yellow-600">
         <div className="grid grid-cols-2 gap-2">
           <div className="grid gap-2">
             <span>{eyebrow}</span>
-            <Balancer>{title}</Balancer>
+            <h2 className="text-2xl">
+              <Balancer>{title}</Balancer>
+            </h2>
             <RichText value={richText} />
             <Buttons buttons={buttons} />
           </div>
           <div />
         </div>
-        <div className="my-10">
-          <CarouselBlock carousel={carousel} />
-        </div>
       </div>
+      <CarouselBlock carousel={carousel} />
     </section>
   );
 };
