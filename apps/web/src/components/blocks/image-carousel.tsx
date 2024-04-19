@@ -17,7 +17,7 @@ export const CarouselBlock: FC<CarouselBlockProps> = ({ carousel }) => {
   return (
     <section className="overflow-x-auto">
       {/* Grid container - this is what makes them into a row of cards */}
-      <div className="grid grid-flow-col gap-4 bg-orange-500 p-4">
+      <div className="grid grid-flow-col gap-4 bg-blue-500 p-4">
         {carousel.map((slide) => (
           // Card container - This contains the image and title, one below each other
           <div key={slide?._key} className="w-[600px] bg-green-500">
