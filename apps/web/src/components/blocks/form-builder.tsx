@@ -85,7 +85,7 @@ export const FormBuilderBlock: FC<Form> = ({
       id="form"
     >
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
           {title}
         </h2>
       </div>
@@ -137,7 +137,6 @@ export const FormBuilderBlock: FC<Form> = ({
     </div>
   );
 };
-
 
 export const PlainFormBuilder: FC<
   Form & {

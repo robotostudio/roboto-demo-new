@@ -55,7 +55,7 @@ export default async function LocaleLayout({
           <Suspense
             fallback={
               <div className="mx-auto max-w-7xl overflow-hidden bg-primary px-6 py-20 sm:py-24 lg:px-8">
-                <div className="flex h-full w-full items-center justify-center gap-2  text-gray-200">
+                <div className="flex h-full w-full items-center justify-center gap-2  text-slate-200">
                   <Loader2 className="animate-spin " />
                   Loading footer
                 </div>
