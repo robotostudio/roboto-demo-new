@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Hero, SanityKeyed } from '~/schema';
-import { Buttons } from '../global/buttons';
 import { SanityButtons } from '~/types';
+import { Buttons } from '../global/buttons';
 import { RichText } from '../global/richText';
 
 export type HeroBlockProps = Omit<SanityKeyed<Hero>, 'buttons'> & {

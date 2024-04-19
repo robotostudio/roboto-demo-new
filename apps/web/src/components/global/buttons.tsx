@@ -8,12 +8,12 @@ import { SanityIcon } from './sanity-icon';
 export type ButtonsProps = {
   buttons?: SanityButtons | null;
   wrapperProps?: ComponentPropsWithoutRef<'div'>;
+  showIcon?: boolean;
 } & ButtonProps;
 
-const SanityLinkButton: FC<{ button: SanityButton } & ButtonProps> = ({
-  button,
-  ...props
-}) => {
+const SanityLinkButton: FC<
+  { button: SanityButton; showIcon: boolean } & ButtonProps
+> = ({ button, showIcon, ...props }) => {
   const { buttonText, url, variant, icon } = button ?? {};
   // if param carry over needed
   // const search = useSearchParams();
@@ -26,7 +26,7 @@ const SanityLinkButton: FC<{ button: SanityButton } & ButtonProps> = ({
   return (
     <Link href={url.href} target={url.openInNewTab ? '_blank' : '_self'}>
       <Button {...props} variant={variant}>
-        {icon?.svg && (
+        {showIcon && icon?.svg && (
           <span className="grid size-7 place-items-center">
             <SanityIcon icon={icon} fontSize={16} />
           </span>
@@ -40,6 +40,7 @@ const SanityLinkButton: FC<{ button: SanityButton } & ButtonProps> = ({
 export const Buttons: FC<ButtonsProps> = ({
   buttons,
   wrapperProps,
+  showIcon = true,
   ...props
 }) => {
   if (!Array.isArray(buttons)) return <></>;
@@ -49,7 +50,13 @@ export const Buttons: FC<ButtonsProps> = ({
       className={cn('flex w-full items-center gap-4', wrapperProps?.className)}
     >
       {buttons.map((button) => (
-        <SanityLinkButton button={button} key={button._key} {...props} />
+        <SanityLinkButton
+          button={button}
+          key={button._key}
+          showIcon={showIcon}
+          // showIcon={icons}
+          {...props}
+        />
       ))}
     </div>
   );

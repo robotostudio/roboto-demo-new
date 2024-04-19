@@ -21,7 +21,6 @@ export const generateStaticParams = async () => {
   }));
   return pages;
 };
-
 export const generateMetadata = async ({
   params,
 }: PageParams<{ slug: string }>): Promise<Metadata> => {

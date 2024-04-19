@@ -1,3 +1,4 @@
+'use client';
 import { FC } from 'react';
 import { PageBuilderBlock } from '~/components/global/pagebuilder';
 import { GetSlugPageDataQueryResult, PageBuilder } from '~/sanity.types';
