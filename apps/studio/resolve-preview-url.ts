@@ -10,7 +10,9 @@ const baseUrl = window.location.hostname === 'localhost' ? localUrl : remoteUrl;
 
 export function resolvePreviewUrl(
   doc: SanityDocument & {
-    slug?: Slug;
+    slug?: {
+      current: string;
+    };
   },
 ) {
   const previewUrl = new URL(baseUrl);

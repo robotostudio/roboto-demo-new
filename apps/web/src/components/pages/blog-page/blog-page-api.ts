@@ -1,12 +1,12 @@
-import { Locale } from '~/config';
+import { LOCALIZED_SANITY_TAGS, Locale, SANITY_TAGS } from '~/config';
 import { getLocalizedSlug, handleErrors } from '~/lib/helper';
-import { sanityFetch } from '~/lib/sanity';
 import {
   getAllBlogIndexTranslationsQuery,
   getAllBlogsPathsQuery,
   getBlogIndexDataQuery,
   getBlogPageDataQuery,
 } from '~/lib/sanity/query';
+import { sanityServerFetch } from '~/lib/sanity/sanity-server-fetch';
 import {
   GetAllBlogIndexTranslationsQueryResult,
   GetAllBlogsPathsQueryResult,
@@ -21,32 +21,43 @@ export const cleanBlogSlug = (str: string) => {
 
 export const getAllBlogsPaths = async () => {
   return await handleErrors(
-    sanityFetch<GetAllBlogsPathsQueryResult>({ query: getAllBlogsPathsQuery }),
+    sanityServerFetch<GetAllBlogsPathsQueryResult>({
+      query: getAllBlogsPathsQuery,
+      tags: [SANITY_TAGS.blogs],
+    }),
   );
 };
 
 export const getAllBlogIndexTranslations = async () => {
   return await handleErrors(
-    sanityFetch<GetAllBlogIndexTranslationsQueryResult>({
+    sanityServerFetch<GetAllBlogIndexTranslationsQueryResult>({
       query: getAllBlogIndexTranslationsQuery,
+      tags: [SANITY_TAGS.blogIndex],
     }),
   );
 };
 
 export const getBlogPageData = async (slug: string, locale: Locale) => {
+  const localizedSlug = getLocalizedSlug(slug, locale, 'blog');
   return await handleErrors(
-    sanityFetch<GetBlogPageDataQueryResult>({
+    sanityServerFetch<GetBlogPageDataQueryResult>({
       query: getBlogPageDataQuery,
-      params: { slug: getLocalizedSlug(slug, locale, 'blog'), locale },
+      params: { slug: localizedSlug, locale },
+      tags: [
+        LOCALIZED_SANITY_TAGS.blogPage(locale),
+        SANITY_TAGS.blogPage,
+        localizedSlug,
+      ],
     }),
   );
 };
 
 export const getBlogIndexData = async (locale: Locale) => {
   return await handleErrors(
-    sanityFetch<GetBlogIndexDataQueryResult>({
+    sanityServerFetch<GetBlogIndexDataQueryResult>({
       query: getBlogIndexDataQuery,
       params: { locale },
+      tags: [LOCALIZED_SANITY_TAGS.blogIndex(locale), SANITY_TAGS.blogIndex],
     }),
   );
 };
