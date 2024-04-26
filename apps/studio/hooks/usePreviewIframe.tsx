@@ -12,7 +12,6 @@ export const usePreviewIframe = ({ ctx, document }: PreviewIframeOptions) => {
   const { schemaType, documentId } = ctx;
 
   const validation = useValidationStatus(documentId, schemaType);
-  console.log('🚀 ~ usePreviewIframe ~ validation:', validation);
 
   const status = useMemo(() => {
     if (validation.isValidating) {
