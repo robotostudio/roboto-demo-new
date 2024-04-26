@@ -1727,4 +1727,37 @@ export type GetMarketingModalDataQueryResult = {
     buttonText?: string;
   } | null;
 } | null;
+// Variable: getOGDataQuery
+// Query: *[_id == $id][0]{    _id,    "title":coalesce(title,ogTitle,""),    "description":coalesce(description,ogDescription,""),    "image":coalesce(image,seoImage,*[_type =="logo"][0].image).asset->url}
+export type GetOGDataQueryResult = {
+  _id: string;
+  title: null | "";
+  description: null | "";
+  image: null | string;
+} | {
+  _id: string;
+  title: string | null | "";
+  description: null | "";
+  image: null | string;
+} | {
+  _id: string;
+  title: string | null | "";
+  description: null | "";
+  image: string | null;
+} | {
+  _id: string;
+  title: string | null | "";
+  description: string | null | "";
+  image: null | string;
+} | {
+  _id: string;
+  title: string | "";
+  description: string | "";
+  image: null | string;
+} | {
+  _id: string;
+  title: string | "";
+  description: string | "";
+  image: string | null;
+} | null;
 

@@ -28,6 +28,7 @@ export const getMetaData = (data: any): Metadata => {
     icon,
     _id,
   } = data;
+  console.log('🚀 ~ getMetaData ~ data:', data);
 
   const meta = {
     seoTitle: seoTitle ?? title ?? '',
