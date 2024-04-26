@@ -1,3 +1,4 @@
+import { draftMode } from 'next/headers';
 import { LOCALIZED_SANITY_TAGS, Locale, SANITY_TAGS } from '~/config';
 import { getLocalizedSlug, handleErrors } from '~/lib/helper';
 import {
@@ -38,11 +39,14 @@ export const getAllBlogIndexTranslations = async () => {
 };
 
 export const getBlogPageData = async (slug: string, locale: Locale) => {
+  const { isEnabled } = draftMode();
+
   const localizedSlug = getLocalizedSlug(slug, locale, 'blog');
   return await handleErrors(
     sanityServerFetch<GetBlogPageDataQueryResult>({
       query: getBlogPageDataQuery,
       params: { slug: localizedSlug, locale },
+      preview: isEnabled,
       tags: [
         LOCALIZED_SANITY_TAGS.blogPage(locale),
         SANITY_TAGS.blogPage,
@@ -53,10 +57,12 @@ export const getBlogPageData = async (slug: string, locale: Locale) => {
 };
 
 export const getBlogIndexData = async (locale: Locale) => {
+  const { isEnabled } = draftMode();
   return await handleErrors(
     sanityServerFetch<GetBlogIndexDataQueryResult>({
       query: getBlogIndexDataQuery,
       params: { locale },
+      preview: isEnabled,
       tags: [LOCALIZED_SANITY_TAGS.blogIndex(locale), SANITY_TAGS.blogIndex],
     }),
   );

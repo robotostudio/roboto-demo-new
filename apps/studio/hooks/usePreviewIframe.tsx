@@ -12,11 +12,12 @@ export const usePreviewIframe = ({ ctx, document }: PreviewIframeOptions) => {
   const { schemaType, documentId } = ctx;
 
   const validation = useValidationStatus(documentId, schemaType);
+  console.log('🚀 ~ usePreviewIframe ~ validation:', validation, document);
 
   const status = useMemo(() => {
     if (validation.isValidating) {
       return {
-        loading: true,
+        loading: false,
         hasErrors: false,
       };
     } else {
@@ -35,7 +36,7 @@ export const usePreviewIframe = ({ ctx, document }: PreviewIframeOptions) => {
   const previewUrl = useMemo(() => {
     if (!document) return '';
     return resolvePreviewUrl(document as SanityDocument);
-  }, [document]);
+  }, []);
 
   return {
     ...status,
