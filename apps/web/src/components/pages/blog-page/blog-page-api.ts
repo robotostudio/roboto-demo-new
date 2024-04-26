@@ -1,12 +1,12 @@
 import { Locale } from '~/config';
 import { getLocalizedSlug, handleErrors } from '~/lib/helper';
-import { sanityFetch } from '~/lib/sanity';
 import {
   getAllBlogIndexTranslationsQuery,
   getAllBlogsPathsQuery,
   getBlogIndexDataQuery,
   getBlogPageDataQuery,
 } from '~/lib/sanity/query';
+import { sanityServerFetch } from '~/lib/sanity/sanity-server-fetch';
 import {
   GetAllBlogIndexTranslationsQueryResult,
   GetAllBlogsPathsQueryResult,
@@ -21,13 +21,15 @@ export const cleanBlogSlug = (str: string) => {
 
 export const getAllBlogsPaths = async () => {
   return await handleErrors(
-    sanityFetch<GetAllBlogsPathsQueryResult>({ query: getAllBlogsPathsQuery }),
+    sanityServerFetch<GetAllBlogsPathsQueryResult>({
+      query: getAllBlogsPathsQuery,
+    }),
   );
 };
 
 export const getAllBlogIndexTranslations = async () => {
   return await handleErrors(
-    sanityFetch<GetAllBlogIndexTranslationsQueryResult>({
+    sanityServerFetch<GetAllBlogIndexTranslationsQueryResult>({
       query: getAllBlogIndexTranslationsQuery,
     }),
   );
@@ -35,7 +37,7 @@ export const getAllBlogIndexTranslations = async () => {
 
 export const getBlogPageData = async (slug: string, locale: Locale) => {
   return await handleErrors(
-    sanityFetch<GetBlogPageDataQueryResult>({
+    sanityServerFetch<GetBlogPageDataQueryResult>({
       query: getBlogPageDataQuery,
       params: { slug: getLocalizedSlug(slug, locale, 'blog'), locale },
     }),
@@ -44,7 +46,7 @@ export const getBlogPageData = async (slug: string, locale: Locale) => {
 
 export const getBlogIndexData = async (locale: Locale) => {
   return await handleErrors(
-    sanityFetch<GetBlogIndexDataQueryResult>({
+    sanityServerFetch<GetBlogIndexDataQueryResult>({
       query: getBlogIndexDataQuery,
       params: { locale },
     }),

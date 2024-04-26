@@ -41,6 +41,7 @@ export default async function LocaleLayout({
   prefetchDNS('https://cdn.sanity.io');
 
   const { isEnabled } = draftMode();
+  console.log('🚀 ~ isEnabled:', { isEnabled });
   return (
     <html lang={locale}>
       <body>
