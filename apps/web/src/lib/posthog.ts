@@ -15,6 +15,8 @@ export function PostHogClient() {
   return posthogClient;
 }
 
+// phx_M40yNmvawEF441mxI3Jp5SpWR6GocqAb9CX6zrpZ0A1
+
 export const userDistinctId = () => {
   const cookie = cookies().get('user-id');
   if (cookie?.value) {

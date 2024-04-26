@@ -42,11 +42,14 @@ const getPageVariantData = async (slug: string, locale: Locale) => {
     return notFound();
   }
   const [featureFlag] = await getPageLinkedFeatureFlags(data._id);
+  console.info('has feature flag', featureFlag);
   if (featureFlag) {
     const bootStrapData = await getBootstrapData();
     const flag = bootStrapData?.featureFlags[featureFlag];
+    console.info('flag', flag);
     if (typeof flag === 'string') {
       const [variant] = await getPageLinkedFeatureFlagVariant(data._id, flag);
+      console.info('variant', variant);
       if (variant?.slug && variant?.language) {
         const [variantData] = await getSlugPageData(
           variant.slug,

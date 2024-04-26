@@ -10,6 +10,7 @@ import { media } from 'sanity-plugin-media';
 import { iconPicker } from 'sanity-plugin-icon-picker';
 import { internationalizedDocuments } from './schemaTypes/documents';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
+import { abTestDocumentTypes } from './utils/abTest';
 
 export default defineConfig({
   name: 'default',
@@ -23,7 +24,11 @@ export default defineConfig({
       structure,
       defaultDocumentNode,
     }),
-    abTest({ schemaTypes: ['page', 'blog'] }),
+    abTest({
+      schemaTypes: abTestDocumentTypes,
+      postHogApiKey: 'phx_M40yNmvawEF441mxI3Jp5SpWR6GocqAb9CX6zrpZ0A1',
+      postHogProjectId: '60207',
+    }),
     visionTool(),
     assist(),
     unsplashImageAsset(),
