@@ -173,7 +173,6 @@ export const isRelativeUrl = (url: string) =>
   url.startsWith('/') || url.startsWith('#') || url.startsWith('?');
 
 export const isValidUrl = (url: string) => {
-  console.log('🚀 ~ isValidUrl ~ url:', url.startsWith('/'));
   try {
     new URL(url);
     return true;

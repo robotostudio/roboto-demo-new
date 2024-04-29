@@ -22,7 +22,6 @@ import {
 import { SchemaType, SingletonType } from './schemaTypes';
 import { getTitleCase } from './utils/helper';
 import { PreviewIFrame } from './components/preview';
-import { validateDocument } from 'sanity';
 
 type Base<T = SchemaType> = {
   type: T;
