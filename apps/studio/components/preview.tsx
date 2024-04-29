@@ -13,15 +13,18 @@ import { BiLinkExternal } from 'react-icons/bi';
 import { UserViewComponent } from 'sanity/structure';
 import { usePreviewIframe } from '../hooks/usePreviewIframe';
 
+
+
+
 export function PreviewIFrame(
   props: ComponentProps<UserViewComponent>,
 ): JSX.Element {
-  const { document, options } = props;
+  const { document, options, documentId, schemaType } = props;
   const [id, setId] = useState(1);
   const iframe = useRef<HTMLIFrameElement>(null);
 
   const { hasErrors, loading, previewUrl, errors } = usePreviewIframe({
-    ctx: options as any,
+    ctx: { documentId, schemaType: schemaType.name },
     document: document.displayed,
   });
 

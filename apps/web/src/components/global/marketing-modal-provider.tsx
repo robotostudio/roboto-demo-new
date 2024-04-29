@@ -18,7 +18,7 @@ const getMarketingModals = async () => {
 export const MarketingModalProvider: FC = async () => {
   const [data, err] = await getMarketingModals();
 
-  if (!data || err) return <>Here</>;
+  if (!data || err) return <></>;
 
   return (
     <Suspense>
