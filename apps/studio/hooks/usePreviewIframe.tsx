@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
 import { SanityDocument, useValidationStatus } from 'sanity';
-import { DefaultDocumentNodeContext } from 'sanity/structure';
 import { resolvePreviewUrl } from '../resolve-preview-url';
 
 export type PreviewIframeOptions = {
-  ctx: Omit<DefaultDocumentNodeContext, 'documentId'> & { documentId: string };
+  ctx: { documentId: string; schemaType: string };
   document: Partial<SanityDocument>;
 };
 
@@ -12,7 +11,6 @@ export const usePreviewIframe = ({ ctx, document }: PreviewIframeOptions) => {
   const { schemaType, documentId } = ctx;
 
   const validation = useValidationStatus(documentId, schemaType);
-  console.log('🚀 ~ usePreviewIframe ~ validation:', validation, document);
 
   const status = useMemo(() => {
     if (validation.isValidating) {
