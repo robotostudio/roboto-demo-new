@@ -22,6 +22,7 @@ import {
 import { SchemaType, SingletonType } from './schemaTypes';
 import { getTitleCase } from './utils/helper';
 import { PreviewIFrame } from './components/preview';
+import { validateDocument } from 'sanity';
 
 type Base<T = SchemaType> = {
   type: T;
@@ -126,7 +127,10 @@ const createList = ({ S, type, icon, title }: CreateList) => {
     .icon(icon ?? File);
 };
 
-export const structure = (S: StructureBuilder, context: StructureResolverContext) =>
+export const structure = (
+  S: StructureBuilder,
+  context: StructureResolverContext,
+) =>
   S.list()
     .title('Content')
     .items([
@@ -158,12 +162,12 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
   S,
   context,
 ) => {
-  const { schemaType } = context ?? {};
+  const { schemaType, documentId } = context ?? {};
 
   return S.document().views([
     S.view.form(),
     ...(previewTypes.includes(schemaType)
-      ? [S.view.component(PreviewIFrame).options({ context }).title('Preview')]
+      ? [S.view.component(PreviewIFrame).options(context).title('Preview')]
       : []),
   ]);
 };

@@ -7,32 +7,56 @@ import {
   Text,
   ThemeProvider,
 } from '@sanity/ui';
-import { useEffect, useRef, useState } from 'react';
+import { ComponentProps, useRef, useState } from 'react';
 import { AiOutlineReload } from 'react-icons/ai';
 import { BiLinkExternal } from 'react-icons/bi';
-import { resolvePreviewUrl } from '../resolve-preview-url';
+import { UserViewComponent } from 'sanity/structure';
+import { usePreviewIframe } from '../hooks/usePreviewIframe';
 
-export function PreviewIFrame(props: any): JSX.Element {
+export function PreviewIFrame(
+  props: ComponentProps<UserViewComponent>,
+): JSX.Element {
   const { document, options } = props;
   const [id, setId] = useState(1);
-  const { displayed } = document;
-  const [displayUrl, setDisplayUrl] = useState('');
   const iframe = useRef<HTMLIFrameElement>(null);
+
+  const { hasErrors, loading, previewUrl, errors } = usePreviewIframe({
+    ctx: options as any,
+    document: document.displayed,
+  });
 
   function handleReload() {
     if (!iframe?.current) return;
     setId(id + 1);
   }
-  useEffect(() => {
-    const productionUrl = resolvePreviewUrl(displayed) ?? '';
-    setDisplayUrl(productionUrl);
-  }, [displayed]);
 
-  if (displayUrl === '')
+  if (hasErrors) {
+    return (
+      <ThemeProvider>
+        <Flex
+          direction="column"
+          padding={5}
+          align="center"
+          justify="center"
+          gap={2}
+        >
+          <Text>There are validation errors in this document.</Text>
+          <Text>Kindly resolve these first</Text>
+          <ul>
+            {errors?.map((error) => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </Flex>
+      </ThemeProvider>
+    );
+  }
+
+  if (loading || !previewUrl)
     return (
       <ThemeProvider>
         <Flex padding={5} align="center" justify="center">
-          <Spinner />
+          {loading ? <Spinner /> : <Text>No preview URL found</Text>}
         </Flex>
       </ThemeProvider>
     );
@@ -44,7 +68,7 @@ export function PreviewIFrame(props: any): JSX.Element {
           <Flex align="center" gap={2}>
             <Box flex={1}>
               <Text size={0} textOverflow="ellipsis">
-                {displayUrl}
+                {previewUrl}
               </Text>
             </Box>
             <Flex align="center" gap={1}>
@@ -64,7 +88,7 @@ export function PreviewIFrame(props: any): JSX.Element {
                 padding={[2]}
                 text="Open"
                 tone="primary"
-                onClick={() => window.open(displayUrl)}
+                onClick={() => window.open(previewUrl)}
               />
             </Flex>
           </Flex>
@@ -76,7 +100,7 @@ export function PreviewIFrame(props: any): JSX.Element {
               ref={iframe}
               title="preview"
               style={{ width: '100%', height: `100%`, maxHeight: `100%` }}
-              src={displayUrl}
+              src={previewUrl}
               referrerPolicy="origin-when-cross-origin"
               frameBorder={0}
             />

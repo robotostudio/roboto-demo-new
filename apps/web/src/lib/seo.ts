@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
-import { ogImageDimensions, webConfig } from '~/config';
+import { baseUrl, ogImageDimensions, webConfig } from '~/config';
 
-
-export const getPageUrl = (slug?: string) => `${webConfig.root}${slug ?? ''}`;
+export const getPageUrl = (slug?: string) => `${baseUrl}${slug ?? ''}`;
 
 const getOgImage = (options?: { title?: string; type: string; id: string }) => {
   const { title, type, id } = options ?? {};
@@ -28,6 +27,7 @@ export const getMetaData = (data: any): Metadata => {
     icon,
     _id,
   } = data;
+  console.log('🚀 ~ getMetaData ~ data:', data);
 
   const meta = {
     seoTitle: seoTitle ?? title ?? '',

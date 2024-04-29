@@ -2,23 +2,25 @@ import { Metadata } from 'next';
 import LiveQuery from 'next-sanity/preview/live-query';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { SlugPageClient } from '~/components/pages/slug-page/slug-page-client';
-import { SlugPage } from '~/components/pages/slug-page/slug-page-component';
 import {
   getAllSlugPagePaths,
   getSlugPageData,
 } from '~/components/pages/slug-page/slug-page-api';
+import { SlugPageClient } from '~/components/pages/slug-page/slug-page-client';
+import { SlugPage } from '~/components/pages/slug-page/slug-page-component';
 import { getLocalizedSlug } from '~/lib/helper';
+import { getSlugPageDataQuery } from '~/lib/sanity/query';
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
-import { getSlugPageDataQuery } from '~/lib/sanity/query';
 
 export const generateStaticParams = async () => {
   const slugs = await getAllSlugPagePaths();
+
   const pages = slugs.map((slug) => ({
     slug: slug?.slug,
     locale: slug?.locale,
   }));
+
   return pages;
 };
 

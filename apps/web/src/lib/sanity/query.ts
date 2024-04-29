@@ -196,6 +196,8 @@ export const getBlogPageDataQuery = groq`
 
 export const getMainPageDataQuery = groq`
 *[_type == "mainPage" && ${localeMatch}][0]{
+  _id,
+  _type,
   title,
   description,
   ${_pageBuilder}
@@ -204,6 +206,8 @@ export const getMainPageDataQuery = groq`
 
 export const getSlugPageDataQuery = groq`
 *[_type == "page" && slug.current == $slug ][0]{
+    _id,
+    _type,
     title,
     content,
     "slug":slug.current,
@@ -218,6 +222,29 @@ export const getMarketingModalDataQuery = groq`
     title,
     description,
     ${_form}    
+}
+`;
+// export const ogQueryWrapper = (condition: string) => groq`
+// *[${condition}][0]{
+//   ${[
+//     coalesceConditions('title', ['ogTitle', 'title']),
+//     coalesceConditions('description', ['ogDescription', 'description']),
+//     coalesceConditions('image', [
+//       'seoImage',
+//       'image',
+//       groq`*[_type =="logo"][0].image`,
+//     ]),
+//   ].join(',')}
+// }
+// `;
+
+export const getOGDataQuery = groq`
+*[_id == $id][0]{
+    _id,
+    "title":coalesce(ogTitle,title),
+    "description":coalesce(ogDescription,description),
+    "image":coalesce(seoImage,image,*[_type =="logo"][0].image).asset->url
+
 }
 `;
 
