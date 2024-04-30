@@ -63,7 +63,7 @@ export const getAllSlugPagePaths = async () => {
 
 export const getPageLinkedFeatureFlags = async (id: string) => {
   return await handleErrors(
-    sanityFetch<GetPageLinkedFeatureFlagsQueryResult>({
+    sanityServerFetch<GetPageLinkedFeatureFlagsQueryResult>({
       query: getPageLinkedFeatureFlagsQuery,
       params: { id },
     }),
@@ -75,7 +75,7 @@ export const getPageLinkedFeatureFlagVariant = async (
   key: string,
 ) => {
   return await handleErrors(
-    sanityFetch<{ slug: string; language: Locale } | null>({
+    sanityServerFetch<{ slug: string; language: Locale } | null>({
       query: getPageLinkedFeatureFlagVariantQuery,
       params: { id, key },
     }),

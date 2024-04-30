@@ -4885,6 +4885,13 @@
         },
         "optional": true
       },
+      "experimentId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "feature": {
         "type": "objectAttribute",
         "value": {
