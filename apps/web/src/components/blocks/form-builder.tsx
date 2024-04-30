@@ -3,11 +3,11 @@ import { CheckCircle, Loader2 } from 'lucide-react';
 import { FC, useEffect, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { formBuilderResponseHandler } from '~/action/formspark';
-import { Form, FormField as IFormField } from '~/schema';
 
 import { Input } from '../global/input';
 import { Button, ButtonProps } from '../ui/button';
 import { RichText } from '../global/richText';
+import { Form, FormField as IFormField } from '~/sanity.types';
 
 export const FormSubmitButton: FC<ButtonProps> = ({ children, ...props }) => {
   const { pending } = useFormStatus();
