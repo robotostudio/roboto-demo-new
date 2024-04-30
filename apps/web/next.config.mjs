@@ -8,10 +8,11 @@ const nextConfig = {
     ? {
         cacheMaxMemorySize: 0,
         logging: {
-          fetches: { fullUrl: true },
+          // fetches: { fullUrl: true },
         },
       }
     : {}),
+
   images: {
     remotePatterns: [{ hostname: 'cdn.sanity.io' }],
   },

@@ -49,8 +49,8 @@ export const getLocalizedSlug = (
 //   };
 // };
 
-export function useMediaQuery(query: string) {
-  const [value, setValue] = React.useState(false);
+export function useMediaQuery(query: string, initialValue = true) {
+  const [value, setValue] = React.useState(initialValue);
 
   React.useEffect(() => {
     function onChange(event: MediaQueryListEvent) {

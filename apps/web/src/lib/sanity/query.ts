@@ -3,11 +3,8 @@ import { Locale } from '~/config';
 import { Blog, BlogIndex, PageBuilder } from '~/sanity.types';
 import { SanityImage } from '~/types';
 
-
-
 export const localeMatch = `select(($locale == 'en-GB' || $locale == '' ) => 
   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)`;
-
 
 export type GetSlugPageDataQueryResponse = {
   title: string;
@@ -218,6 +215,16 @@ export const getSlugPageDataQuery = groq`
 }
 `;
 
+export const getPageLinkedFeatureFlagsQuery = groq`
+*[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].feature
+`;
+
+export const getPageLinkedFeatureFlagVariantQuery = groq`
+*[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].variants[@.key == $key][0].resource->{
+  "slug": string::split(slug.current, "/")[1],
+  language
+}
+`;
 export const getMarketingModalDataQuery = groq`
 *[_type == "marketingModal" && isActive][0]{
     _id,
@@ -249,4 +256,3 @@ export const getOGDataQuery = groq`
 
 }
 `;
-

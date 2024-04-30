@@ -4,11 +4,14 @@ import { LOCALIZED_SANITY_TAGS, Locale, SANITY_TAGS } from '~/config';
 import { getLocalizedSlug, handleErrors } from '~/lib/helper';
 import {
   getAllSlugPagePathsQuery,
+  getPageLinkedFeatureFlagVariantQuery,
+  getPageLinkedFeatureFlagsQuery,
   getSlugPageDataQuery,
 } from '~/lib/sanity/query';
 import { sanityServerFetch } from '~/lib/sanity/sanity-server-fetch';
 import {
   GetAllSlugPagePathsQueryResult,
+  GetPageLinkedFeatureFlagsQueryResult,
   GetSlugPageDataQueryResult,
 } from '~/sanity.types';
 
@@ -57,3 +60,25 @@ export const getAllSlugPagePaths = async () => {
   });
   return paths;
 };
+
+export const getPageLinkedFeatureFlags = async (id: string) => {
+  return await handleErrors(
+    sanityServerFetch<GetPageLinkedFeatureFlagsQueryResult>({
+      query: getPageLinkedFeatureFlagsQuery,
+      params: { id },
+    }),
+  );
+};
+
+export const getPageLinkedFeatureFlagVariant = async (
+  id: string,
+  key: string,
+) => {
+  return await handleErrors(
+    sanityServerFetch<{ slug: string; language: Locale } | null>({
+      query: getPageLinkedFeatureFlagVariantQuery,
+      params: { id, key },
+    }),
+  );
+};
+

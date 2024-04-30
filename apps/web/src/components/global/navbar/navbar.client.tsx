@@ -207,7 +207,7 @@ export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
   data,
 }) => {
   const { buttons, links, logo } = data ?? {};
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const isDesktop = useMediaQuery('(min-width: 768px)', true);
   return (
     <nav className="mx-auto flex w-full max-w-6xl justify-between bg-white  bg-opacity-90 p-4 px-4 backdrop-blur-2xl md:grid md:grid-cols-3 md:px-6">
       <div className="flex items-center ">
