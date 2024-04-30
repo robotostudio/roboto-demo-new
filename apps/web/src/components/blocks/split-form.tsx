@@ -1,9 +1,10 @@
 import { FC } from 'react';
-import { Form, SplitForm } from '~/schema';
 import { SanityImage } from '../global/sanity-image';
 import { FormBuilderBlock } from './form-builder';
+import { SplitForm } from '~/sanity.types';
+import { ProcessPageBuilderBlock } from '~/types';
 
-export type SplitFormBlockProps = Omit<SplitForm, 'form'> & { form: Form };
+export type SplitFormBlockProps = ProcessPageBuilderBlock<SplitForm>;
 
 export const SplitFormBlock: FC<SplitFormBlockProps> = ({
   form,
@@ -16,9 +17,11 @@ export const SplitFormBlock: FC<SplitFormBlockProps> = ({
         <div>
           <SanityImage image={image} />
         </div>
-        <div className="flex items-center justify-center">
-          <FormBuilderBlock {...form} title={title} />
-        </div>
+        {form && (
+          <div className="flex items-center justify-center">
+            <FormBuilderBlock {...form} title={title} />
+          </div>
+        )}
       </div>
     </section>
   );

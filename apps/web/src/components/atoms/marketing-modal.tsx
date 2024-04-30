@@ -9,8 +9,8 @@ import {
   DialogTitle,
 } from '~/components/ui/dialog';
 import { useMarketingModal } from '~/hooks/useMarketingModal';
-import { GetMarketingModalDataQueryResult } from '~/sanity.types';
-import { Form } from '~/schema';
+import { Form, GetMarketingModalDataQueryResult } from '~/sanity.types';
+
 import { PageComponentProps } from '~/types';
 import { PlainFormBuilder } from '../blocks/form-builder';
 

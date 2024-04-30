@@ -1,12 +1,11 @@
 import { FC } from 'react';
-import { Hero, SanityKeyed } from '~/schema';
+
+import { Hero } from '~/sanity.types';
+import { ProcessPageBuilderBlock } from '~/types';
 import { Buttons } from '../global/buttons';
-import { SanityButtons } from '~/types';
 import { RichText } from '../global/richText';
 
-export type HeroBlockProps = Omit<SanityKeyed<Hero>, 'buttons'> & {
-  buttons: SanityButtons;
-};
+export type HeroBlockProps = ProcessPageBuilderBlock<Hero>;
 
 export const HeroBlock: FC<HeroBlockProps> = ({
   title,

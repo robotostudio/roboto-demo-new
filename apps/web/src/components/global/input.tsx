@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FormField } from '~/schema';
+import { FormField } from '~/sanity.types';
 
 export const Input: FC<{ field: FormField }> = ({ field }) => {
   const { _type, fieldId, fieldName, inputType, placeholder, required } =

@@ -1,14 +1,12 @@
 import { FC } from 'react';
-import { Cta, SanityKeyed } from '~/schema';
-import { SanityButtons } from '~/types';
-import Meteors from '../global/meteor';
+
+import { Cta } from '~/sanity.types';
+import { ProcessPageBuilderBlock } from '~/types';
 import { Buttons } from '../global/buttons';
 import { RichText } from '../global/richText';
 import Ripple from '../global/ripple';
 
-export type CtaBlockProps = SanityKeyed<Cta> & {
-  buttons: SanityButtons;
-};
+export type CtaBlockProps = ProcessPageBuilderBlock<Cta>;
 
 export const CtaBlock: FC<CtaBlockProps> = ({ title, richText, buttons }) => {
   return (

@@ -1,14 +1,12 @@
 import { FC } from 'react';
 import Balancer from 'react-wrap-balancer';
-import { ImageCarousel } from '~/schema';
-import { SanityButtons } from '~/types';
+import { ImageCarousel } from '~/sanity.types';
 import { Buttons } from '../global/buttons';
 import { RichText } from '../global/richText';
 import { SanityImage } from '../global/sanity-image';
+import { ProcessPageBuilderBlock } from '~/types';
 
-export type ImageCarouselBlockProps = Omit<ImageCarousel, 'buttons'> & {
-  buttons: SanityButtons;
-};
+export type ImageCarouselBlockProps = ProcessPageBuilderBlock<ImageCarousel>;
 
 export type CarouselBlockProps = Pick<ImageCarouselBlockProps, 'carousel'>;
 

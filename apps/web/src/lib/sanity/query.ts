@@ -1,6 +1,6 @@
 import { groq } from 'next-sanity';
 import { Locale } from '~/config';
-import { Blog, BlogIndex, PageBuilder } from '~/schema';
+import { Blog, BlogIndex, PageBuilder } from '~/sanity.types';
 import { SanityImage } from '~/types';
 
 export const localeMatch = `select(($locale == 'en-GB' || $locale == '' ) => 
