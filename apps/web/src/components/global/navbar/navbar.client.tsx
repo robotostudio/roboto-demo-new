@@ -126,8 +126,8 @@ export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
   const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <Drawer direction="right" open={openDrawer} onOpenChange={setOpenDrawer}>
-      <DrawerTrigger className="md:hidden">
-        <MenuIcon />
+      <DrawerTrigger className="md:hidden" aria-label="Menu" id="menu-button">
+        <MenuIcon aria-label="Menu-icon" id="menu-icon" />
       </DrawerTrigger>
       <DrawerPortal>
         <DrawerContent>
@@ -161,10 +161,10 @@ export const MobileNav: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
                       </Link>
                     ) : (
                       <Accordion
+                        key={link._key}
                         type="single"
                         collapsible
                         className="!ml-0"
-                        key={link._key}
                       >
                         <AccordionItem value={link._key}>
                           <AccordionTrigger className="flex items-center gap-2">
@@ -209,11 +209,18 @@ export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
   const { buttons, links, logo } = data ?? {};
   const isDesktop = useMediaQuery('(min-width: 768px)', true);
   return (
-    <nav className="flex justify-between bg-white bg-opacity-90 p-4 backdrop-blur-2xl  md:grid md:grid-cols-3">
+    <nav className="mx-auto flex w-full max-w-6xl justify-between bg-white  bg-opacity-90 p-4 px-4 backdrop-blur-2xl md:grid md:grid-cols-3 md:px-6">
       <div className="flex items-center ">
         {logo && (
           <Link href="/">
-            <Image src={logo} alt="logo" width={80} height={40} priority />
+            <Image
+              src={logo}
+              className="h-auto"
+              alt="logo"
+              width={80}
+              height={40}
+              priority
+            />
           </Link>
         )}
       </div>

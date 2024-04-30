@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FC } from 'react';
 import Balancer from 'react-wrap-balancer';
-import { RichText } from '~/components/global/richText';
+import { ArticleRichText } from '~/components/global/richText';
 import { SanityImage } from '~/components/global/sanity-image';
 import {
   GetBlogIndexDataQueryResult,
@@ -52,10 +52,9 @@ export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
               <SanityImage
                 image={image}
                 className="aspect-video"
-                options={{
-                  loading: 'lazy',
-                  alt: title ?? slug,
-                }}
+                width={800}
+                loading="eager"
+                height={450}
               />
             </div>
           )}
@@ -76,26 +75,32 @@ export const BlogSlugPage: FC<BlogSlugPageProps> = ({ data }) => {
   return (
     <main className="animate-fade-up-slow mb-32 mt-12 md:mb-56">
       <div className="container">
-        <div className="mx-auto mb-12 flex max-w-[500px] flex-col text-center">
+        <div className="text-center">
           {_createdAt && (
-            <b className="mb-4 text-sm font-normal">
+            <time className="mb-2 text-sm font-normal text-slate-800">
               {new Date(_createdAt).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })}
-            </b>
+            </time>
           )}
-          <h1 className="animate-fade-up-slow my-4 text-lg">
+          <h1 className="animate-fade-up-slow my-4 text-5xl font-bold">
             <Balancer>{title}</Balancer>
           </h1>
-          <p>{description}</p>
+          <p className="mx-auto mb-8 max-w-2xl">{description}</p>
         </div>
-        <div>
-          <div className="relative mb-20 md:mb-[100px]">
-            <SanityImage image={image} />
-          </div>
-          <RichText value={richText} />
+        <div className="relative mb-20 md:mb-[100px]">
+          <SanityImage
+            image={image}
+            width={800}
+            height={400}
+            loading="eager"
+            className="rounded-lg shadow-2xl"
+          />
+        </div>
+        <div className="mx-auto max-w-2xl">
+          <ArticleRichText value={richText} />
         </div>
       </div>
     </main>

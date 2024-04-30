@@ -144,6 +144,7 @@ export const structure = (
         list: { type: 'blog', icon: FileText },
       }),
       createList({ S, type: 'form', icon: ClipboardType }),
+      createList({ S, type: 'marketingModal', icon: ClipboardType }),
       S.divider(),
       abTestStructureList(S),
       createNestedList({
@@ -162,7 +163,7 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
   S,
   context,
 ) => {
-  const { schemaType } = context ?? {};
+  const { schemaType, documentId } = context ?? {};
 
   const previewViews = previewTypes.includes(schemaType)
     ? [S.view.component(PreviewIFrame).options({ context }).title('Preview')]

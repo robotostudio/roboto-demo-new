@@ -30,30 +30,46 @@ export const getImageBlurProps = (image?: SanityImageProp) => {
   return {};
 };
 
-export const SanityImage: FC<{
+type SanityImageProps = {
   image?: SanityImageProp;
   className?: string;
   options?: Omit<ImageProps, 'className' | 'src' | 'width' | 'height'>;
   width?: number;
   height?: number;
-}> = ({ image, className, options, height, width }) => {
+  loading?: 'lazy' | 'eager';
+};
+
+export const SanityImage: FC<SanityImageProps> = ({
+  image,
+  className,
+  options,
+  loading = 'lazy',
+  height,
+  width,
+}) => {
   if (!image?.asset) return <></>;
 
   const dimension = getDimension(image.asset, width, height);
+  const _image = {
+    ...image,
+    _id: image.asset._ref,
+  };
 
   const blurProps = getImageBlurProps(image);
+
+  const url = urlFor(_image)
+    .width(dimension.width)
+    .height(dimension.height)
+    .quality(100)
+    .url();
 
   return (
     <div className="flex flex-col items-center justify-center">
       <Image
         alt={image?.asset._ref ?? 'image-broken'}
-        src={urlFor(image.asset)
-          .width(dimension.width)
-          .height(dimension.height)
-          .quality(100).format("webp")
-          .url()}
-          decoding='async'
-        sizes="(max-width: 640px) 100vw, 80vw"
+        src={url}
+        loading={loading}
+        sizes="(max-width: 640px) 80vw, 80vw"
         width={dimension.width}
         height={dimension.height}
         className={className}

@@ -5,7 +5,9 @@ import dynamic from 'next/dynamic';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
+import { preconnect, prefetchDNS } from 'react-dom';
 import { Footer } from '~/components/global/footer';
+import { MarketingModalProvider } from '~/components/global/marketing-modal-provider';
 import { Navbar } from '~/components/global/navbar';
 import { CSPostHogProvider } from '~/components/global/posthog-provider';
 import { PreviewBar } from '~/components/global/preview-bar';
@@ -22,6 +24,13 @@ const PreviewProvider = dynamic(
   () => import('~/components/global/preview-provider'),
 );
 
+export const metadata = {
+  title: {
+    template: '%s | Roboto Studio',
+    default: 'Roboto Studio',
+  },
+};
+
 export default async function LocaleLayout({
   children,
   params: { locale },
@@ -30,6 +39,9 @@ export default async function LocaleLayout({
   if (!isValidLocale) return notFound();
   unstable_setRequestLocale(locale);
   const bootstrapData = await getBootstrapData();
+
+  preconnect('https://cdn.sanity.io');
+  prefetchDNS('https://cdn.sanity.io');
 
   const { isEnabled } = draftMode();
   return (
@@ -56,6 +68,7 @@ export default async function LocaleLayout({
             >
               <Footer />
             </Suspense>
+            <MarketingModalProvider />
           </NextIntlClientProvider>
         </body>
       </CSPostHogProvider>

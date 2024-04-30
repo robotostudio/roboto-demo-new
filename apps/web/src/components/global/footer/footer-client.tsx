@@ -20,7 +20,7 @@ export const FooterClient: FC<PageComponentProps<GetFooterDataQueryResult>> = ({
                 {link?.url?.href && (
                   <Link
                     href={link.url.href}
-                    className="text-sm leading-6 text-gray-100 hover:text-gray-300"
+                    className="text-sm leading-6 text-slate-100 hover:text-slate-300"
                   >
                     {link.title}
                   </Link>
@@ -29,7 +29,7 @@ export const FooterClient: FC<PageComponentProps<GetFooterDataQueryResult>> = ({
             ))}
         </nav>
         <div className="mt-10 flex justify-center space-x-10"></div>
-        <p className="mt-10 text-center text-xs leading-5 text-gray-200">
+        <p className="mt-10 text-center text-xs leading-5 text-slate-200">
           &copy; 2020 Roboto Studio, Inc. All rights reserved.
         </p>
       </div>

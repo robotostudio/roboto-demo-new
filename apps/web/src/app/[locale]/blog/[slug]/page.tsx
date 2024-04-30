@@ -41,7 +41,6 @@ export default async function SlugPage({
 }: PageParams<{ slug: string }>) {
   const [data, err] = await getBlogPageData(params.slug, params.locale);
   if (!data || err) return notFound();
-
   const { isEnabled } = draftMode();
   if (isEnabled) {
     return (

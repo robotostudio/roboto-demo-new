@@ -77,6 +77,21 @@ const config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        ripple: {
+          '0%, 100%': {
+            transform: 'translate(-50%, -50%) scale(1)',
+          },
+          '50%': {
+            transform: 'translate(-50%, -50%) scale(0.8)',
+          },
+        },
+        wave: {
+          '0%': { transform: 'rotate(0deg)' },
+          '25%': { transform: 'rotate(40deg)' },
+          '50%': { transform: 'rotate(0deg)' },
+          '75%': { transform: 'rotate(40deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        },
         meteor: {
           '0%': { transform: 'rotate(215deg) translateX(0)', opacity: '1' },
           '70%': { opacity: '1' },
@@ -90,10 +105,12 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         meteor: 'meteor 5s linear infinite',
+        ripple: 'ripple 3400ms ease infinite',
+        wave: 'wave 1.5s ease-in-out',
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 } satisfies Config;
 
 export default config;

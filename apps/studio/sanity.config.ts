@@ -30,7 +30,13 @@ export default defineConfig({
       postHogProjectId: '60207',
     }),
     visionTool(),
-    assist(),
+    assist({
+      translate: {
+        document: {
+          languageField: 'language',
+        },
+      },
+    }),
     unsplashImageAsset(),
     media(),
     iconPicker(),

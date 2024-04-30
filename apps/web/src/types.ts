@@ -1,5 +1,5 @@
 import { Locale } from './config';
-import { CarouselField } from './sanity.types';
+import { CarouselField, Form } from './sanity.types';
 
 export type PreviewProps<T> = {
   initialData: T;
@@ -41,19 +41,25 @@ export type SanityButton = {
 
 export type SanityButtons = Array<SanityButton>;
 
-
 export type SanityImage = NonNullable<CarouselField['image']>;
-
 
 export type SitemapProjection = {
   _updatedAt: string;
   slug: string;
 };
 
+export type ProcessPageBuilderAddButtons<T> = T extends { buttons?: unknown }
+  ? Omit<T, 'buttons'> & { buttons?: SanityButtons }
+  : // eslint-disable-next-line @typescript-eslint/ban-types
+    T;
 
-export type ProcessPageBuilderBlock<T> = T &
-  (T extends { buttons?: any }
-    ? { buttons?: SanityButtons }
-    : // eslint-disable-next-line @typescript-eslint/ban-types
-      {});
+export type ProcessPageBuilderAddForm<T> = T extends { form?: unknown }
+  ? Omit<T, 'form'> & { form?: Form }
+  : // eslint-disable-next-line @typescript-eslint/ban-types
+    T;
+
+export type ProcessPageBuilderBlock<T> = ProcessPageBuilderAddButtons<
+  ProcessPageBuilderAddForm<T>
+>;
+
 

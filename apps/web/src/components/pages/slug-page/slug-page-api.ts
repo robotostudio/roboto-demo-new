@@ -1,12 +1,14 @@
-import { Locale } from '~/config';
+'use server';
+import { draftMode } from 'next/headers';
+import { LOCALIZED_SANITY_TAGS, Locale, SANITY_TAGS } from '~/config';
 import { getLocalizedSlug, handleErrors } from '~/lib/helper';
-import { sanityFetch } from '~/lib/sanity';
 import {
   getAllSlugPagePathsQuery,
   getPageLinkedFeatureFlagVariantQuery,
   getPageLinkedFeatureFlagsQuery,
   getSlugPageDataQuery,
 } from '~/lib/sanity/query';
+import { sanityServerFetch } from '~/lib/sanity/sanity-server-fetch';
 import {
   GetAllSlugPagePathsQueryResult,
   GetPageLinkedFeatureFlagsQueryResult,
@@ -14,18 +16,24 @@ import {
 } from '~/sanity.types';
 
 export const getSlugPageData = async (slug: string, locale: Locale) => {
+  const { isEnabled } = draftMode();
+
+  const localizedSlug = getLocalizedSlug(slug, locale);
   return await handleErrors(
-    sanityFetch<GetSlugPageDataQueryResult>({
+    sanityServerFetch<GetSlugPageDataQueryResult>({
       query: getSlugPageDataQuery,
-      params: { slug: getLocalizedSlug(slug, locale), locale },
+      params: { slug: localizedSlug, locale },
+      tags: [LOCALIZED_SANITY_TAGS.slugPage(locale), slug, localizedSlug],
+      preview: isEnabled,
     }),
   );
 };
 
 export const getAllSlugPagePaths = async () => {
   const [data, err] = await handleErrors(
-    sanityFetch<GetAllSlugPagePathsQueryResult>({
+    sanityServerFetch<GetAllSlugPagePathsQueryResult>({
       query: getAllSlugPagePathsQuery,
+      tags: [SANITY_TAGS.slugPage],
     }),
   );
   if (!data || err) {

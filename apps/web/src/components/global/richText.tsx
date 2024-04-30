@@ -113,6 +113,29 @@ export const RichText: FC<PortableRichTextProps> = ({ value, className }) => {
   );
 };
 
+export const ArticleRichText: FC<PortableRichTextProps> = ({
+  value,
+  className,
+}) => {
+  if (!Array.isArray(value)) return <></>;
+  return (
+    <div
+      className={cn(
+        `prose prose-slate prose-headings:scroll-m-24 prose-headings:font-bold prose-headings:text-opacity-90 prose-p:text-opacity-80 prose-a:underline prose-a:decoration-dotted  prose-ol:list-decimal prose-ol:text-opacity-80 prose-ul:list-disc prose-ul:text-opacity-80`,
+        className,
+      )}
+    >
+      <PortableText
+        onMissingComponent={(_args, { type }) => {
+          console.log('missing components', type);
+        }}
+        components={nativeComponents}
+        value={value}
+      />
+    </div>
+  );
+};
+
 export const PortableRichTextNative: FC<PortableRichTextProps> = ({
   value,
   className, // Added className prop

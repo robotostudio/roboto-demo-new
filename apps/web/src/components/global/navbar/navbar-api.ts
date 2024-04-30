@@ -1,11 +1,14 @@
+import { SANITY_TAGS } from '~/config';
 import { handleErrors } from '~/lib/helper';
-import { sanityFetch } from '~/lib/sanity';
 import { getNavbarDataQuery } from '~/lib/sanity/query';
+import { sanityServerFetch } from '~/lib/sanity/sanity-server-fetch';
 import { GetNavbarDataQueryResult } from '~/sanity.types';
 
 export const getNavbarData = async () => {
   return await handleErrors(
-    sanityFetch<GetNavbarDataQueryResult>({ query: getNavbarDataQuery }),
+    sanityServerFetch<GetNavbarDataQueryResult>({
+      query: getNavbarDataQuery,
+      tags: [SANITY_TAGS.navbar],
+    }),
   );
 };
-

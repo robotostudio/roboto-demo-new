@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FormField } from '~/schema';
+import { FormField } from '~/sanity.types';
 
 export const Input: FC<{ field: FormField }> = ({ field }) => {
   const { _type, fieldId, fieldName, inputType, placeholder, required } =
@@ -12,7 +12,7 @@ export const Input: FC<{ field: FormField }> = ({ field }) => {
       <div className="flex w-full flex-col">
         <label
           htmlFor={fieldId}
-          className="block text-sm font-semibold leading-6 text-gray-900"
+          className="block text-sm font-semibold leading-6 text-slate-900"
         >
           {fieldName}
           {required && <span className="text-red-600">*</span>}
@@ -25,7 +25,7 @@ export const Input: FC<{ field: FormField }> = ({ field }) => {
             id={fieldId}
             placeholder={placeholder}
             required={!!required}
-            className="focus:ring-primary-600 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+            className="focus:ring-primary-600 block w-full rounded-md border-0 px-3.5 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
           />
         </div>
       </div>
@@ -37,7 +37,7 @@ export const Input: FC<{ field: FormField }> = ({ field }) => {
       <div className="">
         <label
           htmlFor={fieldId}
-          className="block text-sm font-semibold leading-6 text-gray-900"
+          className="block text-sm font-semibold leading-6 text-slate-900"
         >
           {fieldName}
           {required && <span className="text-red-600">*</span>}
@@ -50,7 +50,7 @@ export const Input: FC<{ field: FormField }> = ({ field }) => {
             id={fieldId}
             placeholder={placeholder}
             required={!!required}
-            className="focus:ring-primary-600 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+            className="focus:ring-primary-600 block w-full rounded-md border-0 px-3.5 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
           />
         </div>
       </div>
@@ -66,7 +66,7 @@ export const Input: FC<{ field: FormField }> = ({ field }) => {
       <div className="">
         <label
           htmlFor={fieldId}
-          className="block text-sm font-semibold leading-6 text-gray-900"
+          className="block text-sm font-semibold leading-6 text-slate-900"
         >
           {fieldName}
           {required && <span className="text-red-600">*</span>}
@@ -79,7 +79,7 @@ export const Input: FC<{ field: FormField }> = ({ field }) => {
             placeholder={placeholder}
             required={!!required}
             autoComplete="tel"
-            className="focus:ring-primary-600 block w-full rounded-md border-0 px-3.5  py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+            className="focus:ring-primary-600 block w-full rounded-md border-0 px-3.5  py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
           />
         </div>
       </div>
@@ -91,7 +91,7 @@ export const Input: FC<{ field: FormField }> = ({ field }) => {
       <div className="">
         <label
           htmlFor={fieldId}
-          className="block text-sm font-semibold leading-6 text-gray-900"
+          className="block text-sm font-semibold leading-6 text-slate-900"
         >
           {fieldName}
           {required && <span className="text-red-600">*</span>}
@@ -103,7 +103,7 @@ export const Input: FC<{ field: FormField }> = ({ field }) => {
             required={!!required}
             placeholder={placeholder}
             rows={4}
-            className="focus:ring-primary-600 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+            className="focus:ring-primary-600 block w-full rounded-md border-0 px-3.5 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
             defaultValue={''}
           />
         </div>
@@ -118,7 +118,7 @@ export const Input: FC<{ field: FormField }> = ({ field }) => {
     return (
       <fieldset>
         {checkboxTitle && (
-          <legend className="text-sm font-semibold leading-6 text-gray-900">
+          <legend className="text-sm font-semibold leading-6 text-slate-900">
             {checkboxTitle}
           </legend>
         )}
@@ -145,13 +145,13 @@ export const Input: FC<{ field: FormField }> = ({ field }) => {
                   <div className="text-sm leading-6">
                     <label
                       htmlFor={value}
-                      className="font-medium text-gray-900"
+                      className="font-medium text-slate-900"
                     >
                       {label}
                       {required && <span className="text-red-600">*</span>}
                     </label>
                     {description && (
-                      <p className="text-gray-500">{description}</p>
+                      <p className="text-slate-500">{description}</p>
                     )}
                   </div>
                 </div>

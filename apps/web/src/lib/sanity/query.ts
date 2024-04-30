@@ -1,11 +1,10 @@
 import { groq } from 'next-sanity';
 import { Locale } from '~/config';
-import { Blog, BlogIndex, PageBuilder } from '~/schema';
+import { Blog, BlogIndex, PageBuilder } from '~/sanity.types';
 import { SanityImage } from '~/types';
 
 export const localeMatch = `select(($locale == 'en-GB' || $locale == '' ) => 
   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)`;
-
 
 export type GetSlugPageDataQueryResponse = {
   title: string;
@@ -196,6 +195,8 @@ export const getBlogPageDataQuery = groq`
 
 export const getMainPageDataQuery = groq`
 *[_type == "mainPage" && ${localeMatch}][0]{
+  _id,
+  _type,
   title,
   description,
   ${_pageBuilder}
@@ -203,8 +204,9 @@ export const getMainPageDataQuery = groq`
 `;
 
 export const getSlugPageDataQuery = groq`
-*[_type == "page" && slug.current == $slug && ${localeMatch}][0]{
+*[_type == "page" && slug.current == $slug ][0]{
     _id,
+    _type,
     title,
     content,
     "slug":slug.current,
@@ -221,5 +223,36 @@ export const getPageLinkedFeatureFlagVariantQuery = groq`
 *[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].variants[@.key == $key][0].resource->{
   "slug": string::split(slug.current, "/")[1],
   language
+}
+`;
+export const getMarketingModalDataQuery = groq`
+*[_type == "marketingModal" && isActive][0]{
+    _id,
+    title,
+    description,
+    ${_form}    
+}
+`;
+// export const ogQueryWrapper = (condition: string) => groq`
+// *[${condition}][0]{
+//   ${[
+//     coalesceConditions('title', ['ogTitle', 'title']),
+//     coalesceConditions('description', ['ogDescription', 'description']),
+//     coalesceConditions('image', [
+//       'seoImage',
+//       'image',
+//       groq`*[_type =="logo"][0].image`,
+//     ]),
+//   ].join(',')}
+// }
+// `;
+
+export const getOGDataQuery = groq`
+*[_id == $id][0]{
+    _id,
+    "title":coalesce(ogTitle,title),
+    "description":coalesce(ogDescription,description),
+    "image":coalesce(seoImage,image,*[_type =="logo"][0].image).asset->url
+
 }
 `;
