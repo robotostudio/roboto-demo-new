@@ -28,13 +28,13 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '~/components/ui/navigation-menu';
-import { useMediaQuery } from '~/lib/helper';
 import { cn } from '~/lib/utils';
 import { GetNavbarDataQueryResult } from '~/sanity.types';
 import { PageComponentProps } from '~/types';
 import { Buttons } from '../buttons';
 
 import { SanityIcon } from '../sanity-icon';
+import { useMediaQuery } from '~/hooks/useMediaQuery';
 
 type NavN = NonNullable<NonNullable<GetNavbarDataQueryResult>['links']>[number];
 

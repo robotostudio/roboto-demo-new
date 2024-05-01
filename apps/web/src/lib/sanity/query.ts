@@ -47,7 +47,7 @@ export const getBlogIndexDataQuery = groq`
     "seo":*[_type == "blogIndex" && ${localeMatch}][0]{
         ...,
     },
-    "blogs":*[_type == "blog" && ${localeMatch}]{
+    "blogs":*[_type == "blog" && !seoHideFromLists && ${localeMatch}]{
       _id,
       ${cardProjection},
       "slug":slug.current

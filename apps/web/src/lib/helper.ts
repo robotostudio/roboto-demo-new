@@ -1,6 +1,5 @@
 import { Locale } from '~/config';
 // import { SanityImage } from '~/types';
-import * as React from 'react';
 
 export async function handleErrors<T>(
   promise: Promise<T>,
@@ -49,20 +48,20 @@ export const getLocalizedSlug = (
 //   };
 // };
 
-export function useMediaQuery(query: string, initialValue = true) {
-  const [value, setValue] = React.useState(initialValue);
+// export function useMediaQuery(query: string, initialValue = true) {
+//   const [value, setValue] = React.useState(initialValue);
 
-  React.useEffect(() => {
-    function onChange(event: MediaQueryListEvent) {
-      setValue(event.matches);
-    }
+//   React.useEffect(() => {
+//     function onChange(event: MediaQueryListEvent) {
+//       setValue(event.matches);
+//     }
 
-    const result = matchMedia(query);
-    result.addEventListener('change', onChange);
-    setValue(result.matches);
+//     const result = matchMedia(query);
+//     result.addEventListener('change', onChange);
+//     setValue(result.matches);
 
-    return () => result.removeEventListener('change', onChange);
-  }, [query]);
+//     return () => result.removeEventListener('change', onChange);
+//   }, [query]);
 
-  return value;
-}
+//   return value;
+// }

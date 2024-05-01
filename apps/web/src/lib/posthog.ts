@@ -1,7 +1,7 @@
-import { randomUUID } from 'crypto';
+// import { randomUUID } from 'crypto';
 import { cookies } from 'next/headers';
 import { PostHog } from 'posthog-node';
-import { generateId } from './gen-id';
+import { uuidv4 } from 'uuidv7';
 
 export function PostHogClient() {
   const posthogClient = new PostHog(
@@ -22,7 +22,7 @@ export const userDistinctId = () => {
   if (cookie?.value) {
     return cookie.value;
   }
-  return randomUUID();
+  return uuidv4();
 };
 
 export async function getFeatureFlag(key: string) {
