@@ -31,11 +31,6 @@ export const abTestMiddleware: MiddlewareFactory =
       const res = NextResponse.redirect(url);
       res.cookies.set('user-id', uuidv7());
       return res;
-
-      // const res = NextResponse.next();
-      // res.cookies.set('user-id', uuidv7());
-      // return res;
-      // request.cookies.set('user-id', uuidv7());
     }
     return next(request, _next);
   };

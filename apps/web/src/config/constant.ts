@@ -17,6 +17,8 @@ export const SANITY_TAGS = {
   slugPage: 'slug-page',
   footer: 'footer',
   navbar: 'navbar',
+  feature: 'feature',
+  featureFlagPage: 'feature-flag-page',
 } as const;
 
 

@@ -67,6 +67,7 @@ export const getPageLinkedFeatureFlags = async (id: string) => {
     sanityServerFetch<GetPageLinkedFeatureFlagsQueryResult>({
       query: getPageLinkedFeatureFlagsQuery,
       params: { id },
+      tags: [SANITY_TAGS.feature],
     }),
   );
 };
@@ -79,6 +80,7 @@ export const getPageLinkedFeatureFlagVariant = async (
     sanityServerFetch<{ slug: string; language: Locale } | null>({
       query: getPageLinkedFeatureFlagVariantQuery,
       params: { id, key },
+      tags: [SANITY_TAGS.feature, SANITY_TAGS.featureFlagPage],
     }),
   );
 };
