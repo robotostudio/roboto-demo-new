@@ -14,7 +14,7 @@ import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
 
 export const dynamicParams = false;
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 
 export const generateStaticParams = async () => {

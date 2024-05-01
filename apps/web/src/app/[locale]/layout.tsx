@@ -16,7 +16,6 @@ import { getBootstrapData } from '~/lib/posthog';
 import { token } from '~/lib/sanity/sanity-server-fetch';
 
 
-export const runtime = 'edge';
 
 type Props = {
   children: React.ReactNode;
