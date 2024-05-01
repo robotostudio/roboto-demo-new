@@ -19,11 +19,12 @@ export const getSlugPageData = async (slug: string, locale: Locale) => {
   const { isEnabled } = draftMode();
 
   const localizedSlug = getLocalizedSlug(slug, locale);
+  const tags = [LOCALIZED_SANITY_TAGS.slugPage(locale), slug, localizedSlug];
   return await handleErrors(
     sanityServerFetch<GetSlugPageDataQueryResult>({
       query: getSlugPageDataQuery,
       params: { slug: localizedSlug, locale },
-      tags: [LOCALIZED_SANITY_TAGS.slugPage(locale), slug, localizedSlug],
+      tags,
       preview: isEnabled,
     }),
   );

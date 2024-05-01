@@ -19,7 +19,14 @@ export const SANITY_TAGS = {
   navbar: 'navbar',
 } as const;
 
-export const getSanityTags = (type: string, locale?: Locale) => {
+
+type GetSanityTag = {
+  type: string;
+  locale?: Locale;
+  slug?: string;
+};
+
+export const getSanityTags = ({ type, locale, slug }: GetSanityTag) => {
   const isLocalized = !!locale;
 
   if (type === 'mainPage') {
@@ -33,6 +40,7 @@ export const getSanityTags = (type: string, locale?: Locale) => {
     return [
       SANITY_TAGS.slugPage,
       ...(isLocalized ? [LOCALIZED_SANITY_TAGS.slugPage(locale)] : []),
+      ...(slug ? [slug] : []),
     ];
   }
 
@@ -42,6 +50,7 @@ export const getSanityTags = (type: string, locale?: Locale) => {
       SANITY_TAGS.blogPage,
       SANITY_TAGS.slugPage,
       ...(isLocalized ? [LOCALIZED_SANITY_TAGS.blogPage(locale)] : []),
+      ...(slug ? [slug] : []),
     ];
   }
 
