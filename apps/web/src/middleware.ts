@@ -25,13 +25,16 @@ function stackMiddlewares(
 
 export const abTestMiddleware: MiddlewareFactory =
   (next) => async (request: NextRequest, _next: NextFetchEvent) => {
+
     const userId = request.cookies.get('user-id');
     if (!userId) {
-      const res = NextResponse.redirect(request.nextUrl.clone());
-      res.cookies.set('user-id', uuidv7());
-      return res;
+      // const res = NextResponse.redirect(request.nextUrl.clone());
+      // NextResponse.next();
+      // const res = NextResponse.next();
+      // res.cookies.set('user-id', uuidv7());
+      request.cookies.set('user-id', uuidv7());
+      return NextResponse.next(request);
     }
-
     return next(request, _next);
   };
 const localeMiddleWare: MiddlewareFactory = () =>

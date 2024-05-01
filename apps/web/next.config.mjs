@@ -6,13 +6,11 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   ...(process.env.NODE_ENV === 'development'
     ? {
-        cacheMaxMemorySize: 0,
         logging: {
-          // fetches: { fullUrl: true },
+          // fetches: { fullUrl: true }
         },
       }
     : {}),
-
   images: {
     remotePatterns: [{ hostname: 'cdn.sanity.io' }],
   },
