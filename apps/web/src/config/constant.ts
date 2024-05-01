@@ -31,6 +31,10 @@ type GetSanityTag = {
 export const getSanityTags = ({ type, locale, slug }: GetSanityTag) => {
   const isLocalized = !!locale;
 
+  if (type === 'abTest') {
+    return [SANITY_TAGS.feature, SANITY_TAGS.featureFlagPage];
+  }
+
   if (type === 'mainPage') {
     return [
       SANITY_TAGS.mainPage,
