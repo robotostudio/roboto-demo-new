@@ -14,14 +14,16 @@ type WebhookPayload = {
 
 export async function POST(req: NextRequest) {
   try {
-    console.log(
-      'body',
-      JSON.stringify({ body: req.body, header: req.headers }),
-    );
-    const { isValidSignature, body } = await parseBody<WebhookPayload>(
-      req,
-      process.env.SANITY_REVALIDATE_SECRET,
-    );
+      console.log(
+        '🚀 ~ POST ~ body:',
+        req.headers.get('sanity-webhook-signature'),
+        process.env.SANITY_REVALIDATE_SECRET,
+      );
+      const { isValidSignature, body } = await parseBody<WebhookPayload>(
+        req,
+        process.env.SANITY_REVALIDATE_SECRET,
+      );
+
 
     if (!isValidSignature) {
       const message = 'Invalid signature';
