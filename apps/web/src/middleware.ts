@@ -28,12 +28,9 @@ export const abTestMiddleware: MiddlewareFactory =
 
     const userId = request.cookies.get('user-id');
     if (!userId) {
-      // const res = NextResponse.redirect(request.nextUrl.clone());
-      // NextResponse.next();
-      // const res = NextResponse.next();
-      // res.cookies.set('user-id', uuidv7());
-      request.cookies.set('user-id', uuidv7());
-      return NextResponse.next(request);
+      const res = NextResponse.next();
+      res.cookies.set('user-id', uuidv7());
+      return res;
     }
     return next(request, _next);
   };
