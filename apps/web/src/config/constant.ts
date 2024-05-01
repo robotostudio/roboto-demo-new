@@ -48,8 +48,14 @@ export const getSanityTags = ({ type, locale, slug }: GetSanityTag) => {
     return [
       SANITY_TAGS.blogs,
       SANITY_TAGS.blogPage,
-      SANITY_TAGS.slugPage,
-      ...(isLocalized ? [LOCALIZED_SANITY_TAGS.blogPage(locale)] : []),
+      SANITY_TAGS.blogIndex,
+      ...(isLocalized
+        ? [
+            LOCALIZED_SANITY_TAGS.blogPage(locale),
+            LOCALIZED_SANITY_TAGS.blogIndex(locale),
+            LOCALIZED_SANITY_TAGS.blogs(locale),
+          ]
+        : []),
       ...(slug ? [slug] : []),
     ];
   }
