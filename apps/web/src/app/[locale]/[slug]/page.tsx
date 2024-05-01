@@ -1,10 +1,9 @@
 import { Metadata } from 'next';
 import LiveQuery from 'next-sanity/preview/live-query';
-import { cookies, draftMode } from 'next/headers';
-import { notFound, redirect } from 'next/navigation';
+import { draftMode } from 'next/headers';
+import { notFound } from 'next/navigation';
 import {
   getAllSlugPagePaths,
-  getPageLinkedFeatureFlags,
   getSlugPageData,
 } from '~/components/pages/slug-page/slug-page-api';
 import { SlugPageClient } from '~/components/pages/slug-page/slug-page-client';
@@ -35,19 +34,18 @@ export const generateMetadata = async ({
 };
 
 const getPageVariantData = async (slug: string, locale: Locale) => {
-  console.time('getPageVariantData');
   const [data, err] = await getSlugPageData(slug, locale);
   if (err || !data?._id) {
     return notFound();
   }
 
-  const { _id, slug: page } = data;
-  if (page && _id) {
-    await getVariants({
-      _id,
-      slug: page,
-    });
-  }
+  // const { _id, slug: page } = data;
+  // if (page && _id) {
+  //   await getVariants({
+  //     _id,
+  //     slug: page,
+  //   });
+  // }
   return [data, null];
 };
 

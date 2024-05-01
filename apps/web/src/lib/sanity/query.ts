@@ -229,6 +229,22 @@ export const getPageLinkedFeatureFlagsQuery = groq`
 }
 `;
 
+
+export const getVariantsFromMiddlewareQuery = groq`
+  *[slug.current == $slug][0]{
+    "test": *[_type =="abTest" && references(^._id)][0]{
+    feature,
+    "variants":variants[]{
+      key,
+      resource->{
+        _type,
+        "slug":slug.current
+      }
+    }
+  }
+}
+`;
+
 export const getPageLinkedFeatureFlagVariantQuery = groq`
 *[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].variants[@.key == $key][0].resource->{
   _type,

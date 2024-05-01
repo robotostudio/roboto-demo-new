@@ -1758,6 +1758,23 @@ export type GetPageLinkedFeatureFlagsQueryResult = {
     } | null;
   }> | null;
 } | null;
+// Variable: getVariantsFromMiddlewareQuery
+// Query:   *[slug.current == $slug][0]{    "test": *[_type =="abTest" && references(^._id)][0]{    feature,    "variants":variants[]{      key,      resource->{        _type,        "slug":slug.current      }    }  }}
+export type GetVariantsFromMiddlewareQueryResult = {
+  test: {
+    feature: string | null;
+    variants: Array<{
+      key: "control" | "variant" | null;
+      resource: {
+        _type: "mainPage";
+        slug: string | null;
+      } | {
+        _type: "page";
+        slug: string | null;
+      } | null;
+    }> | null;
+  } | null;
+} | null;
 // Variable: getPageLinkedFeatureFlagVariantQuery
 // Query: *[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].variants[@.key == $key][0].resource->{  _type,  "slug": slug.current,  language}
 export type GetPageLinkedFeatureFlagVariantQueryResult = null;
