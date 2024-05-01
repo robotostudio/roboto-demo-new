@@ -54,7 +54,6 @@ export async function getBootstrapData() {
   const client = new PostHog(phProjectAPIKey, {
     host: 'https://app.posthog.com',
   });
-  console.log('🚀 ~ getBootstrapData ~ distinct_id:', distinct_id);
   const flags = await client.getAllFlags(distinct_id);
   const bootstrap = {
     distinctID: distinct_id,

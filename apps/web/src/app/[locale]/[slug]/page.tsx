@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import LiveQuery from 'next-sanity/preview/live-query';
-import { draftMode } from 'next/headers';
-import { notFound } from 'next/navigation';
+import { cookies, draftMode } from 'next/headers';
+import { notFound, redirect } from 'next/navigation';
 import {
   getAllSlugPagePaths,
   getPageLinkedFeatureFlagVariant,
@@ -36,31 +36,30 @@ export const generateMetadata = async ({
 };
 
 const getPageVariantData = async (slug: string, locale: Locale) => {
+  console.time('getPageVariantData');
   const [data, err] = await getSlugPageData(slug, locale);
   if (err || !data?._id) {
     return notFound();
   }
   const [featureFlag] = await getPageLinkedFeatureFlags(data._id);
-  console.info('has feature flag', featureFlag);
+  console.log(
+    '🚀 ~ getPageVariantData ~ featureFlag:',
+    JSON.stringify(featureFlag),
+  );
   if (featureFlag) {
-    const bootStrapData = await getBootstrapData();
-    const flag = bootStrapData?.featureFlags[featureFlag];
-    console.info('flag', flag);
-    if (typeof flag === 'string') {
-      const [variant] = await getPageLinkedFeatureFlagVariant(data._id, flag);
-      console.info('variant', variant);
-      if (variant?.slug && variant?.language) {
-        const [variantData] = await getSlugPageData(
-          variant.slug,
-          variant.language,
-        );
+    const bucket = cookies().get('user-bucket')?.value ?? 'control';
+    console.log('🚀 ~ getPageVariantData ~ bucket:', bucket);
+    const isVariant = bucket === 'variant';
+    if (isVariant) {
+      const variant = featureFlag?.variants?.find((v) => v?.key === 'variant');
+      const variantSlug = variant?.resource?.slug;
+      console.timeEnd('getPageVariantData');
 
-        if (variantData) {
-          return [variantData, null];
-        }
-      }
+      if (variantSlug && variantSlug !== data.slug) redirect(variantSlug);
     }
   }
+  console.timeEnd('getPageVariantData');
+
   return [data, null];
 };
 

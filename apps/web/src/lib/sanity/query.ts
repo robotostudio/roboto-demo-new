@@ -216,12 +216,22 @@ export const getSlugPageDataQuery = groq`
 `;
 
 export const getPageLinkedFeatureFlagsQuery = groq`
-*[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].feature
+*[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0]{
+  feature,
+  "variants":variants[]{
+    key,
+    resource->{
+      _type,
+      "slug":slug.current
+    }
+  }
+}
 `;
 
 export const getPageLinkedFeatureFlagVariantQuery = groq`
 *[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].variants[@.key == $key][0].resource->{
-  "slug": string::split(slug.current, "/")[1],
+  _type,
+  "slug": slug.current,
   language
 }
 `;

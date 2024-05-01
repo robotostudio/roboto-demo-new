@@ -610,6 +610,61 @@ export type MainPage = {
   };
 };
 
+export type Blog = {
+  _id: string;
+  _type: "blog";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  slug?: Slug;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  richText?: RichText;
+  language?: string;
+  pageBuilder?: PageBuilder;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  seoNoIndex?: boolean;
+  seoHideFromLists?: boolean;
+  ogTitle?: string;
+  ogDescription?: string;
+  cardTitle?: string;
+  cardDescription?: string;
+  cardImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
 export type InternationalizedArrayReference = Array<{
   _key: string;
 } & InternationalizedArrayReferenceValue>;
@@ -762,70 +817,10 @@ export type AbTest = {
       _type: "reference";
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "page";
-    } | {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "blog";
     };
     _type: "abTestVariant";
     _key: string;
   }>;
-};
-
-export type Blog = {
-  _id: string;
-  _type: "blog";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  description?: string;
-  slug?: Slug;
-  image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  richText?: RichText;
-  language?: string;
-  pageBuilder?: PageBuilder;
-  seoTitle?: string;
-  seoDescription?: string;
-  seoImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  seoNoIndex?: boolean;
-  seoHideFromLists?: boolean;
-  ogTitle?: string;
-  ogDescription?: string;
-  cardTitle?: string;
-  cardDescription?: string;
-  cardImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
 };
 
 export type Page = {
@@ -1035,7 +1030,7 @@ export type GetAllSlugPagePathsQueryResult = Array<{
 // Query: *[_type == "mainPage"].language
 export type GetAllMainPageTranslationsQueryResult = Array<string | null>;
 // Variable: getBlogIndexDataQuery
-// Query: {    "seo":*[_type == "blogIndex" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{        ...,    },    "blogs":*[_type == "blog" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)]{      _id,      "title":coalesce(cardTitle,title),"description":coalesce(cardDescription,description),"image":coalesce(cardImage,image),      "slug":slug.current    }}
+// Query: {    "seo":*[_type == "blogIndex" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{        ...,    },    "blogs":*[_type == "blog" && !seoHideFromLists && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)]{      _id,      "title":coalesce(cardTitle,title),"description":coalesce(cardDescription,description),"image":coalesce(cardImage,image),      "slug":slug.current    }}
 export type GetBlogIndexDataQueryResult = {
   seo: {
     _id: string;
@@ -1743,10 +1738,19 @@ export type GetSlugPageDataQueryResult = {
   }> | null;
 } | null;
 // Variable: getPageLinkedFeatureFlagsQuery
-// Query: *[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].feature
-export type GetPageLinkedFeatureFlagsQueryResult = string | null;
+// Query: *[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0]{  feature,  "variants":variants[]{    key,    resource->{      _type,      "slug":slug.current    }  }}
+export type GetPageLinkedFeatureFlagsQueryResult = {
+  feature: string | null;
+  variants: Array<{
+    key: "control" | "variant" | null;
+    resource: {
+      _type: "page";
+      slug: string | null;
+    } | null;
+  }> | null;
+} | null;
 // Variable: getPageLinkedFeatureFlagVariantQuery
-// Query: *[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].variants[@.key == $key][0].resource->{  "slug": string::split(slug.current, "/")[1],  language}
+// Query: *[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].variants[@.key == $key][0].resource->{  _type,  "slug": slug.current,  language}
 export type GetPageLinkedFeatureFlagVariantQueryResult = null;
 // Variable: getMarketingModalDataQuery
 // Query: *[_type == "marketingModal" && isActive][0]{    _id,    title,    description,    defined(form)=>{  form->{    ...,  }}    }

@@ -67,7 +67,7 @@ export const getPageLinkedFeatureFlags = async (id: string) => {
     sanityServerFetch<GetPageLinkedFeatureFlagsQueryResult>({
       query: getPageLinkedFeatureFlagsQuery,
       params: { id },
-      tags: [SANITY_TAGS.feature],
+      tags: [SANITY_TAGS.feature, SANITY_TAGS.featureFlagPage],
     }),
   );
 };
