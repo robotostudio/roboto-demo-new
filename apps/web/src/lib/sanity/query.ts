@@ -199,6 +199,7 @@ export const getMainPageDataQuery = groq`
   _type,
   title,
   description,
+  "slug":slug.current,
   ${_pageBuilder}
 }
 `;

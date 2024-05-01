@@ -567,49 +567,6 @@ export type Form = {
   buttonText?: string;
 };
 
-export type MainPage = {
-  _id: string;
-  _type: "mainPage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  description?: string;
-  slug?: Slug;
-  pageBuilder?: PageBuilder;
-  language?: string;
-  seoTitle?: string;
-  seoDescription?: string;
-  seoImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  seoNoIndex?: boolean;
-  seoHideFromLists?: boolean;
-  ogTitle?: string;
-  ogDescription?: string;
-  cardTitle?: string;
-  cardDescription?: string;
-  cardImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-};
-
 export type Blog = {
   _id: string;
   _type: "blog";
@@ -817,10 +774,58 @@ export type AbTest = {
       _type: "reference";
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "page";
+    } | {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "mainPage";
     };
     _type: "abTestVariant";
     _key: string;
   }>;
+};
+
+export type MainPage = {
+  _id: string;
+  _type: "mainPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  slug?: Slug;
+  pageBuilder?: PageBuilder;
+  language?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  seoNoIndex?: boolean;
+  seoHideFromLists?: boolean;
+  ogTitle?: string;
+  ogDescription?: string;
+  cardTitle?: string;
+  cardDescription?: string;
+  cardImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
 };
 
 export type Page = {
@@ -1249,12 +1254,13 @@ export type GetBlogPageDataQueryResult = {
   };
 } | null;
 // Variable: getMainPageDataQuery
-// Query: *[_type == "mainPage" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{  _id,  _type,  title,  description,  defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}}
+// Query: *[_type == "mainPage" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{  _id,  _type,  title,  description,  "slug":slug.current,  defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}}
 export type GetMainPageDataQueryResult = {
   _id: string;
   _type: "mainPage";
   title: string | null;
   description: string | null;
+  slug: string | null;
   pageBuilder: Array<{
     _key: string;
     _type: "cta";
@@ -1744,6 +1750,9 @@ export type GetPageLinkedFeatureFlagsQueryResult = {
   variants: Array<{
     key: "control" | "variant" | null;
     resource: {
+      _type: "mainPage";
+      slug: string | null;
+    } | {
       _type: "page";
       slug: string | null;
     } | null;

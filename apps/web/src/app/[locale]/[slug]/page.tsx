@@ -4,15 +4,14 @@ import { cookies, draftMode } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 import {
   getAllSlugPagePaths,
-  getPageLinkedFeatureFlagVariant,
   getPageLinkedFeatureFlags,
   getSlugPageData,
 } from '~/components/pages/slug-page/slug-page-api';
 import { SlugPageClient } from '~/components/pages/slug-page/slug-page-client';
 import { SlugPage } from '~/components/pages/slug-page/slug-page-component';
 import { Locale } from '~/config';
+import { getVariants } from '~/lib/ab-testing';
 import { getLocalizedSlug } from '~/lib/helper';
-import { getBootstrapData } from '~/lib/posthog';
 import { getSlugPageDataQuery } from '~/lib/sanity/query';
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
@@ -41,25 +40,14 @@ const getPageVariantData = async (slug: string, locale: Locale) => {
   if (err || !data?._id) {
     return notFound();
   }
-  const [featureFlag] = await getPageLinkedFeatureFlags(data._id);
-  console.log(
-    '🚀 ~ getPageVariantData ~ featureFlag:',
-    JSON.stringify(featureFlag),
-  );
-  if (featureFlag) {
-    const bucket = cookies().get('user-bucket')?.value ?? 'control';
-    console.log('🚀 ~ getPageVariantData ~ bucket:', bucket);
-    const isVariant = bucket === 'variant';
-    if (isVariant) {
-      const variant = featureFlag?.variants?.find((v) => v?.key === 'variant');
-      const variantSlug = variant?.resource?.slug;
-      console.timeEnd('getPageVariantData');
 
-      if (variantSlug && variantSlug !== data.slug) redirect(variantSlug);
-    }
+  const { _id, slug: page } = data;
+  if (page && _id) {
+    await getVariants({
+      _id,
+      slug: page,
+    });
   }
-  console.timeEnd('getPageVariantData');
-
   return [data, null];
 };
 

@@ -8,6 +8,7 @@ import {
   getMainPageData,
 } from '~/components/pages/main-page/main-page-api';
 import { MainPageComponentClient } from '~/components/pages/main-page/main-page-client';
+import { getVariants } from '~/lib/ab-testing';
 import { getMainPageDataQuery } from '~/lib/sanity/query';
 
 import { getMetaData } from '~/lib/seo';
@@ -15,7 +16,6 @@ import { PageParams } from '~/types';
 
 export const dynamicParams = false;
 // export const runtime = 'edge';
-
 
 export const generateStaticParams = async () => {
   const [slugs, err] = await getAllMainPageTranslations();
@@ -34,7 +34,14 @@ export const generateMetadata = async ({
 
 export default async function Page({ params }: PageParams) {
   const [data, err] = await getMainPageData(params.locale);
-  if (!data || err) return notFound();
+
+  if (!data?._id || err) return notFound();
+  if (data?._id && data?.slug) {
+    await getVariants({
+      _id: data._id,
+      slug: data.slug,
+    });
+  }
 
   const { isEnabled } = draftMode();
   if (isEnabled) {
