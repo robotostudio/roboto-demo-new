@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 import { GetFooterDataQueryResult } from '~/sanity.types';
 import { PageComponentProps } from '~/types';
+import { UserVersion } from './footer-bucket';
 
 export const FooterClient: FC<PageComponentProps<GetFooterDataQueryResult>> = ({
   data,
@@ -28,7 +29,15 @@ export const FooterClient: FC<PageComponentProps<GetFooterDataQueryResult>> = ({
               </div>
             ))}
         </nav>
-        <div className="mt-10 flex justify-center space-x-10"></div>
+
+        <div className="mt-10 flex justify-center space-x-10">
+          <Suspense
+            fallback={<div className="text-xs text-slate-200">Loading...</div>}
+          >
+            <UserVersion />
+          </Suspense>
+        </div>
+
         <p className="mt-10 text-center text-xs leading-5 text-slate-200">
           &copy; 2020 Roboto Studio, Inc. All rights reserved.
         </p>

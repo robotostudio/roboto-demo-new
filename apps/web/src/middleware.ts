@@ -17,14 +17,15 @@ function withMiddleware() {
     if (!userBucket) userBucket = getBucket(['control', 'variant']);
     const { pathname } = req.nextUrl;
     const url = req.nextUrl.clone();
-    if (userBucket === 'variant') {
-      const variant = await getVariantFromMiddleware(pathname);
-      if (variant) {
-        url.pathname = variant;
-        const _res = NextResponse.redirect(url);
-        if (!hasBucket) _res.cookies.set('user-bucket', userBucket);
-        return _res;
-      }
+    const variant = await getVariantFromMiddleware(
+      pathname,
+      userBucket === 'variant',
+    );
+    if (variant) {
+      url.pathname = variant;
+      const _res = NextResponse.redirect(url);
+      if (!hasBucket) _res.cookies.set('user-bucket', userBucket);
+      return _res;
     }
     const res = m(req);
     if (!hasBucket) res.cookies.set('user-bucket', userBucket);

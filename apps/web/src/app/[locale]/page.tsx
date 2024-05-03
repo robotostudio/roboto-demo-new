@@ -36,12 +36,12 @@ export default async function Page({ params }: PageParams) {
   const [data, err] = await getMainPageData(params.locale);
 
   if (!data?._id || err) return notFound();
-  if (data?._id && data?.slug) {
-    await getVariants({
-      _id: data._id,
-      slug: data.slug,
-    });
-  }
+  // if (data?._id && data?.slug) {
+  //   await getVariants({
+  //     _id: data._id,
+  //     slug: data.slug,
+  //   });
+  // }
 
   const { isEnabled } = draftMode();
   if (isEnabled) {
