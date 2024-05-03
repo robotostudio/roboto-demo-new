@@ -16,7 +16,7 @@ export const VariantSwitcher: FC = () => {
         router.refresh();
       }}
     >
-      Switch to Version
+      Switch Version
     </Button>
   );
 };
