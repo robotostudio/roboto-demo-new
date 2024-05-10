@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     if (slug) {
       revalidatePath(slug);
     }
-    const message = `Updated route: ${slug} and tags: ${tags.join(', ')}`;
+    const message = `Updated route: "${slug}" and tags: [${tags.join(', ')}]`;
     return NextResponse.json({ body, message });
   } catch (err: any) {
     console.error(err);
