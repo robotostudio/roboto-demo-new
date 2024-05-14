@@ -6,10 +6,7 @@ export type ABTestWrapperProps = AbTestPagebuilder & {
   bucket?: string;
 };
 
-export const ABTestWrapper: FC<ABTestWrapperProps> = ({
-  variants,
-  bucket = 'control',
-}) => {
+export const ABTestWrapper: FC<ABTestWrapperProps> = ({ variants, bucket }) => {
   if (!Array.isArray(variants)) return <></>;
   if (variants?.length !== 2) return <></>;
   const [control, variant] = variants;

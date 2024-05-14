@@ -15,7 +15,7 @@ function withMiddleware(req: NextRequest) {
   let userBucket = req.cookies.get('user-bucket')?.value;
   if (!userBucket) {
     userBucket = getBucket(['control', 'variant']);
-    const res = NextResponse.redirect(req.url);
+    const res = NextResponse.redirect(req.nextUrl.clone());
     res.cookies.set('user-bucket', userBucket);
     return res;
   }
