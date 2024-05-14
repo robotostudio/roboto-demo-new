@@ -396,7 +396,9 @@ export type PageBuilder = Array<({
   _key: string;
 } & ImageCarousel) | ({
   _key: string;
-} & DynamicIntro)>;
+} & DynamicIntro) | ({
+  _key: string;
+} & AbTestPagebuilder)>;
 
 export type Footer = {
   _id: string;
@@ -755,6 +757,17 @@ export type SanityAssistSchemaTypeField = {
   instructions?: Array<{
     _key: string;
   } & SanityAssistInstruction>;
+};
+
+export type AbTestPagebuilder = {
+  _type: "abTestPagebuilder";
+  label?: string;
+  description?: string;
+  variants?: Array<({
+    _key: string;
+  } & Hero) | ({
+    _key: string;
+  } & Cta)>;
 };
 
 export type AbTest = {
@@ -1263,6 +1276,12 @@ export type GetMainPageDataQueryResult = {
   slug: string | null;
   pageBuilder: Array<{
     _key: string;
+    _type: "abTestPagebuilder";
+    buttons: null;
+    richText: null;
+    form: null;
+  } | {
+    _key: string;
     _type: "cta";
     buttons: Array<{
       _key: string;
@@ -1507,6 +1526,12 @@ export type GetSlugPageDataQueryResult = {
   content: null;
   slug: string | null;
   pageBuilder: Array<{
+    _key: string;
+    _type: "abTestPagebuilder";
+    buttons: null;
+    richText: null;
+    form: null;
+  } | {
     _key: string;
     _type: "cta";
     buttons: Array<{

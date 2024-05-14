@@ -156,13 +156,26 @@ const _form = `defined(form)=>{
   }
 }`;
 
+const _abTestPageBuilder = `_type == "abTestPagebuilder"=>{
+  ...,
+  "variants":variants[]{
+    ...,
+    _type,
+    ${_buttons},
+    ${_richText},
+    ${_form},
+  }
+}`;
+
 const _pageBuilder = `defined(pageBuilder)=>{
   pageBuilder[]{
     ...,
     _type,
     ${_buttons},
     ${_richText},
-    ${_form}
+    ${_form},
+    ${_abTestPageBuilder}
+
 
   }
 

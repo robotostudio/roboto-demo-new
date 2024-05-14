@@ -23,6 +23,7 @@ export type PartialResponse<T> = Prettify<Partial<T>>;
 export type PageComponentProps<T> = {
   data: PartialResponse<T>;
   preview?: boolean;
+  bucket?: string;
   feature?: string | boolean | undefined;
 };
 

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import LiveQuery from 'next-sanity/preview/live-query';
-import { draftMode } from 'next/headers';
+import { cookies, draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { MainPageComponent } from '~/components/pages/main-page';
 import {
@@ -32,6 +32,7 @@ export const generateMetadata = async ({
 
 export default async function Page({ params }: PageParams) {
   const [data, err] = await getMainPageData(params.locale);
+  const cookie = cookies().get('user-bucket')?.value;
 
   if (!data?._id || err) return notFound();
   // if (data?._id && data?.slug) {

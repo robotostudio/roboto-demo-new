@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import LiveQuery from 'next-sanity/preview/live-query';
-import { draftMode } from 'next/headers';
+import { cookies, draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import {
   getAllSlugPagePaths,
@@ -9,7 +9,6 @@ import {
 import { SlugPageClient } from '~/components/pages/slug-page/slug-page-client';
 import { SlugPage } from '~/components/pages/slug-page/slug-page-component';
 import { Locale } from '~/config';
-import { getVariants } from '~/lib/ab-testing';
 import { getLocalizedSlug } from '~/lib/helper';
 import { getSlugPageDataQuery } from '~/lib/sanity/query';
 import { getMetaData } from '~/lib/seo';
@@ -33,26 +32,11 @@ export const generateMetadata = async ({
   return getMetaData(data);
 };
 
-const getPageVariantData = async (slug: string, locale: Locale) => {
-  const [data, err] = await getSlugPageData(slug, locale);
-  if (err || !data?._id) {
-    return notFound();
-  }
-
-  // const { _id, slug: page } = data;
-  // if (page && _id) {
-  //   await getVariants({
-  //     _id,
-  //     slug: page,
-  //   });
-  // }
-  return [data, null];
-};
-
 export default async function Page({ params }: PageParams<{ slug: string }>) {
   const { locale, slug } = params ?? {};
 
-  const [data, err] = await getPageVariantData(slug, locale);
+  const [data, err] = await getSlugPageData(slug, locale);
+  const bucket = cookies().get('user-bucket')?.value;
 
   if (err || !data?._id) {
     return notFound();
@@ -69,9 +53,9 @@ export default async function Page({ params }: PageParams<{ slug: string }>) {
         params={{ slug: getLocalizedSlug(slug, locale), locale }}
         as={SlugPageClient}
       >
-        <SlugPage data={data} />
+        <SlugPage data={data} bucket={bucket} />
       </LiveQuery>
     );
   }
-  return <SlugPage data={data} />;
+  return <SlugPage data={data} bucket={bucket} />;
 }
