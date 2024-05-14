@@ -13,3 +13,4 @@ export const pageBuilder = defineType({
     { type: 'abTestPagebuilder' },
   ],
 });
+

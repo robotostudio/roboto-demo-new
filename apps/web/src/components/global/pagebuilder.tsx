@@ -57,13 +57,14 @@ const ABTestBlocks: Record<string, FC<any>> = {
 
 export const ABTestPageBuilderBlock: FC<PageBuilderBlockProps<PageBuilder>> = ({
   pageBuilder,
+  bucket,
 }) => {
   if (!Array.isArray(pageBuilder)) return <section></section>;
   return (
     <section className="flex flex-col gap-4">
       {pageBuilder.map((block) => {
         const Comp = ABTestBlocks[block._type] ?? BlockNotFound;
-        return <Comp {...block} key={block._key} />;
+        return <Comp {...block} key={block._key} bucket={bucket} />;
       })}
     </section>
   );
