@@ -15,6 +15,8 @@ import { getBlogPageDataQuery } from '~/lib/sanity/query';
 import { getMetaData } from '~/lib/seo';
 import { PageParams } from '~/types';
 
+
+
 export const generateStaticParams = async () => {
   const [slugs, err] = await getAllBlogsPaths();
   if (err || !Array.isArray(slugs)) return [];
