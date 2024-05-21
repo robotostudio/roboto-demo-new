@@ -40,7 +40,6 @@ export default async function LocaleLayout({
   const isValidLocale = locales.some((cur) => cur === locale);
   if (!isValidLocale) return notFound();
   unstable_setRequestLocale(locale);
-  const bootstrapData = await getBootstrapData();
 
   preconnect('https://cdn.sanity.io');
   prefetchDNS('https://cdn.sanity.io');
@@ -48,32 +47,30 @@ export default async function LocaleLayout({
   const { isEnabled } = draftMode();
   return (
     <html lang={locale}>
-      <CSPostHogProvider bootstrapData={bootstrapData}>
-        <body>
-          <NextIntlClientProvider locale={locale}>
-            <Navbar />
-            {isEnabled ? (
-              <PreviewProvider token={token}>{children}</PreviewProvider>
-            ) : (
-              children
-            )}
-            {isEnabled && <PreviewBar />}
-            <Suspense
-              fallback={
-                <div className="mx-auto max-w-7xl overflow-hidden bg-primary px-6 py-20 sm:py-24 lg:px-8">
-                  <div className="flex h-full w-full items-center justify-center gap-2  text-gray-200">
-                    <Loader2 className="animate-spin " />
-                    Loading footer
-                  </div>
+      <body>
+        <NextIntlClientProvider locale={locale}>
+          <Navbar />
+          {isEnabled ? (
+            <PreviewProvider token={token}>{children}</PreviewProvider>
+          ) : (
+            children
+          )}
+          {isEnabled && <PreviewBar />}
+          <Suspense
+            fallback={
+              <div className="mx-auto max-w-7xl overflow-hidden bg-primary px-6 py-20 sm:py-24 lg:px-8">
+                <div className="flex h-full w-full items-center justify-center gap-2  text-gray-200">
+                  <Loader2 className="animate-spin " />
+                  Loading footer
                 </div>
-              }
-            >
-              <Footer />
-            </Suspense>
-            <MarketingModalProvider />
-          </NextIntlClientProvider>
-        </body>
-      </CSPostHogProvider>
+              </div>
+            }
+          >
+            <Footer />
+          </Suspense>
+          <MarketingModalProvider />
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }

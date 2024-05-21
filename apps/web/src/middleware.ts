@@ -1,8 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 import { DEFAULT_LOCALE, Locale, locales } from './config';
 
-import { NextRequest, NextResponse } from 'next/server';
-import { getBucket } from './lib/bucket';
+import { NextRequest } from 'next/server';
 
 function withMiddleware(req: NextRequest) {
   const m = createMiddleware({
@@ -12,13 +11,13 @@ function withMiddleware(req: NextRequest) {
     localePrefix: 'as-needed',
   });
 
-  let userBucket = req.cookies.get('user-bucket')?.value;
-  if (!userBucket) {
-    userBucket = getBucket(['control', 'variant']);
-    const res = NextResponse.redirect(req.nextUrl.clone());
-    res.cookies.set('user-bucket', userBucket);
-    return res;
-  }
+  // let userBucket = req.cookies.get('user-bucket')?.value;
+  // if (!userBucket) {
+  //   userBucket = getBucket(['control', 'variant']);
+  //   const res = NextResponse.redirect(req.nextUrl.clone());
+  //   res.cookies.set('user-bucket', userBucket);
+  //   return res;
+  // }
   return m(req);
 }
 

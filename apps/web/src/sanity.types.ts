@@ -396,9 +396,7 @@ export type PageBuilder = Array<({
   _key: string;
 } & ImageCarousel) | ({
   _key: string;
-} & DynamicIntro) | ({
-  _key: string;
-} & AbTestPagebuilder)>;
+} & DynamicIntro)>;
 
 export type Footer = {
   _id: string;
@@ -569,29 +567,17 @@ export type Form = {
   buttonText?: string;
 };
 
-export type Blog = {
+export type MainPage = {
   _id: string;
-  _type: "blog";
+  _type: "mainPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
   description?: string;
   slug?: Slug;
-  image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  richText?: RichText;
-  language?: string;
   pageBuilder?: PageBuilder;
+  language?: string;
   seoTitle?: string;
   seoDescription?: string;
   seoImage?: {
@@ -624,191 +610,29 @@ export type Blog = {
   };
 };
 
-export type InternationalizedArrayReference = Array<{
-  _key: string;
-} & InternationalizedArrayReferenceValue>;
-
-export type IconPicker = {
-  _type: "iconPicker";
-  provider?: string;
-  name?: string;
-  svg?: string;
-};
-
-export type MediaTag = {
+export type Blog = {
   _id: string;
-  _type: "media.tag";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: Slug;
-};
-
-export type SanityAssistInstructionTask = {
-  _type: "sanity.assist.instructionTask";
-  path?: string;
-  instructionKey?: string;
-  started?: string;
-  updated?: string;
-  info?: string;
-};
-
-export type SanityAssistTaskStatus = {
-  _type: "sanity.assist.task.status";
-  tasks?: Array<{
-    _key: string;
-  } & SanityAssistInstructionTask>;
-};
-
-export type SanityAssistSchemaTypeAnnotations = {
-  _type: "sanity.assist.schemaType.annotations";
-  title?: string;
-  fields?: Array<{
-    _key: string;
-  } & SanityAssistSchemaTypeField>;
-};
-
-export type SanityAssistInstructionContext = {
-  _type: "sanity.assist.instruction.context";
-  reference?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "assist.instruction.context";
-  };
-};
-
-export type AssistInstructionContext = {
-  _id: string;
-  _type: "assist.instruction.context";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  context?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: null;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-};
-
-export type SanityAssistInstructionUserInput = {
-  _type: "sanity.assist.instruction.userInput";
-  message?: string;
-  description?: string;
-};
-
-export type SanityAssistInstructionPrompt = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  } | ({
-    _key: string;
-  } & SanityAssistInstructionFieldRef) | ({
-    _key: string;
-  } & SanityAssistInstructionContext) | ({
-    _key: string;
-  } & SanityAssistInstructionUserInput)>;
-  style?: "normal";
-  listItem?: never;
-  markDefs?: null;
-  level?: number;
-  _type: "block";
-  _key: string;
-}>;
-
-export type SanityAssistInstructionFieldRef = {
-  _type: "sanity.assist.instruction.fieldRef";
-  path?: string;
-};
-
-export type SanityAssistInstruction = {
-  _type: "sanity.assist.instruction";
-  prompt?: SanityAssistInstructionPrompt;
-  icon?: string;
-  title?: string;
-  userId?: string;
-  createdById?: string;
-  output?: Array<{
-    path?: string;
-    _type: "sanity.assist.output.field";
-    _key: string;
-  } | {
-    type?: string;
-    _type: "sanity.assist.output.type";
-    _key: string;
-  }>;
-};
-
-export type SanityAssistSchemaTypeField = {
-  _type: "sanity.assist.schemaType.field";
-  path?: string;
-  instructions?: Array<{
-    _key: string;
-  } & SanityAssistInstruction>;
-};
-
-export type AbTestPagebuilder = {
-  _type: "abTestPagebuilder";
-  label?: string;
-  description?: string;
-  variants?: Array<({
-    _key: string;
-  } & Hero) | ({
-    _key: string;
-  } & Cta)>;
-};
-
-export type AbTest = {
-  _id: string;
-  _type: "abTest";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  description?: string;
-  experimentId?: string;
-  feature?: string;
-  variants?: Array<{
-    key?: "control" | "variant";
-    resource?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "page";
-    } | {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "mainPage";
-    };
-    _type: "abTestVariant";
-    _key: string;
-  }>;
-};
-
-export type MainPage = {
-  _id: string;
-  _type: "mainPage";
+  _type: "blog";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
   description?: string;
   slug?: Slug;
-  pageBuilder?: PageBuilder;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  richText?: RichText;
   language?: string;
+  pageBuilder?: PageBuilder;
   seoTitle?: string;
   seoDescription?: string;
   seoImage?: {
@@ -970,10 +794,145 @@ export type CustomUrl = {
   };
 };
 
+export type InternationalizedArrayReference = Array<{
+  _key: string;
+} & InternationalizedArrayReferenceValue>;
+
+export type IconPicker = {
+  _type: "iconPicker";
+  provider?: string;
+  name?: string;
+  svg?: string;
+};
+
+export type MediaTag = {
+  _id: string;
+  _type: "media.tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: Slug;
+};
+
 export type Slug = {
   _type: "slug";
   current?: string;
   source?: string;
+};
+
+export type SanityAssistInstructionTask = {
+  _type: "sanity.assist.instructionTask";
+  path?: string;
+  instructionKey?: string;
+  started?: string;
+  updated?: string;
+  info?: string;
+};
+
+export type SanityAssistTaskStatus = {
+  _type: "sanity.assist.task.status";
+  tasks?: Array<{
+    _key: string;
+  } & SanityAssistInstructionTask>;
+};
+
+export type SanityAssistSchemaTypeAnnotations = {
+  _type: "sanity.assist.schemaType.annotations";
+  title?: string;
+  fields?: Array<{
+    _key: string;
+  } & SanityAssistSchemaTypeField>;
+};
+
+export type SanityAssistInstructionContext = {
+  _type: "sanity.assist.instruction.context";
+  reference?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "assist.instruction.context";
+  };
+};
+
+export type AssistInstructionContext = {
+  _id: string;
+  _type: "assist.instruction.context";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  context?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type SanityAssistInstructionUserInput = {
+  _type: "sanity.assist.instruction.userInput";
+  message?: string;
+  description?: string;
+};
+
+export type SanityAssistInstructionPrompt = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  } | ({
+    _key: string;
+  } & SanityAssistInstructionFieldRef) | ({
+    _key: string;
+  } & SanityAssistInstructionContext) | ({
+    _key: string;
+  } & SanityAssistInstructionUserInput)>;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: null;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type SanityAssistInstructionFieldRef = {
+  _type: "sanity.assist.instruction.fieldRef";
+  path?: string;
+};
+
+export type SanityAssistInstruction = {
+  _type: "sanity.assist.instruction";
+  prompt?: SanityAssistInstructionPrompt;
+  icon?: string;
+  title?: string;
+  userId?: string;
+  createdById?: string;
+  output?: Array<{
+    path?: string;
+    _type: "sanity.assist.output.field";
+    _key: string;
+  } | {
+    type?: string;
+    _type: "sanity.assist.output.type";
+    _key: string;
+  }>;
+};
+
+export type SanityAssistSchemaTypeField = {
+  _type: "sanity.assist.schemaType.field";
+  path?: string;
+  instructions?: Array<{
+    _key: string;
+  } & SanityAssistInstruction>;
 };
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
@@ -981,11 +940,6 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 // Variable: sitemapQuery
 // Query: *[_type in $types && defined(slug.current) && seoNoIndex != true ]{  "slug":slug.current,  _updatedAt,  _type,  _id}
 export type SitemapQueryResult = Array<{
-  slug: null;
-  _updatedAt: string;
-  _type: "abTest";
-  _id: string;
-} | {
   slug: null;
   _updatedAt: string;
   _type: "assist.instruction.context";
@@ -1267,7 +1221,7 @@ export type GetBlogPageDataQueryResult = {
   };
 } | null;
 // Variable: getMainPageDataQuery
-// Query: *[_type == "mainPage" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{  _id,  _type,  title,  description,  "slug":slug.current,  defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}}
+// Query: *[_type == "mainPage" && select(($locale == 'en-GB' || $locale == '' ) =>   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)][0]{  _id,  _type,  title,  description,  "slug":slug.current,  defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }},    _type == "abTestPagebuilder"=>{  ...,  "variants":variants[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }},  }}  }}}
 export type GetMainPageDataQueryResult = {
   _id: string;
   _type: "mainPage";
@@ -1275,12 +1229,6 @@ export type GetMainPageDataQueryResult = {
   description: string | null;
   slug: string | null;
   pageBuilder: Array<{
-    _key: string;
-    _type: "abTestPagebuilder";
-    buttons: null;
-    richText: null;
-    form: null;
-  } | {
     _key: string;
     _type: "cta";
     buttons: Array<{
@@ -1518,7 +1466,7 @@ export type GetMainPageDataQueryResult = {
   }> | null;
 } | null;
 // Variable: getSlugPageDataQuery
-// Query: *[_type == "page" && slug.current == $slug ][0]{    _id,    _type,    title,    content,    "slug":slug.current,    defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }}  }}    }
+// Query: *[_type == "page" && slug.current == $slug ][0]{    _id,    _type,    title,    content,    "slug":slug.current,    defined(pageBuilder)=>{  pageBuilder[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }},    _type == "abTestPagebuilder"=>{  ...,  "variants":variants[]{    ...,    _type,    defined(buttons)=>{  buttons[]{    ...,    defined(url)=>{  url{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }},    defined(icon)=>{  icon{    svg  }}  }},    defined(richText)=>{  richText[]{    ...,     defined(markDefs)=>{  markDefs[]{    ...,    defined(customLink)=>{  customLink{    openInNewTab,    "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),  }}     }}     }},    defined(form)=>{  form->{    ...,  }},  }}  }}    }
 export type GetSlugPageDataQueryResult = {
   _id: string;
   _type: "page";
@@ -1526,12 +1474,6 @@ export type GetSlugPageDataQueryResult = {
   content: null;
   slug: string | null;
   pageBuilder: Array<{
-    _key: string;
-    _type: "abTestPagebuilder";
-    buttons: null;
-    richText: null;
-    form: null;
-  } | {
     _key: string;
     _type: "cta";
     buttons: Array<{
@@ -1770,35 +1712,11 @@ export type GetSlugPageDataQueryResult = {
 } | null;
 // Variable: getPageLinkedFeatureFlagsQuery
 // Query: *[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0]{  feature,  "variants":variants[]{    key,    resource->{      _type,      "slug":slug.current    }  }}
-export type GetPageLinkedFeatureFlagsQueryResult = {
-  feature: string | null;
-  variants: Array<{
-    key: "control" | "variant" | null;
-    resource: {
-      _type: "mainPage";
-      slug: string | null;
-    } | {
-      _type: "page";
-      slug: string | null;
-    } | null;
-  }> | null;
-} | null;
+export type GetPageLinkedFeatureFlagsQueryResult = null;
 // Variable: getVariantsFromMiddlewareQuery
 // Query:   *[slug.current == $slug][0]{    "test": *[_type =="abTest" && references(^._id)][0]{    feature,    "variants":variants[]{      key,      resource->{        _type,        "slug":slug.current      }    }  }}
 export type GetVariantsFromMiddlewareQueryResult = {
-  test: {
-    feature: string | null;
-    variants: Array<{
-      key: "control" | "variant" | null;
-      resource: {
-        _type: "mainPage";
-        slug: string | null;
-      } | {
-        _type: "page";
-        slug: string | null;
-      } | null;
-    }> | null;
-  } | null;
+  test: null;
 } | null;
 // Variable: getPageLinkedFeatureFlagVariantQuery
 // Query: *[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].variants[@.key == $key][0].resource->{  _type,  "slug": slug.current,  language}

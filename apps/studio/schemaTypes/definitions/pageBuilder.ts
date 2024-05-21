@@ -8,9 +8,6 @@ export const pagebuilderBlockTypes = pagebuilderBlocks.map(({ name }) => ({
 export const pageBuilder = defineType({
   name: 'pageBuilder',
   type: 'array',
-  of: [
-    ...pagebuilderBlockTypes.map((block) => defineArrayMember(block)),
-    { type: 'abTestPagebuilder' },
-  ],
+  of: [...pagebuilderBlockTypes.map((block) => defineArrayMember(block))],
 });
 

@@ -5,12 +5,10 @@ import { defineConfig } from 'sanity';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 import { iconPicker } from 'sanity-plugin-icon-picker';
 import { media } from 'sanity-plugin-media';
-import { abTest } from 'sanity-plugin-roboto-ab-test';
 import { structureTool } from 'sanity/structure';
 import { schemaTypes } from './schemaTypes';
 import { internationalizedDocuments } from './schemaTypes/documents';
 import { defaultDocumentNode, structure } from './structure';
-import { abTestDocumentTypes } from './utils/abTest';
 import { getFlag } from './utils/helper';
 
 export default defineConfig({
@@ -24,9 +22,6 @@ export default defineConfig({
     structureTool({
       structure,
       defaultDocumentNode,
-    }),
-    abTest({
-      pageBuilderFields: ['hero', 'cta'],
     }),
     visionTool(),
     assist({
