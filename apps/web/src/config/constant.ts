@@ -3,7 +3,7 @@ export const ogImageDimensions = {
   height: 630,
 };
 
-export const locales = ['en-GB', 'fr', 'de'] as const;
+export const locales = ['en-GB', 'fr', 'de', 'ar'] as const;
 
 export const DEFAULT_LOCALE = 'en-GB';
 export type Locale = (typeof locales)[number];

@@ -40,6 +40,7 @@ export default defineConfig({
         { id: 'en-GB', title: 'English' },
         { id: 'de', title: 'German' },
         { id: 'fr', title: 'French' },
+        { id: 'ar', title: 'Arabic' },
       ],
     }),
   ],

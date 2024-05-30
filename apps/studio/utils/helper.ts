@@ -86,6 +86,7 @@ export const serializeSlug = (input: string, language = 'en-GB', type = '') => {
 export const getFlag = (lang: string) => {
   if (lang === 'en-GB') return getUnicodeFlagIcon('GB');
   if (lang === 'en-US') return getUnicodeFlagIcon('US');
+  if (lang === 'ar') return getUnicodeFlagIcon('AE');
   return getUnicodeFlagIcon(lang);
 };
 
