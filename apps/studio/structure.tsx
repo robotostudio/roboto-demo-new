@@ -5,7 +5,6 @@ import {
   File,
   FileText,
   Footprints,
-  HomeIcon,
   LucideIcon,
   Menu,
   Settings,
@@ -21,7 +20,9 @@ import {
 } from 'sanity/structure';
 import { PreviewIFrame } from './components/preview';
 import { SchemaType, SingletonType } from './schemaTypes';
-import { getTitleCase } from './utils/helper';
+import { API_VERSION } from './utils/constant';
+import { FlagComponent } from './utils/flags';
+import { getFlag, getTitleCase } from './utils/helper';
 
 type Base<T = SchemaType> = {
   type: T;
@@ -110,6 +111,52 @@ const createIndexList = ({ S, index, list }: CreateIndexList) => {
     );
 };
 
+type MainPageTranslations = {
+  language: string;
+  _id: string;
+  title: string;
+};
+
+const createMainPageIndexListWithTranslations = async ({
+  S,
+  type,
+  title,
+  icon,
+  context,
+}: CreateSingleTon & { context: StructureResolverContext }) => {
+  const { getClient } = context;
+
+  const client = getClient({
+    apiVersion: API_VERSION,
+  });
+
+  const mainPageTranslations = await client.fetch<
+    MainPageTranslations[]
+  >(`*[_type == "mainPage"  && !(_id in path("drafts.**")) ]{
+    language,
+    _id,
+    title
+  }`);
+  const list = mainPageTranslations.map((item) => {
+    return S.listItem()
+      .title(item.title)
+      .icon(() => <>{getFlag(item.language)}</>)
+      .id(item._id)
+      .child(S.document().schemaType(type).documentId(item._id));
+  });
+
+  const newTitle = title ?? getTitleCase(type);
+
+  return S.listItem()
+    .title(newTitle)
+    .icon(icon ?? File)
+    .child(
+      S.list()
+        .title(newTitle)
+        .items([...list]),
+    );
+};
+
 type CreateList = {
   S: StructureBuilder;
 } & Base;
@@ -126,16 +173,80 @@ const createList = ({ S, type, icon, title }: CreateList) => {
     .icon(icon ?? File);
 };
 
-export const structure = (
+const createListWithTranslations = async ({
+  S,
+  type,
+  icon,
+  title,
+  context,
+}: CreateList & { context: StructureResolverContext }) => {
+  const { getClient } = context;
+  const client = getClient({ apiVersion: API_VERSION });
+
+  const languages = await client.fetch<string[]>(
+    `array::unique(*[_type == $type].language)`,
+    { type },
+    {},
+  );
+  const newTitle = title ?? getTitleCase(type);
+  console.log('🚀 ~ languages:', languages);
+
+  const list = languages.map((lang) => {
+    const listTitle = `${lang} Pages`;
+    return S.listItem()
+      .title(listTitle)
+      .icon(() => <>{getFlag(lang)}</>)
+      .id(lang)
+      .child(
+        S.documentList()
+          .title(newTitle)
+          .id(lang)
+          .schemaType(type)
+          .filter(`_type == "${type}" && language == "${lang}"`),
+      );
+  });
+
+  return S.listItem()
+    .title(newTitle)
+    .icon(icon ?? File)
+    .child(
+      S.list()
+        .title(newTitle)
+        .items([
+          ...list,
+          S.divider(),
+          S.listItem()
+            .title('All Pages')
+            .child(
+              S.documentList()
+                .title(newTitle)
+                .schemaType(type)
+                .filter(`_type == "${type}"`),
+            ),
+        ]),
+    );
+};
+
+export const structure = async (
   S: StructureBuilder,
   context: StructureResolverContext,
 ) =>
   S.list()
     .title('Content')
     .items([
-      createSingleTon({ S, type: 'mainPage', icon: HomeIcon }),
+      // createSingleTon({ S, type: 'mainPage', icon: HomeIcon }),
+      await createMainPageIndexListWithTranslations({
+        S,
+        type: 'mainPage',
+        context,
+      }),
       S.divider(),
-      createList({ S, type: 'page' }),
+      // createList({ S, type: 'page' }),
+      await createListWithTranslations({
+        S,
+        type: 'page',
+        context,
+      }),
       // createList({ S, type: 'faq' }),
       createIndexList({
         S,

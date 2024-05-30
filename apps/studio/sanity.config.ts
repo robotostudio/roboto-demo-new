@@ -51,7 +51,6 @@ export default defineConfig({
       const _internalizedDocs = internationalizedDocuments.map(
         (doc) => `${doc}`,
       );
-
       const filtered = prev
         .filter((template) => !_internalizedDocs.includes(template.id))
         .map((template) => {

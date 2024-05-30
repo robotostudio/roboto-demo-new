@@ -29,3 +29,6 @@ export const GROUPS: FieldGroupDefinition[] = [
   { name: CONST.RELATED, icon: InlineElementIcon, title: 'Related' },
 ];
 
+
+
+export const API_VERSION = '2022-11-15';
