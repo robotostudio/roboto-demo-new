@@ -9,13 +9,9 @@ import { preconnect, prefetchDNS } from 'react-dom';
 import { Footer } from '~/components/global/footer';
 import { MarketingModalProvider } from '~/components/global/marketing-modal-provider';
 import { Navbar } from '~/components/global/navbar';
-import { CSPostHogProvider } from '~/components/global/posthog-provider';
 import { PreviewBar } from '~/components/global/preview-bar';
 import { locales } from '~/config';
-import { getBootstrapData } from '~/lib/posthog';
 import { token } from '~/lib/sanity/sanity-server-fetch';
-
-
 
 type Props = {
   children: React.ReactNode;
@@ -46,7 +42,7 @@ export default async function LocaleLayout({
 
   const { isEnabled } = draftMode();
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body>
         <NextIntlClientProvider locale={locale}>
           <Navbar />
