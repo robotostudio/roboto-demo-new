@@ -242,7 +242,6 @@ export const getPageLinkedFeatureFlagsQuery = groq`
 }
 `;
 
-
 export const getVariantsFromMiddlewareQuery = groq`
   *[slug.current == $slug][0]{
     "test": *[_type =="abTest" && references(^._id)][0]{
@@ -292,7 +291,11 @@ export const getOGDataQuery = groq`
     _id,
     "title":coalesce(ogTitle,title),
     "description":coalesce(ogDescription,description),
-    "image":coalesce(seoImage,image,*[_type =="logo"][0].image).asset->url
-
+    "image": coalesce(seoImage, image, *[_type == "logo"][0].image).asset->{
+      "url": url + "?w=566&h=566&fit=max",
+    },
+    "palette": coalesce(seoImage, image, *[_type == "logo"][0].image).asset->metadata.palette,
+    "type":coalesce(_type, "Page"),
+    "date":coalesce(date, "Recent")
 }
 `;

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { Palette } from 'lucide-react';
 import { ImageResponse } from 'next/og';
 import { ImageResponseOptions } from 'next/server';
 
@@ -9,52 +10,61 @@ import { GetOGDataQueryResult } from '~/sanity.types';
 
 export const runtime = 'edge';
 
-type Font = 'medium' | 'extra-bold' | 'extra-bold-italic';
+async function getTtfFont(
+  family: string,
+  axes: string[],
+  value: number[],
+): Promise<ArrayBuffer> {
+  const familyParam = axes.join(',') + '@' + value.join(',');
 
-// const loadFontData = async (type: Font) => {
-//   if (type === 'extra-bold-italic') {
-//     const font = fetch(
-//       new URL(
-//         '../../../font/GalaxieCopernicus-ExtraboldItalic.woff',
-//         import.meta.url,
-//       ),
-//     ).then((res) => res.arrayBuffer());
+  // Get css style sheet with user agent Mozilla/5.0 Firefox/1.0 to ensure non-variable TTF is returned
+  const cssCall = await fetch(
+    `https://fonts.googleapis.com/css2?family=${family}:${familyParam}&display=swap`,
+    {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 Firefox/1.0',
+      },
+    },
+  );
 
-//     return await font;
-//   }
-//   if (type === 'extra-bold') {
-//     const font = fetch(
-//       new URL(
-//         '../../../font/GalaxieCopernicus-Extrabold.woff',
-//         import.meta.url,
-//       ),
-//     ).then((res) => res.arrayBuffer());
+  const css = await cssCall.text();
+  const ttfUrl = css.match(/url\(([^)]+)\)/)?.[1];
 
-//     return await font;
-//   }
-//   const font = fetch(
-//     new URL('../../../font/GalaxieCopernicus-Medium.woff', import.meta.url),
-//   ).then((res) => res.arrayBuffer());
+  if (!ttfUrl) {
+    throw new Error('Failed to extract font URL from CSS');
+  }
 
-//   return await font;
-// };
+  return await fetch(ttfUrl).then((res) => res.arrayBuffer());
+}
 
-const getOptions = async (
-  fontType: Font = 'medium',
-): Promise<ImageResponseOptions> => {
-  // const font = await loadFontData(fontType);
+const getOptions = async (): Promise<ImageResponseOptions> => {
+  const interRegular = await getTtfFont('Inter', ['wght'], [400]);
+  const interBold = await getTtfFont('Inter', ['wght'], [700]);
+  const interSemiBold = await getTtfFont('Inter', ['wght'], [600]);
 
   return {
     width: ogImageDimensions.width,
     height: ogImageDimensions.height,
-    // fonts: [
-    //   {
-    //     data: font,
-    //     name: 'GalaxieCopernicus',
-    //     style: fontType === 'extra-bold-italic' ? 'italic' : 'normal',
-    //     weight: fontType === 'medium' ? 400 : 600,
-    //   },
-    // ],
+    fonts: [
+      {
+        name: 'Inter',
+        data: interRegular,
+        style: 'normal',
+        weight: 400,
+      },
+      {
+        name: 'Inter',
+        data: interBold,
+        style: 'normal',
+        weight: 700,
+      },
+      {
+        name: 'Inter',
+        data: interSemiBold,
+        style: 'normal',
+        weight: 600,
+      },
+    ],
   };
 };
 
@@ -70,47 +80,94 @@ async function getOGData(id: string) {
 }
 
 const Generic = async ({ id }: any) => {
-  // const { description, image, title } = await getOGData(genericOGQuery, id);
-  // const truncatedDesc = description.slice(0, 160).concat('...');
   const data = await getOGData(id);
   let content = (
     <div tw="flex flex-col w-full h-full items-center justify-center bg-white">
-      <div tw=" flex w-full h-full items-center justify-center ">
-        <h1>Something went Wrong with image generation</h1>
+      <div tw="flex w-full h-full items-center justify-center">
+        <h1 style={{ fontFamily: 'Inter' }}>
+          Something went Wrong with image generation
+        </h1>
       </div>
     </div>
   );
   if (data) {
-    const { description, image, title } = data;
+    const { description, image, title, type, date, palette } = data;
+    console.log('🚀 ~ Generic ~ palette:', palette);
     const truncatedDesc = description?.slice(0, 160).concat('...');
+    const dominantColor = palette?.dominant?.background || '#3B82F6';
     content = (
-      <div tw="w-full h-full flex ">
-        <div tw="flex flex-row relative items-center justify-center">
-          <img
-            src={'https://demo.roboto.studio/logo.svg'}
-            width={70}
-            height={48}
-            alt=""
-            tw="absolute top-4 left-10 items-center justify-center"
+      <div
+        tw={`bg-[${dominantColor}] flex flex-row overflow-hidden relative w-full`}
+        style={{ fontFamily: 'Inter' }}
+      >
+        <svg
+          width="100%"
+          height="100%"
+          style={{ position: 'absolute', top: 0, left: 0 }}
+        >
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" style={{ stopColor: 'transparent' }} />
+              <stop offset="100%" style={{ stopColor: 'white' }} />
+            </linearGradient>
+          </defs>
+          <rect
+            width="100%"
+            height="100%"
+            fill="url(#gradient)"
+            opacity="0.2"
           />
-          <div tw="flex px-10">
-            <div tw="flex ">
-              {image && (
+        </svg>
+
+        <div tw="flex-1 p-10 flex flex-col justify-between relative z-10">
+          <div tw="flex justify-between items-start w-full">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                fill="white"
+              ></path>
+            </svg>
+            <div tw="bg-white flex bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-medium">
+              {date}
+            </div>
+          </div>
+
+          <h1 tw="text-5xl font-bold leading-tight max-w-[90%] text-white">
+            {title}
+          </h1>
+
+          <div
+            tw={`bg-white text-[${dominantColor}] flex px-5 py-2 rounded-full text-base font-semibold self-start`}
+          >
+            {type
+              .split(/(?=[A-Z])/)
+              .join(' ')
+              .toLowerCase()
+              .replace(/^\w/, (c) => c.toUpperCase())}
+          </div>
+        </div>
+
+        <div tw="w-[630px] h-[630px] flex items-center justify-center p-8 relative z-10">
+          <div tw="w-[566px] h-[566px] bg-white bg-opacity-20 flex flex-col justify-center items-center rounded-3xl shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_2px_4px_-1px_rgba(0,0,0,0.03),0_4px_6px_-1px_rgba(0,0,0,0.05),0_8px_10px_-1px_rgba(0,0,0,0.05)] overflow-hidden">
+            <div tw="flex relative w-full h-full">
+              {image?.url && (
                 <img
-                  src={image}
-                  alt=""
-                  width={ogImageDimensions.width / 2}
-                  height={ogImageDimensions.height / 2}
-                  tw="rounded-lg"
+                  src={image.url}
+                  tw="w-full h-full rounded-3xl shadow-2xl"
+                  width={566}
+                  height={566}
+                  alt="Dynamic Image from Page"
+                  style={{
+                    objectFit: 'cover',
+                  }}
                 />
               )}
             </div>
-            <span tw="w-1/2 px-10">
-              <span tw="flex flex-col justify-center w-7/8 text-[#000000]">
-                <span tw=" text-5xl text-clip mb-4 line-clamp-2">{title}</span>
-                <span tw="text-clip w-full line-clamp-2">{truncatedDesc}</span>
-              </span>
-            </span>
           </div>
         </div>
       </div>
@@ -123,7 +180,10 @@ const Generic = async ({ id }: any) => {
 const NotFound = async ({ image }: any) => {
   return new ImageResponse(
     (
-      <div tw="flex flex-col w-full h-full items-center justify-center bg-white">
+      <div
+        tw="flex flex-col w-full h-full items-center justify-center bg-white"
+        style={{ fontFamily: 'Inter' }}
+      >
         <div tw=" flex w-full h-full items-center justify-center ">
           <h1>Something went Wrong with image generation</h1>
         </div>
@@ -132,6 +192,7 @@ const NotFound = async ({ image }: any) => {
     await getOptions(),
   );
 };
+
 const block = {
   notFound: Generic,
   page: Generic,

@@ -1744,26 +1744,146 @@ export type GetMarketingModalDataQueryResult = {
   } | null;
 } | null;
 // Variable: getOGDataQuery
-// Query: *[_id == $id][0]{    _id,    "title":coalesce(ogTitle,title),    "description":coalesce(ogDescription,description),    "image":coalesce(seoImage,image,*[_type =="logo"][0].image).asset->url}
+// Query: *[_id == $id][0]{    _id,    "title":coalesce(ogTitle,title),    "description":coalesce(ogDescription,description),    "image": coalesce(seoImage, image, *[_type == "logo"][0].image).asset->{      "url": url + "?w=566&h=566&fit=max",    },    "palette": coalesce(seoImage, image, *[_type == "logo"][0].image).asset->metadata.palette,    "type":coalesce(_type, "Page"),    "date":coalesce(date, "Recent")}
 export type GetOGDataQueryResult = {
   _id: string;
   title: null;
   description: null;
-  image: null | string;
+  image: null | {
+    url: string | null;
+  };
+  palette: SanityImagePalette | null;
+  type: "media.tag" | "Page";
+  date: null | "Recent";
+} | {
+  _id: string;
+  title: null;
+  description: null;
+  image: null | {
+    url: string | null;
+  };
+  palette: SanityImagePalette | null;
+  type: "Page" | "translation.metadata";
+  date: null | "Recent";
 } | {
   _id: string;
   title: null | string;
   description: null;
-  image: null | string;
+  image: null | {
+    url: string | null;
+  };
+  palette: SanityImagePalette | null;
+  type: "assist.instruction.context" | "Page";
+  date: null | "Recent";
+} | {
+  _id: string;
+  title: null | string;
+  description: null;
+  image: null | {
+    url: string | null;
+  };
+  palette: SanityImagePalette | null;
+  type: "footer" | "Page";
+  date: null | "Recent";
+} | {
+  _id: string;
+  title: null | string;
+  description: null;
+  image: null | {
+    url: string | null;
+  };
+  palette: SanityImagePalette | null;
+  type: "form" | "Page";
+  date: null | "Recent";
+} | {
+  _id: string;
+  title: null | string;
+  description: null;
+  image: null | {
+    url: string | null;
+  };
+  palette: SanityImagePalette | null;
+  type: "logo" | "Page";
+  date: null | "Recent";
+} | {
+  _id: string;
+  title: null | string;
+  description: null;
+  image: null | {
+    url: string | null;
+  };
+  palette: SanityImagePalette | null;
+  type: "navbar" | "Page";
+  date: null | "Recent";
 } | {
   _id: string;
   title: null | string;
   description: null | string;
-  image: null | string;
+  image: null | {
+    url: string | null;
+  };
+  palette: SanityImagePalette | null;
+  type: "marketingModal" | "Page";
+  date: null | "Recent";
+} | {
+  _id: string;
+  title: null | string;
+  description: null | string;
+  image: null | {
+    url: string | null;
+  };
+  palette: SanityImagePalette | null;
+  type: "Page" | "sanity.fileAsset";
+  date: null | "Recent";
+} | {
+  _id: string;
+  title: null | string;
+  description: null | string;
+  image: null | {
+    url: string | null;
+  };
+  palette: SanityImagePalette | null;
+  type: "Page" | "sanity.imageAsset";
+  date: null | "Recent";
 } | {
   _id: string;
   title: string | null;
   description: string | null;
-  image: string | null;
+  image: {
+    url: string | null;
+  } | null;
+  palette: SanityImagePalette | null;
+  type: "blog" | "Page";
+  date: null | "Recent";
+} | {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  image: {
+    url: string | null;
+  } | null;
+  palette: SanityImagePalette | null;
+  type: "blogIndex" | "Page";
+  date: null | "Recent";
+} | {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  image: {
+    url: string | null;
+  } | null;
+  palette: SanityImagePalette | null;
+  type: "mainPage" | "Page";
+  date: null | "Recent";
+} | {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  image: {
+    url: string | null;
+  } | null;
+  palette: SanityImagePalette | null;
+  type: "page" | "Page";
+  date: null | "Recent";
 } | null;
 
