@@ -1,4 +1,6 @@
 name: Assertions and static report
+env:
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_WEBSITE }}
 
 on:
   schedule:
