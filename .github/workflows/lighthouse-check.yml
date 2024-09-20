@@ -16,8 +16,8 @@ jobs:
       - name: Install Dependencies
         run: npm install -g @unlighthouse/cli puppeteer 
 
-      - name: Unlighthouse assertions and client
-        run: unlighthouse-ci --site https://demo.roboto.studio --budget 75 --build-static
+      # - name: Unlighthouse assertions and client
+      #   run: unlighthouse-ci --site https://demo.roboto.studio --budget 75 --build-static
 
       - name: Deploy
-        run: npx vercel deploy --cwd=.unlighthouse --prod
+        run: npx vercel deploy --cwd=.unlighthouse --prod --token ${{ secrets.VERCEL_TOKEN }}

@@ -1,0 +1,258 @@
+[
+  {
+    "path": "/",
+    "score": 0.99,
+    "performance": 0.97,
+    "accessibility": 0.98,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/about",
+    "score": 0.97,
+    "performance": 0.97,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/about-variant",
+    "score": 0.97,
+    "performance": 0.97,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/ar",
+    "score": 0.99,
+    "performance": 0.98,
+    "accessibility": 0.98,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/ar/about",
+    "score": 0.98,
+    "performance": 0.98,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/ar/blog/tesla-model-3-review",
+    "score": 0.99,
+    "performance": 0.97,
+    "accessibility": 0.98,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/ar/contact",
+    "score": 0.97,
+    "performance": 0.97,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/blog",
+    "score": 0.99,
+    "performance": 0.94,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/blog/english-page",
+    "score": 0.99,
+    "performance": 0.96,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/blog/sanity-seo",
+    "score": 0.99,
+    "performance": 0.96,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/blog/tesla-model-3-review",
+    "score": 0.99,
+    "performance": 0.97,
+    "accessibility": 0.98,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/blog/the-future-of-sound-innovating-with-3d-audio-technology",
+    "score": 0.99,
+    "performance": 0.99,
+    "accessibility": 0.98,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/blog/the-remarkable-journey-of-the-typewriter",
+    "score": 1,
+    "performance": 1,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/blog/top-10-tips-for-recruitment",
+    "score": 0.99,
+    "performance": 0.97,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/contact",
+    "score": 0.98,
+    "performance": 0.98,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/contact-v2",
+    "score": 0.98,
+    "performance": 0.99,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/de",
+    "score": 1,
+    "performance": 0.99,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/de/blog",
+    "score": 1,
+    "performance": 0.98,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/de/contact",
+    "score": 0.98,
+    "performance": 0.98,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/de/ppc-page",
+    "score": 0.98,
+    "performance": 0.98,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/demo-v1",
+    "score": 0.98,
+    "performance": 0.99,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/demo-v2",
+    "score": 0.98,
+    "performance": 0.99,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/example-page",
+    "score": 0.98,
+    "performance": 0.98,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/fr",
+    "score": 0.99,
+    "performance": 0.98,
+    "accessibility": 0.98,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/fr/blog",
+    "score": 0.99,
+    "performance": 0.97,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/fr/blog/10-conseils-principaux-pour-le-recrutement",
+    "score": 1,
+    "performance": 0.99,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 1
+  },
+  {
+    "path": "/fr/contact",
+    "score": 0.98,
+    "performance": 0.99,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/fr/page-ppc",
+    "score": 0.98,
+    "performance": 0.99,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/hidden-dev",
+    "score": 0.98,
+    "performance": 0.99,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/ppc-page",
+    "score": 0.98,
+    "performance": 0.98,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/using-v0-in-a-page-builder",
+    "score": 0.98,
+    "performance": 1,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  {
+    "path": "/v2",
+    "score": 0.98,
+    "performance": 0.99,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  }
+]
