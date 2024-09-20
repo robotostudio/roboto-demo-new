@@ -1,0 +1,23 @@
+name: Assertions and static report
+
+on:
+  schedule:
+    - cron: '30 7 * * 1'
+  workflow_dispatch:
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install Dependencies
+        run: npm install -g @unlighthouse/cli puppeteer 
+
+      - name: Unlighthouse assertions and client
+        run: unlighthouse-ci --site https://demo.roboto.studio --budget 75 --build-static
+
+      - name: Deploy
+        run: npx vercel deploy --cwd=.unlighthouse --prod
