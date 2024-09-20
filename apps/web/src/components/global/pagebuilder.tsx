@@ -1,5 +1,5 @@
-import { ComponentType, FC } from 'react';
-import { PageBuilder } from '~/sanity.types';
+import type { ComponentType, FC } from 'react';
+import type { PageBuilder } from '~/sanity.types';
 import { CtaBlock, DynamicIntroBlock, HeroBlock } from '../blocks';
 import { ImageCarouselBlock } from '../blocks/image-carousel';
 import { SplitFormBlock } from '../blocks/split-form';
@@ -30,7 +30,7 @@ export const PageBuilderBlock: FC<PageBuilderBlockProps<PageBuilder>> = ({
   pageBuilder,
   bucket,
 }) => {
-  if (!Array.isArray(pageBuilder)) return <section></section>;
+  if (!Array.isArray(pageBuilder)) return <section />;
   return (
     <section className="flex flex-col gap-4">
       {pageBuilder.map((block) => {

@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og';
-import { ImageResponseOptions } from 'next/server';
+import type { ImageResponseOptions } from 'next/server';
 
 import { ogImageDimensions } from '~/config';
 import { getClient } from '~/lib/sanity';
 import { getOGDataQuery } from '~/lib/sanity/query';
-import { GetOGDataQueryResult } from '~/sanity.types';
+import type { GetOGDataQueryResult } from '~/sanity.types';
 
 export const runtime = 'edge';
 
@@ -177,7 +177,7 @@ const Generic = async ({ id }: any) => {
 };
 
 const NotFound = async ({ image }: any) => {
-  return new ImageResponse(
+	return new ImageResponse(
     (
       <div
         tw="flex flex-col w-full h-full items-center justify-center bg-white"
@@ -199,14 +199,14 @@ const block = {
 } as const;
 
 export async function GET({ url }: Request): Promise<ImageResponse> {
-  const { searchParams } = new URL(url);
-  const type = searchParams.get('type') as keyof typeof block;
+	const { searchParams } = new URL(url);
+	const type = searchParams.get('type') as keyof typeof block;
   const para = Object.fromEntries(searchParams.entries());
-  console.log('🚀 ~ GET ~ type:', type, para);
+	console.log('🚀 ~ GET ~ type:', type, para);
 
-  const image = block[type] ?? block['notFound'];
+	const image = block[type] ?? block['notFound'];
 
-  try {
+	try {
     return await image(para);
   } catch (err) {
     console.log(err);
