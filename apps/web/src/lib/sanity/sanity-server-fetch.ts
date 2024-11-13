@@ -12,7 +12,7 @@ const client = createClient({
     enabled: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',
     studioUrl:
       process.env.NODE_ENV === 'production'
-        ? 'https://template-roboto.sanity.studio'
+        ? 'https://roboto-demo.sanity.studio'
         : 'http://localhost:3333',
   },
 });

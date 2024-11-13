@@ -42,7 +42,7 @@ export default defineConfig({
         origin:
           window.location.hostname === 'localhost'
             ? 'http://localhost:3000'
-            : 'https://template.roboto.studio',
+            : 'https://demo.roboto.studio',
         previewMode: {
           enable: '/api/presentation-draft',
         },
