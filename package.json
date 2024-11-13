@@ -13,7 +13,7 @@
     "lint": "turbo lint"
   },
   "devDependencies": {
-    "turbo": "^2.1.2"
+    "turbo": "^2.2.3"
   },
   "dependencies": {
     "eslint": "8.6.0",
