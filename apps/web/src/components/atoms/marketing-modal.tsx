@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import type { FC } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -9,9 +9,9 @@ import {
   DialogTitle,
 } from '~/components/ui/dialog';
 import { useMarketingModal } from '~/hooks/useMarketingModal';
-import { Form, GetMarketingModalDataQueryResult } from '~/sanity.types';
+import type { Form, GetMarketingModalDataQueryResult } from '~/sanity.types';
 
-import { PageComponentProps } from '~/types';
+import type { PageComponentProps } from '~/types';
 import { PlainFormBuilder } from '../blocks/form-builder';
 
 type MarketingModalProps = PageComponentProps<GetMarketingModalDataQueryResult>;
