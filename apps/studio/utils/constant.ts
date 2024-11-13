@@ -1,4 +1,4 @@
-import { FieldGroupDefinition } from 'sanity';
+import type { FieldGroupDefinition } from 'sanity';
 import {
   ComposeIcon,
   SearchIcon,
@@ -20,7 +20,7 @@ export const GROUPS: FieldGroupDefinition[] = [
   {
     name: CONST.MAIN_CONTENT,
     icon: ComposeIcon,
-    title: `Content`,
+    title: 'Content',
     default: true,
   },
   { name: CONST.SEO, icon: SearchIcon, title: 'SEO' },
@@ -28,7 +28,5 @@ export const GROUPS: FieldGroupDefinition[] = [
   { name: CONST.CARD, icon: BlockElementIcon, title: 'Card' },
   { name: CONST.RELATED, icon: InlineElementIcon, title: 'Related' },
 ];
-
-
 
 export const API_VERSION = '2022-11-15';

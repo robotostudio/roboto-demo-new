@@ -1,9 +1,10 @@
-import { MetadataRoute } from 'next';
-import { groq } from 'next-sanity';
+import type { MetadataRoute } from 'next';
 import { baseUrl } from '~/config';
-import { getClient } from '~/lib/sanity';
+import { handleErrors } from '~/lib/helper';
+import { client } from '~/lib/sanity';
+import { sitemapQuery } from '~/lib/sanity/query';
 
-import { SitemapProjection } from '~/types';
+import type { SitemapProjection } from '~/types';
 
 type SiteMap = Pick<
   MetadataRoute.Sitemap[number],
@@ -21,21 +22,15 @@ const formatToSitemap = (
   }));
 };
 
-export const sitemapQuery = groq`
-*[_type in $types && defined(slug.current) && seoNoIndex != true ]{
-  "slug":slug.current,
-  _updatedAt,
-  _type,
-  _id
-}`;
-
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const client = getClient();
-
-  const slugPages = await client.fetch<SitemapProjection[]>(sitemapQuery, {
-    types: ['page', 'mainPage', 'blog', 'blogIndex'],
-  });
+  const [slugPages] = await handleErrors(
+    client.fetch<SitemapProjection[]>(sitemapQuery, {
+      types: ['page', 'mainPage', 'blog', 'blogIndex'],
+    }),
+  );
+  if (!slugPages) {
+    return [];
+  }
 
   const slugPagesSitemap = formatToSitemap([...slugPages], {
     changeFrequency: 'weekly',

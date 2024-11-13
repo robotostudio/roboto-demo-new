@@ -12,13 +12,6 @@ export const singletons = [blogIndex, mainPage, navbar, logo, footer];
 
 export const documents = [page, blog, form, marketingModal, ...singletons];
 
-export const internationalizedDocuments = [
-  page,
-  blog,
-  // faq,
-  mainPage,
-  form,
-  blogIndex,
-].map(({ name }) => name);
-
-
+export const internationalizedDocuments = [page, blog, mainPage, blogIndex].map(
+  ({ name }) => name,
+);

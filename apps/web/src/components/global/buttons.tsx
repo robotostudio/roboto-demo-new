@@ -1,36 +1,26 @@
 import Link from 'next/link';
-import { ComponentPropsWithoutRef, FC } from 'react';
+import { Fragment, type ComponentPropsWithoutRef, type FC } from 'react';
 import { cn } from '~/lib/utils';
-import { SanityButton, SanityButtons } from '~/types';
-import { Button, ButtonProps } from '../ui/button';
+import type { Maybe, SanityButton } from '~/types';
+import { Button, type ButtonProps } from '../ui/button';
 import { SanityIcon } from './sanity-icon';
 
 export type ButtonsProps = {
-  buttons?: SanityButtons | null;
+  buttons?: Maybe<Array<SanityButton>>;
   wrapperProps?: ComponentPropsWithoutRef<'div'>;
-  showIcon?: boolean;
 } & ButtonProps;
 
-const SanityLinkButton: FC<
-  { button: SanityButton; showIcon: boolean } & ButtonProps
-> = ({ button, showIcon, ...props }) => {
+const SanityLinkButton: FC<{ button: SanityButton } & ButtonProps> = ({
+  button,
+  ...props
+}) => {
   const { buttonText, url, variant, icon } = button ?? {};
-  // if param carry over needed
-  // const search = useSearchParams();
-  // const query = search.toString();
-  // const param = query ? `?${query}` : '';
-
-  if (!url?.href) {
+  if (!url?.href || url?.href === '#')
     return <Button variant={'destructive'}>Link Broken</Button>;
-  }
   return (
     <Link href={url.href} target={url.openInNewTab ? '_blank' : '_self'}>
-      <Button {...props} variant={variant}>
-        {showIcon && icon?.svg && (
-          <span className="grid size-7 place-items-center">
-            <SanityIcon icon={icon} fontSize={16} />
-          </span>
-        )}
+      <Button {...props} variant={variant ?? 'default'}>
+        {icon?.svg && <SanityIcon icon={icon} className="size-7" />}
         {buttonText}
       </Button>
     </Link>
@@ -40,7 +30,6 @@ const SanityLinkButton: FC<
 export const Buttons: FC<ButtonsProps> = ({
   buttons,
   wrapperProps,
-  showIcon = true,
   ...props
 }) => {
   if (!Array.isArray(buttons)) return <></>;
@@ -49,14 +38,10 @@ export const Buttons: FC<ButtonsProps> = ({
       {...wrapperProps}
       className={cn('flex w-full items-center gap-4', wrapperProps?.className)}
     >
-      {buttons.map((button) => (
-        <SanityLinkButton
-          button={button}
-          key={button._key}
-          showIcon={showIcon}
-          // showIcon={icons}
-          {...props}
-        />
+      {buttons.map((button, index) => (
+        <Fragment key={`${button?._key}-button-${index}`}>
+          {button && <SanityLinkButton button={button} {...props} />}
+        </Fragment>
       ))}
     </div>
   );

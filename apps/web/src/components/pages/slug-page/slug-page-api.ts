@@ -1,87 +1,68 @@
 'use server';
-import { draftMode } from 'next/headers';
-import { LOCALIZED_SANITY_TAGS, Locale, SANITY_TAGS } from '~/config';
+import type { Locale } from '~/config';
 import { getLocalizedSlug, handleErrors } from '~/lib/helper';
+import { client } from '~/lib/sanity';
 import {
+  genericPageQueryOG,
   getAllSlugPagePathsQuery,
-  getPageLinkedFeatureFlagVariantQuery,
-  getPageLinkedFeatureFlagsQuery,
   getSlugPageDataQuery,
+  slugPageQueryOG,
 } from '~/lib/sanity/query';
 import { sanityServerFetch } from '~/lib/sanity/sanity-server-fetch';
-import {
+import type {
+  GenericPageQueryOGResult,
   GetAllSlugPagePathsQueryResult,
-  GetPageLinkedFeatureFlagsQueryResult,
   GetSlugPageDataQueryResult,
+  SlugPageQueryOGResult,
 } from '~/sanity.types';
 
 export const getSlugPageData = async (slug: string, locale: Locale) => {
-  const { isEnabled } = draftMode();
-
   const localizedSlug = getLocalizedSlug(slug, locale);
-  const tags = [LOCALIZED_SANITY_TAGS.slugPage(locale), slug, localizedSlug];
   return await handleErrors(
     sanityServerFetch<GetSlugPageDataQueryResult>({
       query: getSlugPageDataQuery,
       params: { slug: localizedSlug, locale },
-      tags,
-      preview: isEnabled,
+      tags: [localizedSlug],
     }),
   );
 };
 
 export const getAllSlugPagePaths = async () => {
   const [data, err] = await handleErrors(
-    sanityServerFetch<GetAllSlugPagePathsQueryResult>({
-      query: getAllSlugPagePathsQuery,
-      tags: [SANITY_TAGS.slugPage],
-    }),
+    client.fetch<GetAllSlugPagePathsQueryResult>(getAllSlugPagePathsQuery),
   );
   if (!data || err) {
     return [];
   }
   const paths: { slug: string; locale: Locale }[] = [];
-  data.forEach((page) => {
+  for (const page of data) {
     if (page?.slug && page?.locale) {
       const slugFragments = page.slug.split('/').filter(Boolean);
-      if (slugFragments.length > 1) {
-        const [, slug] = slugFragments;
-        paths.push({
-          locale: page.locale as Locale,
-          slug,
-        });
-      } else {
-        const [slug] = slugFragments;
-        paths.push({
-          locale: page.locale as Locale,
-          slug,
-        });
-      }
+      const slug =
+        slugFragments.length > 1 ? slugFragments[1] : slugFragments[0];
+      paths.push({
+        locale: page.locale as Locale,
+        slug,
+      });
     }
-  });
+  }
   return paths;
 };
 
-export const getPageLinkedFeatureFlags = async (id: string) => {
+export const getSlugPageOGData = async (id: string) => {
   return await handleErrors(
-    sanityServerFetch<GetPageLinkedFeatureFlagsQueryResult>({
-      query: getPageLinkedFeatureFlagsQuery,
+    sanityServerFetch<SlugPageQueryOGResult>({
+      query: slugPageQueryOG,
       params: { id },
-      tags: [SANITY_TAGS.feature, SANITY_TAGS.featureFlagPage],
     }),
   );
 };
 
-export const getPageLinkedFeatureFlagVariant = async (
-  id: string,
-  key: string,
-) => {
+export const getGenericPageOGData = async (id: string) => {
   return await handleErrors(
-    sanityServerFetch<{ slug: string; language: Locale } | null>({
-      query: getPageLinkedFeatureFlagVariantQuery,
-      params: { id, key },
-      tags: [SANITY_TAGS.feature, SANITY_TAGS.featureFlagPage],
+    sanityServerFetch<GenericPageQueryOGResult>({
+      query: genericPageQueryOG,
+      params: { id },
     }),
   );
 };
-

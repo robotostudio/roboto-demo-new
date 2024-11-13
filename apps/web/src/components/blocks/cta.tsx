@@ -1,16 +1,20 @@
-import { FC } from 'react';
-
-import { Cta } from '~/sanity.types';
-import { ProcessPageBuilderBlock } from '~/types';
+import type { FC } from 'react';
+import type { Cta } from '~/sanity.types';
+import type { ProcessPageBuilderBlock } from '~/types';
 import { Buttons } from '../global/buttons';
 import { RichText } from '../global/richText';
 import Ripple from '../global/ripple';
 
 export type CtaBlockProps = ProcessPageBuilderBlock<Cta>;
 
-export const CtaBlock: FC<CtaBlockProps> = ({ title, richText, buttons }) => {
+export const CtaBlock: FC<CtaBlockProps> = ({
+  title,
+  richText,
+  buttons,
+  _type,
+}) => {
   return (
-    <section className="relative overflow-hidden py-20 md:py-32">
+    <section className="relative overflow-hidden py-20 md:py-32" id={_type}>
       <Ripple />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">

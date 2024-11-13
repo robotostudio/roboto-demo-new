@@ -6,28 +6,17 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   ...(process.env.NODE_ENV === 'development'
     ? {
+        cacheMaxMemorySize: 0,
         logging: {
-          // fetches: { fullUrl: true }
+          fetches: {},
         },
       }
     : {}),
-
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 's-maxage=1, stale-while-revalidate=59',
-          },
-        ],
-      },
-    ];
-  },
-
   images: {
     remotePatterns: [{ hostname: 'cdn.sanity.io' }],
+  },
+  experimental: {
+    taint: true,
   },
 };
 

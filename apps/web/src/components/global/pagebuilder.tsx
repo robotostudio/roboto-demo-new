@@ -1,18 +1,20 @@
-import type { ComponentType, FC } from 'react';
-import type { PageBuilder } from '~/sanity.types';
-import { CtaBlock, DynamicIntroBlock, HeroBlock } from '../blocks';
-import { ImageCarouselBlock } from '../blocks/image-carousel';
+import type { FC } from 'react';
 import { SplitFormBlock } from '../blocks/split-form';
+import { ImageCarouselBlock } from '../blocks/image-carousel';
+import type { PageBuilder } from '~/sanity.types';
+import { CtaBlock } from '../blocks/cta';
+import { HeroBlock } from '../blocks/hero';
+import { DynamicIntroBlock } from '../blocks/dynamic-intro';
 
 export type PageBuilderBlockProps<T> = {
   pageBuilder?: T | null;
-  bucket?: string;
 };
 
 type BlockTypeKeys = PageBuilder[number]['_type'];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Blocks: Record<BlockTypeKeys, FC<any> | ComponentType<any>> = {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+const Blocks: Record<BlockTypeKeys, FC<any>> = {
   hero: HeroBlock,
   cta: CtaBlock,
   dynamicIntro: DynamicIntroBlock,
@@ -28,14 +30,13 @@ const BlockNotFound: FC<{ _type: string }> = ({ _type }) => {
 
 export const PageBuilderBlock: FC<PageBuilderBlockProps<PageBuilder>> = ({
   pageBuilder,
-  bucket,
 }) => {
-  if (!Array.isArray(pageBuilder)) return <section />;
+  if (!Array.isArray(pageBuilder)) return null;
   return (
     <section className="flex flex-col gap-4">
       {pageBuilder.map((block) => {
         const Comp = Blocks[block._type] ?? BlockNotFound;
-        return <Comp {...block} key={block._key} bucket={bucket} />;
+        return <Comp {...block} key={block._key} />;
       })}
     </section>
   );
