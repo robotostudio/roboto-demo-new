@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from 'next-intl';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { VisualEditing } from 'next-sanity';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { draftMode } from 'next/headers';
@@ -29,7 +29,7 @@ export default async function LocaleLayout({
 }: Props) {
   const isValidLocale = locales.some((cur) => cur === locale);
   if (!isValidLocale) return notFound();
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   preconnect('https://cdn.sanity.io');
   prefetchDNS('https://cdn.sanity.io');
@@ -57,7 +57,7 @@ export default async function LocaleLayout({
                       : payload?.document?._id,
                     payload?.document?._type,
                   ];
-                  console.log('🚀 ~ refresh tags:', tags);
+                  console.log('🚀 ~ refresh tags:-', tags);
                   for (const tag of tags) {
                     if (tag) revalidateTag(tag);
                   }
