@@ -5,12 +5,12 @@ import {
   File,
   FileText,
   Footprints,
-  LucideIcon,
+  type LucideIcon,
   Menu,
   Settings,
   Split,
 } from 'lucide-react';
-import {
+import type {
   DefaultDocumentNodeResolver,
   Divider,
   ListItem,
@@ -19,10 +19,13 @@ import {
   StructureResolverContext,
 } from 'sanity/structure';
 import { PreviewIFrame } from './components/preview';
-import { SchemaType, SingletonType } from './schemaTypes';
+import type { SchemaType, SingletonType } from './schemaTypes';
 import { API_VERSION } from './utils/constant';
-import { FlagComponent } from './utils/flags';
 import { getFlag, getTitleCase } from './utils/helper';
+import {
+  createListWithTranslations,
+  createMainPageIndexListWithTranslations,
+} from './utils/main-page-structure';
 
 type Base<T = SchemaType> = {
   type: T;
@@ -117,45 +120,45 @@ type MainPageTranslations = {
   title: string;
 };
 
-const createMainPageIndexListWithTranslations = async ({
-  S,
-  type,
-  title,
-  icon,
-  context,
-}: CreateSingleTon & { context: StructureResolverContext }) => {
-  const { getClient } = context;
+// const createMainPageIndexListWithTranslations = async ({
+//   S,
+//   type,
+//   title,
+//   icon,
+//   context,
+// }: CreateSingleTon & { context: StructureResolverContext }) => {
+//   const { getClient } = context;
 
-  const client = getClient({
-    apiVersion: API_VERSION,
-  });
+//   const client = getClient({
+//     apiVersion: API_VERSION,
+//   });
 
-  const mainPageTranslations = await client.fetch<
-    MainPageTranslations[]
-  >(`*[_type == "mainPage"  && !(_id in path("drafts.**")) ]{
-    language,
-    _id,
-    title
-  }`);
-  const list = mainPageTranslations.map((item) => {
-    return S.listItem()
-      .title(item.title)
-      .icon(() => <>{getFlag(item.language)}</>)
-      .id(item._id)
-      .child(S.document().schemaType(type).documentId(item._id));
-  });
+//   const mainPageTranslations = await client.fetch<
+//     MainPageTranslations[]
+//   >(`*[_type == "mainPage"  && !(_id in path("drafts.**")) ]{
+//     language,
+//     _id,
+//     title
+//   }`);
+//   const list = mainPageTranslations.map((item) => {
+//     return S.listItem()
+//       .title(item.title)
+//       .icon(() => <FlagComponent lang={item.language} />)
+//       .id(item._id)
+//       .child(S.document().schemaType(type).documentId(item._id));
+//   });
 
-  const newTitle = title ?? getTitleCase(type);
+//   const newTitle = title ?? getTitleCase(type);
 
-  return S.listItem()
-    .title(newTitle)
-    .icon(icon ?? File)
-    .child(
-      S.list()
-        .title(newTitle)
-        .items([...list]),
-    );
-};
+//   return S.listItem()
+//     .title(newTitle)
+//     .icon(icon ?? File)
+//     .child(
+//       S.list()
+//         .title(newTitle)
+//         .items([...list]),
+//     );
+// };
 
 type CreateList = {
   S: StructureBuilder;
@@ -173,60 +176,6 @@ const createList = ({ S, type, icon, title }: CreateList) => {
     .icon(icon ?? File);
 };
 
-const createListWithTranslations = async ({
-  S,
-  type,
-  icon,
-  title,
-  context,
-}: CreateList & { context: StructureResolverContext }) => {
-  const { getClient } = context;
-  const client = getClient({ apiVersion: API_VERSION });
-
-  const languages = await client.fetch<string[]>(
-    `array::unique(*[_type == $type].language)`,
-    { type },
-    {},
-  );
-  const newTitle = title ?? getTitleCase(type);
-  console.log('🚀 ~ languages:', languages);
-
-  const list = languages.map((lang) => {
-    const listTitle = `${lang} Pages`;
-    return S.listItem()
-      .title(listTitle)
-      .icon(() => <>{getFlag(lang)}</>)
-      .id(lang)
-      .child(
-        S.documentList()
-          .title(newTitle)
-          .id(lang)
-          .schemaType(type)
-          .filter(`_type == "${type}" && language == "${lang}"`),
-      );
-  });
-
-  return S.listItem()
-    .title(newTitle)
-    .icon(icon ?? File)
-    .child(
-      S.list()
-        .title(newTitle)
-        .items([
-          ...list,
-          S.divider(),
-          S.listItem()
-            .title('All Pages')
-            .child(
-              S.documentList()
-                .title(newTitle)
-                .schemaType(type)
-                .filter(`_type == "${type}"`),
-            ),
-        ]),
-    );
-};
-
 export const structure = async (
   S: StructureBuilder,
   context: StructureResolverContext,
@@ -234,20 +183,17 @@ export const structure = async (
   S.list()
     .title('Content')
     .items([
-      // createSingleTon({ S, type: 'mainPage', icon: HomeIcon }),
       await createMainPageIndexListWithTranslations({
         S,
         type: 'mainPage',
         context,
       }),
       S.divider(),
-      // createList({ S, type: 'page' }),
       await createListWithTranslations({
         S,
         type: 'page',
         context,
       }),
-      // createList({ S, type: 'faq' }),
       createIndexList({
         S,
         index: { type: 'blogIndex', icon: BookMarked },

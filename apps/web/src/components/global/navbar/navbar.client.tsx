@@ -1,5 +1,4 @@
 'use client';
-
 import {
   Accordion,
   AccordionContent,
@@ -9,7 +8,7 @@ import {
 import { ChevronDownIcon, MenuIcon, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { FC, useState } from 'react';
+import React, { type FC, useState } from 'react';
 import {
   Drawer,
   DrawerClose,
@@ -29,12 +28,14 @@ import {
   navigationMenuTriggerStyle,
 } from '~/components/ui/navigation-menu';
 import { cn } from '~/lib/utils';
-import { GetNavbarDataQueryResult } from '~/sanity.types';
-import { PageComponentProps } from '~/types';
+import type { GetNavbarDataQueryResult } from '~/sanity.types';
+import type { PageComponentProps } from '~/types';
 import { Buttons } from '../buttons';
-
 import { SanityIcon } from '../sanity-icon';
-import { useMediaQuery } from '~/hooks/useMediaQuery';
+import { useIsMobile } from '~/hooks/use-is-mobile';
+
+
+
 
 type NavN = NonNullable<NonNullable<GetNavbarDataQueryResult>['links']>[number];
 
@@ -207,7 +208,7 @@ export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
   data,
 }) => {
   const { buttons, links, logo } = data ?? {};
-  const isDesktop = useMediaQuery('(min-width: 768px)', true);
+  const isMobile = useIsMobile();
   return (
     <nav className="mx-auto flex w-full max-w-6xl justify-between bg-white  bg-opacity-90 p-4 px-4 backdrop-blur-2xl md:grid md:grid-cols-3 md:px-6">
       <div className="flex items-center ">
@@ -224,7 +225,9 @@ export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
           </Link>
         )}
       </div>
-      {isDesktop ? (
+      {isMobile ? (
+        <MobileNav data={data} />
+      ) : (
         <>
           <div className="flex items-center justify-center">
             <NavigationMenu>
@@ -238,8 +241,6 @@ export const NavbarClient: FC<PageComponentProps<GetNavbarDataQueryResult>> = ({
             <Buttons buttons={buttons} />
           </div>
         </>
-      ) : (
-        <MobileNav data={data} />
       )}
     </nav>
   );

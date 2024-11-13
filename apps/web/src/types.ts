@@ -1,11 +1,11 @@
-import { Locale } from './config';
-import { CarouselField, Form } from './sanity.types';
+import type { Locale } from './config';
+import type { Page, Form, Button } from './sanity.types';
 
 export type PreviewProps<T> = {
   initialData: T;
   query: string;
   preview?: boolean;
-  queryParams: Record<string, any>;
+  queryParams: Record<string, unknown>;
 };
 
 export type PageParams<T = Record<string, string>> = {
@@ -23,26 +23,24 @@ export type PartialResponse<T> = Prettify<Partial<T>>;
 export type PageComponentProps<T> = {
   data: PartialResponse<T>;
   preview?: boolean;
-  bucket?: string;
-  feature?: string | boolean | undefined;
 };
 
 export type ProcessedUrl = {
-  openInNewTab: boolean | null;
-  href: string | null;
-} | null;
+  openInNewTab?: Maybe<boolean>;
+  href?: Maybe<string>;
+};
 
 export type SanityButton = {
   _key: string;
   buttonText?: string;
-  icon?: { svg: string | null } | null;
-  variant?: 'default' | 'outline';
-  url?: ProcessedUrl;
+  icon?: Maybe<{ svg?: Maybe<string> }>;
+  variant?: Button['variant'];
+  url?: Maybe<ProcessedUrl>;
 };
 
 export type SanityButtons = Array<SanityButton>;
 
-export type SanityImage = NonNullable<CarouselField['image']>;
+export type SanityImage = NonNullable<Page['image']>;
 
 export type SitemapProjection = {
   _updatedAt: string;
@@ -63,4 +61,4 @@ export type ProcessPageBuilderBlock<T> = ProcessPageBuilderAddButtons<
   ProcessPageBuilderAddForm<T>
 >;
 
-
+export type Maybe<T> = T | null | undefined;

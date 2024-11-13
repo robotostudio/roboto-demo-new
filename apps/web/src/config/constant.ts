@@ -3,11 +3,10 @@ export const ogImageDimensions = {
   height: 630,
 };
 
-export const locales = ['en-GB', 'fr', 'de', 'ar'] as const;
+export const locales = ['en-GB', 'fr', 'de'] as const;
 
 export const DEFAULT_LOCALE = 'en-GB';
 export type Locale = (typeof locales)[number];
-
 
 export const SANITY_TAGS = {
   mainPage: 'main-page',
@@ -17,10 +16,15 @@ export const SANITY_TAGS = {
   slugPage: 'slug-page',
   footer: 'footer',
   navbar: 'navbar',
-  feature: 'feature',
-  featureFlagPage: 'feature-flag-page',
 } as const;
 
+export const LOCALIZED_SANITY_TAGS = {
+  mainPage: (locale: Locale) => `${SANITY_TAGS.mainPage}-${locale}`,
+  blogPage: (locale: Locale) => `${SANITY_TAGS.blogPage}-${locale}`,
+  blogs: (locale: Locale) => `${SANITY_TAGS.blogs}-${locale}`,
+  blogIndex: (locale: Locale) => `${SANITY_TAGS.blogIndex}-${locale}`,
+  slugPage: (locale: Locale) => `${SANITY_TAGS.slugPage}-${locale}`,
+} as const;
 
 type GetSanityTag = {
   type: string;
@@ -30,10 +34,6 @@ type GetSanityTag = {
 
 export const getSanityTags = ({ type, locale, slug }: GetSanityTag) => {
   const isLocalized = !!locale;
-
-  if (type === 'abTest') {
-    return [SANITY_TAGS.feature, SANITY_TAGS.featureFlagPage];
-  }
 
   if (type === 'mainPage') {
     return [
@@ -87,12 +87,3 @@ export const getSanityTags = ({ type, locale, slug }: GetSanityTag) => {
 
   return [];
 };
-
-export const LOCALIZED_SANITY_TAGS = {
-  mainPage: (locale: Locale) => `${SANITY_TAGS.mainPage}-${locale}`,
-  blogPage: (locale: Locale) => `${SANITY_TAGS.blogPage}-${locale}`,
-  blogs: (locale: Locale) => `${SANITY_TAGS.blogs}-${locale}`,
-  blogIndex: (locale: Locale) => `${SANITY_TAGS.blogIndex}-${locale}`,
-  slugPage: (locale: Locale) => `${SANITY_TAGS.slugPage}-${locale}`,
-} as const;
-

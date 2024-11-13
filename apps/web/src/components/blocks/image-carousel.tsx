@@ -1,10 +1,10 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import Balancer from 'react-wrap-balancer';
-import { ImageCarousel } from '~/sanity.types';
+import type { ImageCarousel } from '~/sanity.types';
 import { Buttons } from '../global/buttons';
 import { RichText } from '../global/richText';
 import { SanityImage } from '../global/sanity-image';
-import { ProcessPageBuilderBlock } from '~/types';
+import type { ProcessPageBuilderBlock } from '~/types';
 
 export type ImageCarouselBlockProps = ProcessPageBuilderBlock<ImageCarousel>;
 
@@ -41,9 +41,10 @@ export const ImageCarouselBlock: FC<ImageCarouselBlockProps> = ({
   eyebrow,
   richText,
   title,
+  _type,
 }) => {
   return (
-    <section className="py-12">
+    <section className="py-12" id={_type}>
       <div className="mx-auto w-full max-w-6xl">
         <div className="grid grid-cols-2 gap-2">
           <div>

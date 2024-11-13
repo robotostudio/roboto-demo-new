@@ -1,26 +1,20 @@
-import { Loader2 } from 'lucide-react';
 import { NextIntlClientProvider } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
-import dynamic from 'next/dynamic';
+import { VisualEditing } from 'next-sanity';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 import { preconnect, prefetchDNS } from 'react-dom';
 import { Footer } from '~/components/global/footer';
 import { MarketingModalProvider } from '~/components/global/marketing-modal-provider';
 import { Navbar } from '~/components/global/navbar';
 import { PreviewBar } from '~/components/global/preview-bar';
 import { locales } from '~/config';
-import { token } from '~/lib/sanity/sanity-server-fetch';
 
 type Props = {
   children: React.ReactNode;
   params: { locale: string };
 };
-
-const PreviewProvider = dynamic(
-  () => import('~/components/global/preview-provider'),
-);
 
 export const metadata = {
   title: {
@@ -40,30 +34,40 @@ export default async function LocaleLayout({
   preconnect('https://cdn.sanity.io');
   prefetchDNS('https://cdn.sanity.io');
 
-  const { isEnabled } = draftMode();
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale}>
           <Navbar />
-          {isEnabled ? (
-            <PreviewProvider token={token}>{children}</PreviewProvider>
+          {draftMode().isEnabled ? (
+            <>
+              {children}
+              <PreviewBar />
+              <VisualEditing
+                refresh={async (payload) => {
+                  'use server';
+                  if (payload.source === 'manual') {
+                    revalidatePath('/', 'layout');
+                    return;
+                  }
+                  const tags = [
+                    payload?.document?.slug?.current,
+                    payload?.document?._id?.startsWith('drafts.')
+                      ? payload?.document?._id.slice(7)
+                      : payload?.document?._id,
+                    payload?.document?._type,
+                  ];
+                  console.log('🚀 ~ refresh tags:', tags);
+                  for (const tag of tags) {
+                    if (tag) revalidateTag(tag);
+                  }
+                }}
+              />
+            </>
           ) : (
             children
           )}
-          {isEnabled && <PreviewBar />}
-          <Suspense
-            fallback={
-              <div className="mx-auto max-w-7xl overflow-hidden bg-primary px-6 py-20 sm:py-24 lg:px-8">
-                <div className="flex h-full w-full items-center justify-center gap-2  text-gray-200">
-                  <Loader2 className="animate-spin " />
-                  Loading footer
-                </div>
-              </div>
-            }
-          >
-            <Footer />
-          </Suspense>
+          <Footer />
           <MarketingModalProvider />
         </NextIntlClientProvider>
       </body>

@@ -1,16 +1,7 @@
 import { groq } from 'next-sanity';
-import { Locale } from '~/config';
-import { Blog, BlogIndex, PageBuilder } from '~/sanity.types';
-import { SanityImage } from '~/types';
 
 export const localeMatch = `select(($locale == 'en-GB' || $locale == '' ) => 
   (!defined(language) || language == 'en-GB'), language == $locale => language == $locale)`;
-
-export type GetSlugPageDataQueryResponse = {
-  title: string;
-  slug: string;
-  pageBuilder: PageBuilder;
-};
 
 export const getAllSlugPagePathsQuery = groq`
 *[_type == "page" && defined(slug.current) && !seoNoIndex]{
@@ -19,22 +10,9 @@ export const getAllSlugPagePathsQuery = groq`
 }
 `;
 
-export type GetAllSlugPagePathsQueryResponse = {
-  slug: string;
-  locale: Locale;
-}[];
-
-export type GetMainPageDataQueryResponse = {
-  title: string;
-  description: string;
-  pageBuilder: PageBuilder;
-};
-
 export const getAllMainPageTranslationsQuery = groq`
 *[_type == "mainPage"].language
 `;
-
-export type GetAllMainPageTranslationsQueryResponse = string[];
 
 const cardProjection = `
 "title":coalesce(cardTitle,title),
@@ -47,7 +25,7 @@ export const getBlogIndexDataQuery = groq`
     "seo":*[_type == "blogIndex" && ${localeMatch}][0]{
         ...,
     },
-    "blogs":*[_type == "blog" && !seoHideFromLists && ${localeMatch}]{
+    "blogs":*[_type == "blog" && ${localeMatch}]{
       _id,
       ${cardProjection},
       "slug":slug.current
@@ -55,26 +33,9 @@ export const getBlogIndexDataQuery = groq`
 }
 `;
 
-export type IndexPageBlog = {
-  title: string;
-  image: SanityImage;
-  description: string;
-  slug: string;
-  _id: string;
-};
-
-export type GetBlogIndexDataQuery = {
-  seo: BlogIndex;
-  blogs: IndexPageBlog[];
-};
-
-export type GetBlogPageDataQueryResponse = Blog;
-
 export const getAllBlogIndexTranslationsQuery = groq`
 *[_type == "blogIndex"].language
 `;
-
-export type GetAllBlogIndexTranslationsQueryResponse = string[];
 
 export const getAllBlogsPathsQuery = groq`
 *[_type == "blog" && defined(slug.current) && !seoNoIndex]{
@@ -83,38 +44,42 @@ export const getAllBlogsPathsQuery = groq`
 }
 `;
 
-export type GetAllBlogsPathsQuery = {
-  slug: string;
-  locale: Locale;
-}[];
+const _image = `
+  image{
+    ...,
+    "alt":coalesce(asset->altText,asset->originalFilename, "Image-Broken"),
+    "blurData":asset->metadata.lqip,
+    "dominantColor":asset->metadata.palette.dominant.background,
+  }
+`;
 
-const _url = `defined(url)=>{
+const _url = `
   url{
     openInNewTab,
     "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),
   }
-}`;
+`;
 
-const _customLink = `defined(customLink)=>{
+const _customLink = `
   customLink{
     openInNewTab,
     "href": select(type == "internal"=>internal->slug.current, type == "external" => external,"#"),
   }
-}`;
+`;
 
-const _markDefs = ` defined(markDefs)=>{
+const _markDefs = ` 
   markDefs[]{
     ...,
     ${_customLink}   
   }
-}`;
+`;
 
-const _icon = `defined(icon)=>{
+const _icon = `
   icon{
     svg
   }
-}`;
-const _columns = `defined(columns)=>{
+`;
+const _columns = `
   columns[]{
     ...,
     title,
@@ -122,9 +87,9 @@ const _columns = `defined(columns)=>{
     ${_icon},
     ${_url}
   }
-}`;
+`;
 
-const _links = `defined(links)=>{
+const _links = `
   links[]{
     ...,
     title,
@@ -132,54 +97,72 @@ const _links = `defined(links)=>{
     ${_url},
     ${_columns}
   }
-}`;
+`;
 
-const _buttons = `defined(buttons)=>{
+const _buttons = `
   buttons[]{
     ...,
     ${_url},
     ${_icon}
   }
-}`;
+`;
 
-const _richText = `defined(richText)=>{
+const _richText = `
   richText[]{
     ...,
     ${_markDefs}
    
   }
-}`;
+`;
 
-const _form = `defined(form)=>{
+const _form = `
   form->{
     ...,
   }
-}`;
+`;
 
-const _abTestPageBuilder = `_type == "abTestPagebuilder"=>{
+const _cta = `_type == "cta"=>{
   ...,
-  "variants":variants[]{
-    ...,
-    _type,
-    ${_buttons},
-    ${_richText},
-    ${_form},
-  }
+  ${_richText},
+  ${_buttons}
+}`;
+const _hero = `_type == "hero"=>{
+  ...,
+  ${_buttons},
+  ${_richText}
 }`;
 
-const _pageBuilder = `defined(pageBuilder)=>{
+const _imageCarousel = `_type == "imageCarousel"=>{
+  ...,
+  ${_buttons},
+  ${_richText},
+}`;
+
+const _splitForm = `_type == "splitForm"=>{
+  ...,
+  ${_image},
+  ${_form},
+  ${_richText},
+}`;
+
+const _dynamicIntro = `_type == "dynamicIntro"=>{
+  ...,
+  ${_richText},
+  ${_buttons}
+}`;
+
+const _pageBuilder = `
   pageBuilder[]{
     ...,
     _type,
-    ${_buttons},
-    ${_richText},
-    ${_form},
-    ${_abTestPageBuilder}
+    ${_cta},
+    ${_hero},
+    ${_imageCarousel},
+    ${_splitForm},
+    ${_dynamicIntro}
+  } 
+`;
 
-
-  }
-
-}`;
 export const getFooterDataQuery = groq`
 *[_type == "footer"][0]{
     _id,
@@ -202,6 +185,7 @@ export const getNavbarDataQuery = groq`
 export const getBlogPageDataQuery = groq`
 *[_type == "blog" && slug.current == $slug && ${localeMatch}][0]{
     ...,
+    ${_image},
     ${_richText}
   }
   `;
@@ -212,7 +196,7 @@ export const getMainPageDataQuery = groq`
   _type,
   title,
   description,
-  "slug":slug.current,
+  ${_image},
   ${_pageBuilder}
 }
 `;
@@ -223,79 +207,70 @@ export const getSlugPageDataQuery = groq`
     _type,
     title,
     content,
+    ${_image},
     "slug":slug.current,
     ${_pageBuilder}
     
 }
 `;
 
-export const getPageLinkedFeatureFlagsQuery = groq`
-*[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0]{
-  feature,
-  "variants":variants[]{
-    key,
-    resource->{
-      _type,
-      "slug":slug.current
-    }
-  }
+export const getOGDataQuery = groq`
+*[_id == $id][0]{
+    _id,
+    "title":coalesce(ogTitle,title),
+    "description":coalesce(ogDescription,description),
+    "image":coalesce(seoImage,image,*[_type =="logo"][0].image).asset->url
 }
 `;
 
-export const getVariantsFromMiddlewareQuery = groq`
-  *[slug.current == $slug][0]{
-    "test": *[_type =="abTest" && references(^._id)][0]{
-    feature,
-    "variants":variants[]{
-      key,
-      resource->{
-        _type,
-        "slug":slug.current
-      }
-    }
-  }
-}
-`;
-
-export const getPageLinkedFeatureFlagVariantQuery = groq`
-*[_type == "abTest" && !(_id in path("drafts.**")) && references($id)][0].variants[@.key == $key][0].resource->{
+const _ogFields = `
+  _id,
+  "title":select(defined(ogTitle)=>ogTitle,defined(seoTitle)=>seoTitle,title),
+  "description":select(defined(ogDescription)=>ogDescription,defined(seoDescription)=>seoDescription,description),
+  "image": image.asset->url + "?w=566&h=566&dpr=2&fit=max",  
+  "dominantColor":image.asset->metadata.palette.dominant.background,
+  "seoImage": seoImage.asset->url + "?w=1200&h=630&dpr=2&fit=max",
+  "logo":*[_type =="logo"][0].image.asset->url,
   _type,
-  "slug": slug.current,
-  language
+  "date":coalesce(date,_createdAt)
+`;
+
+export const genericPageQueryOG = groq`
+*[_id == $id && defined(slug.current)][0]{
+  ${_ogFields}
 }
 `;
+export const slugPageQueryOG = groq`
+*[_type == "page" && _id == $id][0]{
+  ${_ogFields}
+}
+`;
+
+export const blogPageQueryOG = groq`
+*[_type == "blog" && _id == $id][0]{
+  ${_ogFields}
+}
+`;
+
+export const mainPageQueryOG = groq`
+*[_type == "mainPage"][0]{
+  ${_ogFields}
+}
+`;
+
+export const sitemapQuery = groq`
+*[_type in $types && defined(slug.current) && seoNoIndex != true ]{
+  "slug":slug.current,
+  _updatedAt,
+  _type,
+  _id
+}`;
+
 export const getMarketingModalDataQuery = groq`
 *[_type == "marketingModal" && isActive][0]{
     _id,
     title,
     description,
     ${_form}    
-}
-`;
-// export const ogQueryWrapper = (condition: string) => groq`
-// *[${condition}][0]{
-//   ${[
-//     coalesceConditions('title', ['ogTitle', 'title']),
-//     coalesceConditions('description', ['ogDescription', 'description']),
-//     coalesceConditions('image', [
-//       'seoImage',
-//       'image',
-//       groq`*[_type =="logo"][0].image`,
-//     ]),
-//   ].join(',')}
-// }
-// `;
-
-export const getOGDataQuery = groq`
-*[_id == $id][0]{
-    _id,
-    "title":coalesce(ogTitle,title),
-    "description":coalesce(ogDescription,description),
-    "image": coalesce(seoImage, image, *[_type == "logo"][0].image).asset->{
-      "url": url + "?w=566&h=566&dpr=2&fit=max",
-    },
-    "palette": coalesce(seoImage, image, *[_type == "logo"][0].image).asset->metadata.palette,
-    "type":coalesce(_type, "Page"),
-    "date":coalesce(date, "Recent")
 }
 `;

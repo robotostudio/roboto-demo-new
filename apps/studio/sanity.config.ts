@@ -1,19 +1,21 @@
+import { defineConfig } from 'sanity';
+import { structureTool } from 'sanity/structure';
+import { presentationTool } from 'sanity/presentation';
+import { visionTool } from '@sanity/vision';
+import { schemaTypes } from './schemaTypes';
+import { defaultDocumentNode, structure } from './structure';
 import { assist } from '@sanity/assist';
 import { documentInternationalization } from '@sanity/document-internationalization';
-import { visionTool } from '@sanity/vision';
-import { defineConfig } from 'sanity';
-import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
-import { iconPicker } from 'sanity-plugin-icon-picker';
 import { media } from 'sanity-plugin-media';
-import { structureTool } from 'sanity/structure';
-import { schemaTypes } from './schemaTypes';
+import { iconPicker } from 'sanity-plugin-icon-picker';
 import { internationalizedDocuments } from './schemaTypes/documents';
-import { defaultDocumentNode, structure } from './structure';
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
+import { resolve } from './resolve-presentation-document';
 import { getFlag } from './utils/helper';
 
 export default defineConfig({
   name: 'default',
-  title: 'roboto-demo-new',
+  title: 'roboto-demo',
 
   projectId: 's6kuy1ts',
   dataset: 'production',
@@ -34,6 +36,18 @@ export default defineConfig({
     unsplashImageAsset(),
     media(),
     iconPicker(),
+    presentationTool({
+      resolve: resolve,
+      previewUrl: {
+        origin:
+          window.location.hostname === 'localhost'
+            ? 'http://localhost:3000'
+            : 'https://template.roboto.studio',
+        previewMode: {
+          enable: '/api/presentation-draft',
+        },
+      },
+    }),
     documentInternationalization({
       schemaTypes: internationalizedDocuments,
       supportedLanguages: [
@@ -45,6 +59,16 @@ export default defineConfig({
     }),
   ],
 
+  document: {
+    newDocumentOptions: (prev, { creationContext }) => {
+      const { type } = creationContext;
+      if (type === 'global') return [];
+      return prev;
+    },
+  },
+  scheduledPublishing: {
+    enabled: false,
+  },
   schema: {
     types: schemaTypes,
     templates: (prev) => {
