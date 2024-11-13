@@ -57,7 +57,7 @@ export default async function LocaleLayout({
                       : payload?.document?._id,
                     payload?.document?._type,
                   ];
-                  console.log('🚀 ~ refresh tags:', tags);
+                  console.log('🚀 ~ refresh tags:-', tags);
                   for (const tag of tags) {
                     if (tag) revalidateTag(tag);
                   }
